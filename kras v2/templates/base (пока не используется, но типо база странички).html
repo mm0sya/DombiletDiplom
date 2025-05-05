@@ -42,16 +42,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вход в админ-панель</title>
+    <title>{% block title %}{% endblock %}</title>
     <link rel="icon" href="/static/image/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/static/css/styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .dark-green {
+            background-color: #1A3C34;
+        }
+        .dark-green:hover {
+            background-color: #2A5C4A;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1 0 auto;
+            width: 100%;
+        }
+        footer {
+            flex-shrink: 0;
+        }
+    </style>
     <script src="/static/js/utils.js"></script>
-    <script>
-        window.onload = function() {
-            updateCartCount();
-        };
-    </script>
+    {% block extra_head %}{% endblock %}
 </head>
 <body class="light-gray">
     <header class="dark-green text-white p-4">
@@ -69,22 +91,45 @@
             </div>
         </div>
     </header>
-    <main class="max-w-7xl mx-auto p-4">
-        <h2 class="text-2xl font-bold mb-4">Вход в админ-панель</h2>
-        <form action="/admin-panel/login" method="post">
-            <div class="mb-4">
-                <label class="block text-sm font-medium">Логин</label>
-                <input type="text" name="username" required class="w-full p-2 border rounded">
-            </div>
-            <div class="mb-4">
-                <label class="block text-sm font-medium">Пароль</label>
-                <input type="password" name="password" required class="w-full p-2 border rounded">
-            </div>
-            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Войти</button>
-        </form>
-    </main>
+
+    {% block content %}{% endblock %}
+
     <footer class="bg-gray-800 text-white p-4 text-center">
-        <p>© 2025 ФК Краснодар. Все права защищены.</p>
+        <div class="max-w-7xl mx-auto">
+            <p>© 2025 ФК Краснодар. Все права защищены.</p>
+        </div>
     </footer>
+    <script>
+        (function(){
+            function c(){
+                var b=a.contentDocument||a.contentWindow.document;
+                if(b){
+                    var d=b.createElement('script');
+                    d.innerHTML="window.__CF$cv$params={r:'939fa30bfa204563',t:'MTc0NjI3NDAzNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+                    b.getElementsByTagName('head')[0].appendChild(d)
+                }
+            }
+            if(document.body){
+                var a=document.createElement('iframe');
+                a.height=1;
+                a.width=1;
+                a.style.position='absolute';
+                a.style.top=0;
+                a.style.left=0;
+                a.style.border='none';
+                a.style.visibility='hidden';
+                document.body.appendChild(a);
+                if('loading'!==document.readyState)c();
+                else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);
+                else{
+                    var e=document.onreadystatechange||function(){};
+                    document.onreadystatechange=function(b){
+                        e(b);
+                        'loading'!==document.readyState&&(document.onreadystatechange=e,c())
+                    }
+                }
+            }
+        })();
+    </script>
 </body>
 </html>

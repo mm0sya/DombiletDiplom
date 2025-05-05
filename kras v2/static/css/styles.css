@@ -1,27 +1,19 @@
 /* Базовые стили для body и структуры страницы */
-body {
-    font-family: 'Inter', sans-serif;
+html, body {
     height: 100%;
     margin: 0;
+}
+body {
     display: flex;
     flex-direction: column;
 }
-
-html, body {
-    height: 100%;
-}
-
 main {
     flex: 1 0 auto;
-    width: 100%;
-    overflow-y: auto; /* Включает вертикальный скроллинг */
-    max-height: 70vh; /* Ограничивает высоту для демонстрации скроллбара */
+    width: 100%; /* Добавлено */
 }
-
 footer {
     flex-shrink: 0;
 }
-
 /* Стили для header */
 .dark-green {
     background-color: #1A3C34;
@@ -49,23 +41,26 @@ footer {
     background-color: #2EB648;
 }
 
+
+/*ЭТО ВСЁ ПО СКРОЛЛБАРУ От сюда*/
 /* Кастомный скроллбар для WebKit-браузеров (Chrome, Safari) */
 ::-webkit-scrollbar {
-    width: 12px; /* Ширина скроллбара */
+    width: 9px; /* Ширина скроллбара */
     height: 12px; /* Высота для горизонтального скроллбара */
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Цвет фона трека */
+    background: #F5F7FA; /* Цвет фона трека */
     border-radius: 10px; /* Скругление углов трека */
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #34C759; /* Цвет ползунка */
+    background: #6B7280 ; /* Цвет ползунка */
     border-radius: 10px; /* Скругление углов ползунка */
     border: 2px solid #f1f1f1; /* Граница для эффекта */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #2EB648; /* Цвет при наведении */
+    background: #4B5563; /* Цвет при наведении */
 }
+/*ЭТО ВСЁ ПО СКРОЛЛБАРУ До сюда*/

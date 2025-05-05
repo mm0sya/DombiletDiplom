@@ -1,0 +1,3278 @@
+<svg id="spartak" xmlns="http://www.w3.org/2000/svg" width="1007.48" height="559.65" viewBox="0 0 1007.48 559.65">
+  <defs>
+    <style>
+      .cls-1, .cls-3 {
+        fill: #ededed;
+      }
+
+      .cls-1 {
+        stroke: #bbb;
+        stroke-miterlimit: 1.05;
+        stroke-width: 0.63px;
+      }
+
+      .cls-2, .cls-5, .cls-6 {
+        isolation: isolate;
+        font-family: ArialMT, Arial;
+      }
+
+      .cls-2, .cls-6 {
+        font-size: 12px;
+      }
+
+      .cls-2 {
+        fill: #9e9e9e;
+      }
+
+      .cls-4 {
+        fill: #bbb;
+      }
+
+      .cls-5 {
+        font-size: 18.84px;
+      }
+    </style>
+  <pattern id="cross" data-name="cross" width="1" height="1">
+  <rect class="cls-901" width="14.5" height="14.5"/>
+  <rect class="cls-902" width="14.5" height="14.5"/>
+  <polyline class="cls-903" transform="translate(1 1)" points="3.85 9.25 3.85 9.25 9.38 3.98"/>
+  <polyline class="cls-903" transform="translate(1 1)" points="3.98 3.85 3.98 3.85 9.25 9.38"/>
+</pattern>
+<pattern id="check" data-name="check" width="1" height="1">
+  <rect class="cls-903" width="14.5" height="14.5"/>
+  <rect class="cls-904" width="14.5" height="14.5"/>
+  <path class="cls-905" transform="translate(1 3)" d="M4.37,7.82h0a.63.63,0,0,1-.48-.21L.77,4.2a.63.63,0,0,1,.94-.85l2.7,2.93,5.8-5.5a.61.61,0,0,1,.88.08.64.64,0,0,1,0,.83l-6.27,6A.66.66,0,0,1,4.37,7.82Z"/>
+</pattern></defs>
+  <g id="Layer_2" class="small-active" data-name="Layer 2">
+    <g id="k106">
+      <g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="445.89" y="479.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 491.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="479.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 491.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="479.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 491.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="479.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 491.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="479.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 491.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="479.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 491.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="479.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 491.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="479.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 491.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="479.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 491.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="479.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 491.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="479.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 491.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="479.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 491.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="479.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 491.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="479.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 491.19)">40</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="466.03" y="459.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 471.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="459.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 471.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="459.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 471.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="459.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 471.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="459.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 471.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="459.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 471.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="459.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 471.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="459.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 471.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="459.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 471.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="459.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 471.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="459.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 471.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="459.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 471.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="459.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 471.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="459.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 471.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="459.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 471.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="459.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 471.19)">41</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="486.17" y="439.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 451.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="439.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 451.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="439.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 451.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="439.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 451.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="439.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 451.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="439.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 451.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="439.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 451.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="439.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 451.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="439.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 451.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="439.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 451.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="439.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 451.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="439.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 451.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="439.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 451.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="439.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 451.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="439.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 451.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="439.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 451.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="439.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 451.19)">41</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="506.3" y="419.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 431.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="419.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 431.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="419.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 431.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="419.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 431.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="419.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 431.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="419.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 431.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="419.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 431.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="419.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 431.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="419.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 431.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="419.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 431.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="419.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 431.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="419.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 431.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="419.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 431.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="419.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 431.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="419.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 431.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="419.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 431.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="419.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 431.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="419.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 431.19)">41</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="526.44" y="399.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(527.22 411.19)">23</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="506.3" y="399.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 411.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="399.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 411.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="399.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 411.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="399.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 411.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="399.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 411.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="399.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 411.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="399.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 411.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="399.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 411.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="399.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 411.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="399.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 411.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="399.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 411.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="399.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 411.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="399.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 411.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="399.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 411.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="399.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 411.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="399.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 411.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="399.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 411.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="399.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 411.19)">41</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="546.57" y="379.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(547.36 391.19)">22</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="526.44" y="379.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(527.22 391.19)">23</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="506.3" y="379.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 391.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="379.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 391.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="379.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 391.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="379.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 391.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="379.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 391.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="379.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 391.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="379.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 391.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="379.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 391.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="379.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 391.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="379.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 391.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="379.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 391.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="379.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 391.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="379.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 391.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="379.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 391.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="379.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 391.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="379.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 391.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="379.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 391.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="379.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 391.19)">41</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="566.71" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(568.09 371.19)">21</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="546.57" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(547.36 371.19)">22</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="526.44" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(527.22 371.19)">23</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="506.3" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 371.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 371.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 371.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 371.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 371.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 371.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 371.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 371.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 371.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 371.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 371.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 371.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 371.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 371.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 371.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 371.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 371.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="359.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 371.19)">41</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="586.85" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(587.63 351.19)">20</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="566.71" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(568.09 351.19)">21</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="546.57" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(547.36 351.19)">22</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="526.44" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(527.22 351.19)">23</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="506.3" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 351.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 351.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 351.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 351.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 351.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 351.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 351.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 351.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 351.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 351.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 351.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 351.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 351.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 351.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 351.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 351.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 351.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="339.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 351.19)">41</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="586.85" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(587.63 331.19)">20</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="566.71" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(568.09 331.19)">21</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="546.57" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(547.36 331.19)">22</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="526.44" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(527.22 331.19)">23</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="506.3" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 331.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 331.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 331.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 331.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 331.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 331.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 331.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 331.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 331.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 331.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 331.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 331.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 331.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 331.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 331.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 331.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 331.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="319.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 331.19)">41</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="606.98" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(607.29 311.19)">19</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="586.85" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(587.63 311.19)">20</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="566.71" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(568.09 311.19)">21</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="546.57" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(547.36 311.19)">22</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="526.44" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(527.22 311.19)">23</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="506.3" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 311.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 311.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 311.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 311.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 311.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 311.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 311.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 311.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 311.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 311.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 311.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 311.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 311.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 311.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 311.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 311.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 311.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 311.19)">41</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="103.58" y="299.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(103.96 311.19)">42</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="627.12" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(627.43 291.19)">18</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="606.98" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(607.29 291.19)">19</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="586.85" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(587.63 291.19)">20</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="566.71" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(568.09 291.19)">21</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="546.57" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(547.36 291.19)">22</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="526.44" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(527.22 291.19)">23</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="506.3" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 291.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 291.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 291.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 291.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 291.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 291.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 291.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 291.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 291.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 291.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 291.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 291.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 291.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 291.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 291.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 291.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 291.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 291.19)">41</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="103.58" y="279.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(103.96 291.19)">42</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="647.26" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(647.5 271.19)">17</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="627.12" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(627.43 271.19)">18</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="606.98" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(607.29 271.19)">19</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="586.85" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(587.63 271.19)">20</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="566.71" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(568.09 271.19)">21</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="546.57" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(547.36 271.19)">22</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="526.44" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(527.22 271.19)">23</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="506.3" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 271.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 271.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 271.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 271.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 271.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 271.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 271.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 271.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 271.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 271.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 271.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 271.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 271.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 271.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 271.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 271.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 271.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 271.19)">41</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="103.58" y="259.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(103.96 271.19)">42</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="667.39" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(667.7 251.19)">16</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="647.26" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(647.5 251.19)">17</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="627.12" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(627.43 251.19)">18</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="606.98" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(607.29 251.19)">19</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="586.85" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(587.63 251.19)">20</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="566.71" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(568.09 251.19)">21</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="546.57" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(547.36 251.19)">22</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="526.44" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(527.22 251.19)">23</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="506.3" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 251.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 251.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 251.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 251.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 251.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 251.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 251.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 251.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 251.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 251.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 251.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 251.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 251.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 251.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 251.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 251.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 251.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 251.19)">41</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="103.58" y="239.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(103.96 251.19)">42</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="788.21" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(788.57 231.19)">10</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="768.07" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(768.85 231.19)">11</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="747.94" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(748.12 231.19)">12</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="727.8" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(728.11 231.19)">13</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="707.66" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(707.97 231.19)">14</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="687.53" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(687.6 231.19)">15</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="667.39" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(667.7 231.19)">16</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="647.26" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(647.5 231.19)">17</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="627.12" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(627.43 231.19)">18</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="606.98" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(607.29 231.19)">19</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="586.85" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(587.63 231.19)">20</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="566.71" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(568.09 231.19)">21</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="546.57" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(547.36 231.19)">22</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="526.44" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(527.22 231.19)">23</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="506.3" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 231.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 231.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 231.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 231.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 231.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 231.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 231.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 231.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 231.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 231.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 231.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 231.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 231.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 231.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 231.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 231.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 231.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 231.19)">41</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="103.58" y="219.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(103.96 231.19)">42</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="808.34" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(812.46 211.19)">9</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="788.21" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(788.57 211.19)">10</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="768.07" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(768.85 211.19)">11</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="747.94" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(748.12 211.19)">12</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="727.8" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(728.11 211.19)">13</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="707.66" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(707.97 211.19)">14</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="687.53" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(687.6 211.19)">15</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="667.39" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(667.7 211.19)">16</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="647.26" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(647.5 211.19)">17</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="627.12" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(627.43 211.19)">18</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="606.98" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(607.29 211.19)">19</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="586.85" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(587.63 211.19)">20</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="566.71" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(568.09 211.19)">21</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="546.57" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(547.36 211.19)">22</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="526.44" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(527.22 211.19)">23</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="506.3" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 211.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 211.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 211.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 211.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 211.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 211.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 211.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 211.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 211.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 211.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 211.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 211.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 211.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 211.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 211.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 211.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 211.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 211.19)">41</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="103.58" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(103.96 211.19)">42</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="83.44" y="199.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(83.53 211.19)">43</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="828.48" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(832.6 191.19)">8</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="808.34" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(812.46 191.19)">9</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="788.21" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(788.57 191.19)">10</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="768.07" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(768.85 191.19)">11</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="747.94" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(748.12 191.19)">12</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="727.8" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(728.11 191.19)">13</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="707.66" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(707.97 191.19)">14</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="687.53" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(687.6 191.19)">15</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="667.39" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(667.7 191.19)">16</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="647.26" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(647.5 191.19)">17</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="627.12" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(627.43 191.19)">18</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="606.98" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(607.29 191.19)">19</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="586.85" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(587.63 191.19)">20</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="566.71" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(568.09 191.19)">21</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="546.57" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(547.36 191.19)">22</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="526.44" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(527.22 191.19)">23</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="506.3" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 191.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 191.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 191.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 191.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 191.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 191.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 191.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 191.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 191.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 191.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 191.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 191.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 191.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 191.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 191.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 191.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 191.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 191.19)">41</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="103.58" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(103.96 191.19)">42</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="83.44" y="179.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(83.53 191.19)">43</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="848.62" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(852.74 171.19)">7</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="828.48" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(832.6 171.19)">8</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="808.34" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(812.46 171.19)">9</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="788.21" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(788.57 171.19)">10</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="768.07" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(768.85 171.19)">11</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="747.94" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(748.12 171.19)">12</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="727.8" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(728.11 171.19)">13</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="707.66" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(707.97 171.19)">14</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="687.53" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(687.6 171.19)">15</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="667.39" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(667.7 171.19)">16</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="647.26" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(647.5 171.19)">17</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="627.12" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(627.43 171.19)">18</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="606.98" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(607.29 171.19)">19</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="586.85" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(587.63 171.19)">20</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="566.71" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(568.09 171.19)">21</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="546.57" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(547.36 171.19)">22</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="526.44" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(527.22 171.19)">23</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="506.3" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 171.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 171.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 171.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 171.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 171.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 171.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 171.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 171.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 171.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 171.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 171.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 171.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 171.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 171.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 171.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 171.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 171.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 171.19)">41</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="103.58" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(103.96 171.19)">42</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="83.44" y="159.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(83.53 171.19)">43</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="868.75" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(872.87 151.19)">6</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="848.62" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(852.74 151.19)">7</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="828.48" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(832.6 151.19)">8</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="808.34" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(812.46 151.19)">9</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="788.21" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(788.57 151.19)">10</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="768.07" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(768.85 151.19)">11</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="747.94" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(748.12 151.19)">12</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="727.8" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(728.11 151.19)">13</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="707.66" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(707.97 151.19)">14</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="687.53" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(687.6 151.19)">15</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="667.39" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(667.7 151.19)">16</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="647.26" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(647.5 151.19)">17</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="627.12" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(627.43 151.19)">18</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="606.98" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(607.29 151.19)">19</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="586.85" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(587.63 151.19)">20</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="566.71" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(568.09 151.19)">21</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="546.57" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(547.36 151.19)">22</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="526.44" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(527.22 151.19)">23</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="506.3" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 151.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 151.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 151.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 151.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 151.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 151.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 151.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 151.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 151.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 151.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 151.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 151.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 151.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 151.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 151.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 151.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 151.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 151.19)">41</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="103.58" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(103.96 151.19)">42</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="83.44" y="139.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(83.53 151.19)">43</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="888.89" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(893.01 131.19)">5</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="868.75" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(872.87 131.19)">6</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="848.62" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(852.74 131.19)">7</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="828.48" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(832.6 131.19)">8</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="808.34" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(812.46 131.19)">9</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="788.21" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(788.57 131.19)">10</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="768.07" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(768.85 131.19)">11</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="747.94" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(748.12 131.19)">12</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="727.8" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(728.11 131.19)">13</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="707.66" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(707.97 131.19)">14</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="687.53" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(687.6 131.19)">15</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="667.39" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(667.7 131.19)">16</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="647.26" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(647.5 131.19)">17</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="627.12" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(627.43 131.19)">18</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="606.98" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(607.29 131.19)">19</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="586.85" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(587.63 131.19)">20</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="566.71" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(568.09 131.19)">21</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="546.57" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(547.36 131.19)">22</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="526.44" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(527.22 131.19)">23</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="506.3" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 131.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 131.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 131.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 131.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 131.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 131.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 131.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 131.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 131.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 131.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 131.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 131.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 131.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 131.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 131.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 131.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 131.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 131.19)">41</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="103.58" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(103.96 131.19)">42</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="83.44" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(83.53 131.19)">43</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="63.31" y="119.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(64.09 131.19)">44</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="909.03" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(913.14 111.19)">4</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="888.89" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(893.01 111.19)">5</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="868.75" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(872.87 111.19)">6</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="848.62" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(852.74 111.19)">7</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="828.48" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(832.6 111.19)">8</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="808.34" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(812.46 111.19)">9</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="788.21" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(788.57 111.19)">10</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="768.07" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(768.85 111.19)">11</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="747.94" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(748.12 111.19)">12</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="727.8" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(728.11 111.19)">13</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="707.66" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(707.97 111.19)">14</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="687.53" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(687.6 111.19)">15</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="667.39" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(667.7 111.19)">16</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="647.26" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(647.5 111.19)">17</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="627.12" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(627.43 111.19)">18</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="606.98" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(607.29 111.19)">19</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="586.85" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(587.63 111.19)">20</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="566.71" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(568.09 111.19)">21</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="546.57" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(547.36 111.19)">22</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="526.44" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(527.22 111.19)">23</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="506.3" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 111.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 111.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 111.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 111.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 111.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 111.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 111.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 111.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 111.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 111.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 111.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 111.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 111.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 111.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 111.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 111.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 111.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 111.19)">41</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="103.58" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(103.96 111.19)">42</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="83.44" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(83.53 111.19)">43</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="63.31" y="99.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(64.09 111.19)">44</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="929.16" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(933.28 91.19)">3</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="909.03" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(913.14 91.19)">4</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="888.89" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(893.01 91.19)">5</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="868.75" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(872.87 91.19)">6</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="848.62" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(852.74 91.19)">7</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="828.48" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(832.6 91.19)">8</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="808.34" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(812.46 91.19)">9</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="788.21" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(788.57 91.19)">10</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="768.07" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(768.85 91.19)">11</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="747.94" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(748.12 91.19)">12</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="727.8" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(728.11 91.19)">13</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="707.66" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(707.97 91.19)">14</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="687.53" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(687.6 91.19)">15</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="667.39" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(667.7 91.19)">16</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="647.26" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(647.5 91.19)">17</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="627.12" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(627.43 91.19)">18</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="606.98" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(607.29 91.19)">19</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="586.85" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(587.63 91.19)">20</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="566.71" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(568.09 91.19)">21</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="546.57" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(547.36 91.19)">22</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="526.44" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(527.22 91.19)">23</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="506.3" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 91.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 91.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 91.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 91.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 91.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 91.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 91.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 91.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 91.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 91.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 91.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 91.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 91.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 91.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 91.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 91.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 91.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 91.19)">41</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="103.58" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(103.96 91.19)">42</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="83.44" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(83.53 91.19)">43</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="63.31" y="79.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(64.09 91.19)">44</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="929.16" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(933.28 71.19)">3</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="909.03" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(913.14 71.19)">4</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="888.89" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(893.01 71.19)">5</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="868.75" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(872.87 71.19)">6</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="848.62" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(852.74 71.19)">7</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="828.48" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(832.6 71.19)">8</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="808.34" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(812.46 71.19)">9</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="788.21" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(788.57 71.19)">10</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="768.07" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(768.85 71.19)">11</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="747.94" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(748.12 71.19)">12</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="727.8" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(728.11 71.19)">13</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="707.66" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(707.97 71.19)">14</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="687.53" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(687.6 71.19)">15</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="667.39" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(667.7 71.19)">16</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="647.26" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(647.5 71.19)">17</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="627.12" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(627.43 71.19)">18</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="606.98" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(607.29 71.19)">19</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="586.85" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(587.63 71.19)">20</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="566.71" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(568.09 71.19)">21</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="546.57" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(547.36 71.19)">22</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="526.44" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(527.22 71.19)">23</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="506.3" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 71.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 71.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 71.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 71.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 71.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 71.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 71.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 71.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 71.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 71.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 71.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 71.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 71.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 71.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 71.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 71.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 71.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 71.19)">41</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="103.58" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(103.96 71.19)">42</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="83.44" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(83.53 71.19)">43</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="63.31" y="59.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(64.09 71.19)">44</text>
+        </g>
+      </g>
+      <g>
+        <g></g>
+        <g>
+          <rect class="cls-1" x="949.3" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(953.42 51.19)">2</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="929.16" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(933.28 51.19)">3</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="909.03" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(913.14 51.19)">4</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="888.89" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(893.01 51.19)">5</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="868.75" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(872.87 51.19)">6</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="848.62" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(852.74 51.19)">7</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="828.48" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(832.6 51.19)">8</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="808.34" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(812.46 51.19)">9</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="788.21" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(788.57 51.19)">10</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="768.07" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(768.85 51.19)">11</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="747.94" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(748.12 51.19)">12</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="727.8" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(728.11 51.19)">13</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="707.66" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(707.97 51.19)">14</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="687.53" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(687.6 51.19)">15</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="667.39" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(667.7 51.19)">16</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="647.26" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(647.5 51.19)">17</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="627.12" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(627.43 51.19)">18</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="606.98" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(607.29 51.19)">19</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="586.85" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(587.63 51.19)">20</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="566.71" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(568.09 51.19)">21</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="546.57" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(547.36 51.19)">22</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="526.44" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(527.22 51.19)">23</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="506.3" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 51.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 51.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 51.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 51.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 51.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 51.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 51.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 51.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 51.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 51.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 51.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 51.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 51.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 51.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 51.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 51.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 51.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 51.19)">41</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="103.58" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(103.96 51.19)">42</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="83.44" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(83.53 51.19)">43</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="63.31" y="39.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(64.09 51.19)">44</text>
+        </g>
+      </g>
+      <g>
+        <g>
+          <rect class="cls-1" x="969.43" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(973.55 31.19)">1</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="949.3" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(953.42 31.19)">2</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="929.16" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(933.28 31.19)">3</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="909.03" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(913.14 31.19)">4</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="888.89" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(893.01 31.19)">5</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="868.75" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(872.87 31.19)">6</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="848.62" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(852.74 31.19)">7</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="828.48" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(832.6 31.19)">8</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="808.34" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(812.46 31.19)">9</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="788.21" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(788.57 31.19)">10</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="768.07" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(768.85 31.19)">11</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="747.94" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(748.12 31.19)">12</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="727.8" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(728.11 31.19)">13</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="707.66" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(707.97 31.19)">14</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="687.53" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(687.6 31.19)">15</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="667.39" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(667.7 31.19)">16</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="647.26" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(647.5 31.19)">17</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="627.12" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(627.43 31.19)">18</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="606.98" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(607.29 31.19)">19</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="586.85" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(587.63 31.19)">20</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="566.71" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(568.09 31.19)">21</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="546.57" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(547.36 31.19)">22</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="526.44" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(527.22 31.19)">23</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="506.3" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(507.08 31.19)">24</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="486.17" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(486.95 31.19)">25</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="466.03" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(466.81 31.19)">26</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="445.89" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(446.67 31.19)">27</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="385.49" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(386.27 31.19)">28</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="365.35" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(366.13 31.19)">29</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="345.21" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(345.99 31.19)">30</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="325.08" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(325.86 31.19)">31</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="304.94" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(305.72 31.19)">32</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="284.8" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(285.59 31.19)">33</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="264.67" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(265.77 31.19)">34</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="244.53" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(245.31 31.19)">35</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="224.4" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(224.65 31.19)">36</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="204.26" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(204.69 31.19)">37</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="184.12" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(184.61 31.19)">38</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="163.99" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(164.27 31.19)">39</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="143.85" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(144.1 31.19)">40</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="123.72" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(124.07 31.19)">41</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="103.58" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(103.96 31.19)">42</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="83.44" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(83.53 31.19)">43</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="63.31" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(64.09 31.19)">44</text>
+        </g>
+        <g>
+          <rect class="cls-1" x="43.17" y="19.57" width="14.7" height="14.7" rx="0.57" />
+          <text class="cls-2" transform="translate(43.85 31.19)">45</text>
+        </g>
+      </g>
+      <g id="field">
+        <text class="cls-5" transform="translate(291.11 553.53)">Поле</text>
+        <rect x="167.65" y="521.54" width="291.98" height="0.69" />
+      </g>
+      <g>
+        <text class="cls-6" transform="translate(470.15 490.8)">1</text>
+        <text class="cls-6" transform="translate(490.28 470.95)">2</text>
+        <text class="cls-6" transform="translate(510.42 451.19)">3</text>
+        <text class="cls-6" transform="translate(530.56 431.19)">4</text>
+        <text class="cls-6" transform="translate(550.59 411.19)">5</text>
+        <text class="cls-6" transform="translate(570.72 391.19)">6</text>
+        <text class="cls-6" transform="translate(590.97 370.83)">7</text>
+        <text class="cls-6" transform="translate(611 350.72)">8</text>
+        <text class="cls-6" transform="translate(611 331.19)">9</text>
+        <text class="cls-6" transform="translate(627.42 311.19)">10</text>
+        <text class="cls-6" transform="translate(647.93 291.19)">11</text>
+        <text class="cls-6" transform="translate(668.07 271.19)">12</text>
+        <text class="cls-6" transform="translate(687.6 251.19)">13</text>
+        <text class="cls-6" transform="translate(809.02 231.19)">14</text>
+        <text class="cls-6" transform="translate(829.26 211.19)">15</text>
+        <text class="cls-6" transform="translate(849.4 191.19)">16</text>
+        <text class="cls-6" transform="translate(869.43 171.19)">17</text>
+        <text class="cls-6" transform="translate(889.57 151.19)">18</text>
+        <text class="cls-6" transform="translate(909.7 131.19)">19</text>
+        <text class="cls-6" transform="translate(929.84 111.19)">20</text>
+        <text class="cls-6" transform="translate(950.08 91.19)">21</text>
+        <text class="cls-6" transform="translate(950.08 71.19)">22</text>
+        <text class="cls-6" transform="translate(970.22 51.19)">23</text>
+        <text class="cls-6" transform="translate(994.13 31.19)">24</text>
+      </g>
+      <g>
+        <text class="cls-6" transform="translate(127.41 490.8)">1</text>
+        <text class="cls-6" transform="translate(107.47 470.95)">2</text>
+        <text class="cls-6" transform="translate(107.71 451.19)">3</text>
+        <text class="cls-6" transform="translate(107.71 431.19)">4</text>
+        <text class="cls-6" transform="translate(107.71 411.19)">5</text>
+        <text class="cls-6" transform="translate(107.71 391.19)">6</text>
+        <text class="cls-6" transform="translate(107.71 370.83)">7</text>
+        <text class="cls-6" transform="translate(107.71 350.72)">8</text>
+        <text class="cls-6" transform="translate(107.71 331.19)">9</text>
+        <text class="cls-6" transform="translate(82.24 311.19)">10</text>
+        <text class="cls-6" transform="translate(82.24 291.19)">11</text>
+        <text class="cls-6" transform="translate(82.24 271.19)">12</text>
+        <text class="cls-6" transform="translate(82.24 251.19)">13</text>
+        <text class="cls-6" transform="translate(82.24 231.19)">14</text>
+        <text class="cls-6" transform="translate(63.82 211.19)">15</text>
+        <text class="cls-6" transform="translate(63.82 191.19)">16</text>
+        <text class="cls-6" transform="translate(63.82 171.19)">17</text>
+        <text class="cls-6" transform="translate(63.82 151.19)">18</text>
+        <text class="cls-6" transform="translate(43.97 131.19)">19</text>
+        <text class="cls-6" transform="translate(43.97 111.19)">20</text>
+        <text class="cls-6" transform="translate(43.97 91.19)">21</text>
+        <text class="cls-6" transform="translate(43.97 71.19)">22</text>
+        <text class="cls-6" transform="translate(43.97 51.19)">23</text>
+        <text class="cls-6" transform="translate(19.82 31.19)">24</text>
+      </g>
+    </g>
+  </g>
+</svg>

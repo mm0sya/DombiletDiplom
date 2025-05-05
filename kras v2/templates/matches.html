@@ -83,20 +83,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Матчи ФК Краснодар</title>
     <link rel="icon" href="/static/image/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .dark-green {
-            background-color: #1A3C34;
-        }
-        .dark-green:hover {
-            background-color: #2A5C4A;
-        }
-        .light-gray {
-            background-color: #F5F7FA;
-        }
         .match-card {
             border-radius: 12px;
             overflow: hidden;
@@ -170,20 +159,8 @@
         .bold-option {
             font-weight: bold;
         }
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
-        body {
-            display: flex;
-            flex-direction: column;
-        }
-        main {
-            flex: 1 0 auto;
-            width: 100%; /* Добавлено */
-        }
-        footer {
-            flex-shrink: 0;
+        .w-full {
+            width: 1280px;
         }
     </style>
     <script src="/static/js/utils.js"></script>
@@ -192,12 +169,15 @@
             const dateFrom = document.getElementById('date-from').value;
             const dateTo = document.getElementById('date-to').value;
             const tournamentFilter = document.getElementById('tournament-filter').value;
+            const searchQuery = document.getElementById('search-query').value.toLowerCase();
             const matchCards = document.querySelectorAll('.match-card');
             
             matchCards.forEach(card => {
                 const matchDate = card.dataset.date;
                 const matchTournament = card.dataset.tournament;
+                const matchTeams = card.querySelector('.match-teams').textContent.toLowerCase();
                 
+                // Фильтр по дате
                 let dateMatch = true;
                 if (dateFrom && matchDate < dateFrom) {
                     dateMatch = false;
@@ -206,9 +186,14 @@
                     dateMatch = false;
                 }
                 
+                // Фильтр по турниру
                 const tournamentMatch = tournamentFilter === 'all' || matchTournament === tournamentFilter;
                 
-                if (dateMatch && tournamentMatch) {
+                // Фильтр по поисковому запросу
+                const searchMatch = searchQuery === '' || matchTeams.includes(searchQuery);
+                
+                // Показываем карточку, если все фильтры совпадают
+                if (dateMatch && tournamentMatch && searchMatch) {
                     card.style.display = 'block';
                 } else {
                     card.style.display = 'none';
@@ -240,9 +225,12 @@
     </header>
     <main class="max-w-7xl mx-auto p-6">
         <h2 class="text-3xl font-bold mb-6 text-center">Билеты и расписание матчей футбольного клуба Краснодар</h2>
+        <div class="flex justify-between mb-4 ">
+            <input type="text" id="search-query" class="border rounded p-2 w-full" placeholder="🔎 Поиск по командам..." oninput="filterMatches()">
+        </div>
         <div class="flex justify-between mb-4">
             <div class="flex space-x-2">
-                <select id="tournament-filter" class="border rounded p-2" onchange="filterMatches()">
+                <select id="tournament-filter" class="border rounded p-2 w-64" onchange="filterMatches()">
                     <option value="all" class="bold-option" selected>Все лиги</option>
                     <option value="Кубок России">Кубок России</option>
                     <option value="РПЛ">РПЛ</option>
