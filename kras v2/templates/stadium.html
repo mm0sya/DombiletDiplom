@@ -1,0 +1,161 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О стадионе</title>
+    <link rel="icon" href="/static/image/favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .dark-green {
+            background-color: #1A3C34;
+        }
+        .dark-green:hover {
+            background-color: #2A5C4A;
+        }
+        .light-gray {
+            background-color: #F5F7FA;
+        }
+        html, body {
+        height: 100%;
+        margin: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1 0 auto;
+            width: 100%; /* Добавлено */
+        }
+        footer {
+            flex-shrink: 0;
+        }
+
+        .hero-section {
+            background-image: url('/static/image/stadium.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 600px;
+            display: flex;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            position: relative; /* Необходимо для позиционирования ::before */
+            padding: 6rem 1rem;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.3));
+            z-index: 1;
+        }
+        .hero-section > div {
+            position: relative;
+            z-index: 2; /* Контент поверх затемнения */
+        }
+        .hero-section h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            color: white;
+        }
+        .hero-section p {
+            font-size: 1.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            color: #d1fae5;
+            font-weight:bold;
+        }
+
+    </style>
+    <script src="/static/js/utils.js"></script>
+    <script>
+        window.onload = function() {
+            updateCartCount();
+        };
+    </script>
+</head>
+<body class="light-gray">
+    <header class="dark-green text-white p-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="/static/image/favicon.ico" alt="Логотип ФК Краснодар" class="h-10 mr-4">
+                <nav class="flex space-x-8">
+                    <a href="/" class="hover:underline">Главная</a>
+                    <a href="/matches" class="hover:underline">Матчи</a>
+                    <a href="/stadium" class="hover:underline">Стадион</a>
+                </nav>
+            </div>
+            <div>
+                <a href="/cart" class="hover:underline">Корзина (<span id="cart-count">0</span>)</a>
+            </div>
+        </div>
+    </header>
+    <section class="hero-section mb-8">
+        <div>
+            <h1>О стадионе "Ozon Арена"</h1>
+            <p class="mb-6">Покупайте билеты на матчи и поддерживайте свою команду!</p>
+        </div>
+    </section>
+    <main class="max-w-7xl mx-auto p-4">
+        <h2 class="text-2xl font-bold mb-4 text-center">Современный дом ФК «Краснодар»</h2>
+        <div class="bg-white rounded-lg shadow-lg p-4">
+            <div>
+                <p class="text-gray-600 mb-4 text-justify">
+                    Открыт доступ всем билетам на матчи ФК «Краснодар» на нашем сайте. Спешите, количество мест ограничено!
+                    Футбольный клуб «Краснодар» основан в 2008 году. В дебютный сезон команда начала выступать в Первенстве России во второй лиге и с тех пор прошла путь до одного из лидеров российского футбола. В сезоне 2015/2016 клуб дебютировал в еврокубках, дойдя до 1/8 финала Лиги Европы.
+                </p>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-gray-800 text-white p-4 text-center">
+        <p>© 2025 ФК Краснодар. Все права защищены.</p>
+    </footer>
+</body>
+</html>

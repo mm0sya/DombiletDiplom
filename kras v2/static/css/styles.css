@@ -1,0 +1,71 @@
+/* Базовые стили для body и структуры страницы */
+body {
+    font-family: 'Inter', sans-serif;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+html, body {
+    height: 100%;
+}
+
+main {
+    flex: 1 0 auto;
+    width: 100%;
+    overflow-y: auto; /* Включает вертикальный скроллинг */
+    max-height: 70vh; /* Ограничивает высоту для демонстрации скроллбара */
+}
+
+footer {
+    flex-shrink: 0;
+}
+
+/* Стили для header */
+.dark-green {
+    background-color: #1A3C34;
+}
+
+.dark-green:hover {
+    background-color: #2A5C4A;
+}
+
+/* Стили для фона страницы */
+.light-gray {
+    background-color: #F5F7FA;
+}
+
+/* Стили для кнопки CTA */
+.cta-button {
+    background-color: #34C759;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.cta-button:hover {
+    background-color: #2EB648;
+}
+
+/* Кастомный скроллбар для WebKit-браузеров (Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 12px; /* Ширина скроллбара */
+    height: 12px; /* Высота для горизонтального скроллбара */
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Цвет фона трека */
+    border-radius: 10px; /* Скругление углов трека */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #34C759; /* Цвет ползунка */
+    border-radius: 10px; /* Скругление углов ползунка */
+    border: 2px solid #f1f1f1; /* Граница для эффекта */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2EB648; /* Цвет при наведении */
+}

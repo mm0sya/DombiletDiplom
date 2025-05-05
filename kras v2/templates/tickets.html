@@ -1,0 +1,775 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><script type="text/javascript">
+    var gk_isXlsx = false;
+    var gk_xlsxFileLookup = {};
+    var gk_fileData = {};
+    function filledCell(cell) {
+      return cell !== '' && cell != null;
+    }
+    function loadFileData(filename) {
+    if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+        try {
+            var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+            var firstSheetName = workbook.SheetNames[0];
+            var worksheet = workbook.Sheets[firstSheetName];
+            var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+            var filteredData = jsonData.filter(row => row.some(filledCell));
+            var headerRowIndex = filteredData.findIndex((row, index) =>
+              row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+            );
+            if (headerRowIndex === -1 || headerRowIndex > 25) {
+              headerRowIndex = 0;
+            }
+            var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+            csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+            return csv;
+        } catch (e) {
+            console.error(e);
+            return "";
+        }
+    }
+    return gk_fileData[filename] || "";
+    }
+</script>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Покупка билетов</title>
+<link rel="icon" href="/static/image/favicon.ico" type="image/x-icon">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.dark-green {
+    background-color: #1A3C34;
+}
+.dark-green:hover {
+    background-color: #2A5C4A;
+}
+.light-gray {
+    background-color: #F5F7FA;
+}
+.match-banner {
+    width: 100%;
+    height: 850px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+.match-info {
+    background-color: white;
+    border-radius: 18px;
+    padding: 40px;
+    margin: 0 auto;
+    max-width: 1400px;
+    position: relative;
+    top: -100px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.match-info .header-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 16px;
+}
+.match-info .header-info .match-type {
+    font-size: 14px;
+    color: #6B7280;
+}
+.match-info .header-info .location {
+    font-size: 14px;
+    color: #6B7280;
+}
+.match-info .header-info .price-section {
+    display: flex;
+    align-items: center;
+}
+.match-info .header-info .price-section .price {
+    font-size: 14px;
+    color: #6B7280;
+}
+.match-info .header-info .price-section .price span {
+    font-weight: bold;
+}
+.match-info h2 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #1F2A44;
+    margin: 0;
+}
+.match-info h2 span {
+    font-size: 32px;
+    font-weight: bold;
+    color: #1F2A44;
+}
+.match-info p.date {
+    font-size: 16px;
+    color: #6B7280;
+    margin: 8px 0 4px 0;
+}
+.match-info .buy-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+.match-info .buy-button {
+    background-color: #34C759;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.2s;
+    cursor: pointer;
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+}
+.match-info .buy-button:hover {
+    background-color: #2EB648;
+}
+.stadium-map {
+    width: 100%;
+    max-width: 1400px; /* Ограничиваем максимальную ширину */
+    height: 800px;
+    background-color: white;
+    border-radius: 18px;
+    margin: 0 auto; /* Отцентрировать блок */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.stadium-map svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+.ticket-section {
+    border-bottom: 1px solid #e5e7eb;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.ticket-section:last-child {
+    border-bottom: none;
+}
+.select-button {
+    background-color: #34C759;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+.select-button:hover {
+    background-color: #2EB648;
+}
+.select-button:disabled {
+    background-color: #d1d5db;
+    cursor: not-allowed;
+}
+.sector {
+    transition: opacity 0.2s;
+}
+.sector.active:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+.sector.inactive {
+    pointer-events: none;
+}
+.info-section {
+    margin: 20px 0;
+}
+.info-section .info-wrapper {
+    background-color: #E6F5F1;
+    padding: 40px;
+    border-radius: 18px;
+    border: 1px solid #D1E8E2;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.info-section .info-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+.info-section .info-block {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+.info-section .info-block h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1F2A44;
+    margin-bottom: 10px;
+}
+.match-info .header-info .price-section {
+    display: flex;
+    align-items: center;
+    margin-right: 100px; /* Сдвигаем левее на 20px, настройте значение по необходимости */
+}
+.info-section .info-block h3 .number {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-color: #34C759;
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+    line-height: 24px;
+    margin-right: 8px;
+}
+.info-section .info-block p {
+    font-size: 14px;
+    color: #6B7280;
+    line-height: 1.5;
+}
+.contact-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 20px auto;
+}
+.contact-section .contact-text {
+    font-size: 14px;
+    color: #6B7280;
+}
+.contact-section .contact-text a {
+    color: #34C759;
+    text-decoration: underline;
+}
+.contact-section .toggle-tickets {
+    background-color: #34C759;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    cursor: pointer;
+}
+.contact-section .toggle-tickets:hover {
+    background-color: #2EB648;
+}
+.tickets-section {
+    display: none;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.mb-4.mx-auto {
+    max-width: 1400px; /* Ограничиваем ширину как у .stadium-map */
+    margin-left: auto;
+    margin-right: auto;
+}
+.tickets-section.active {
+    display: block;
+}
+</style>
+<script src="/static/js/utils.js"></script>
+<script>
+function selectSector(sectorName) {
+    const matchId = "{{ match.id }}";
+    window.location.href = `/sector_view/${matchId}/${sectorName}`;
+}
+
+function scrollToStadiumMap() {
+    document.querySelector('.stadium-map').scrollIntoView({ behavior: 'smooth' });
+}
+
+function formatDate(dateString) {
+    const months = [
+        'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня',
+        'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'
+    ];
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${day} ${month} ${year}, ${hours}:${minutes}`;
+}
+
+function toggleTickets() {
+    const ticketsSection = document.querySelector('.tickets-section');
+    ticketsSection.classList.toggle('active');
+}
+
+window.onload = function() {
+    updateCartCount();
+    const dateElement = document.querySelector('.match-info .date');
+    const rawDate = dateElement.getAttribute('data-date');
+    dateElement.textContent = formatDate(rawDate);
+};
+</script>
+</head>
+<body class="light-gray">
+<header class="dark-green text-white p-4">
+<div class="max-w-7xl mx-auto flex justify-between items-center">
+    <div class="flex items-center">
+        <img src="/static/image/favicon.ico" alt="Логотип ФК Краснодар" class="h-10 mr-4">
+        <nav class="flex space-x-8">
+            <a href="/" class="hover:underline">Главная</a>
+            <a href="/matches" class="hover:underline">Матчи</a>
+            <a href="/stadium" class="hover:underline">Стадион</a>
+        </nav>
+    </div>
+    <div>
+        <a href="/cart" class="hover:underline">Корзина (<span id="cart-count">0</span>)</a>
+    </div>
+</div>
+</header>
+<main>
+<div class="match-banner" style="background-image: url('/static/backgrounds/{{ match.image }}')"></div>
+
+<div class="match-info">
+    <div style="position: relative; width: 100%;">
+        <div class="header-info">
+            <div class="match-type">⚽ Футбольный матч</div>
+            <div class="location">📍 г. Краснодар, площадка: Краснодар Арена</div>
+            <div class="price-section">
+                <div class="price">Стоимость: <span>От {{ match.sectors | map(attribute='price') | min }} ₽</span></div>
+            </div>
+        </div>
+        <h2>Билеты на <span>{{ match.teams }}</span></h2>
+        <p class="date" data-date="{{ match.date }}"></p>
+        <div class="buy-section">
+            <a class="buy-button" onclick="scrollToStadiumMap()">Перейти к покупке</a>
+        </div>
+    </div>
+</div>
+
+<div class="info-section">
+    <div class="info-wrapper">
+        <div class="info-container">
+            <div class="info-block">
+                <h3><span class="number">1</span> Как выбрать места?</h3>
+                <p>Свободные места подсвечивы цветом. Выберите сектор, интересующие вас места и нажмите иконку оформления заказа для ввода контактных данных.</p>
+            </div>
+            <div class="info-block">
+                <h3><span class="number">2</span> Как оплатить билеты?</h3>
+                <p>На странице оформления заказа выберите удобный для вас способ оплаты: банковской картой или наличными курьеру при получении билетов.</p>
+            </div>
+            <div class="info-block">
+                <h3><span class="number">3</span> Как получить билеты?</h3>
+                <p>С помощью бесплатной доставки или самовывоза. Для удобства воспользуйтесь электронными билетами, которые придут вам на почту.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mb-4 mx-auto">
+    <h1 class="text-lg mt-10 font-semibold mb-1">Выбор мест</h1>
+    <h2 class="mb-4">Выберите интересующий вас доступный сектор, далее на схеме сектора выберите место и перейдите к покупке:</h3>
+    <div class="stadium-map">
+        <svg id="sector_scheme" data-version="2" xmlns="http://www.w3.org/2000/svg" width="1259.39" height="1092.72"
+            viewBox="0 0 968.76 840.55">
+            <defs>
+                <style>
+                #sector_scheme .cls-1 {
+                    fill: #00cc00 !important; /* До 500 */
+                    opacity: 0.6;
+                }
+                #sector_scheme .cls-2 {
+                    fill: #66cc00 !important; /* 501-1000 */
+                    opacity: 0.6;
+                }
+                #sector_scheme .cls-3 {
+                    fill: #ffcc00 !important; /* 1001-2000 */
+                    opacity: 0.6;
+                }
+                #sector_scheme .cls-4 {
+                    fill: #ff6600 !important; /* 2001-5000 */
+                    opacity: 0.6;
+                }
+                #sector_scheme .cls-5 {
+                    fill: #ff3333 !important; /* 5001-10000 */
+                    opacity: 0.6;
+                }
+                #sector_scheme .cls-6 {
+                    fill: #cc00cc !important; /* Более 10001 */
+                    opacity: 0.6;
+                }
+                #sector_scheme .cls-7 {
+                    isolation: isolate !important;
+                    font-size: 11px !important;
+                    font-family: Arial-BoldMT, Arial !important;
+                    font-weight: 700 !important;
+                    fill: #fff !important;
+                }
+                #sector_scheme .cls-8 {
+                    fill: #f4f4f4 !important;
+                }
+                #sector_scheme .cls-9 {
+                    fill: #e3e7ea !important;
+                }
+                #sector_scheme .cls-10 {
+                    fill: #8cc497 !important;
+                }
+                #sector_scheme .cls-11 {
+                    fill: #6fad6f !important;
+                }
+                #sector_scheme .cls-12 {
+                    fill: #fff !important;
+                    fill-rule: evenodd !important;
+                }
+                #sector_scheme .cls-13 {
+                    fill: #fff !important;
+                }
+                #sector_scheme .cls-14 {
+                    font-size: 11px;
+                    fill: #8e9ca7 !important;
+                    font-family: ArialMT, Arial !important;
+                }
+                #spartak text.cls-7 {
+                    fill: transparent;
+                }
+                </style>
+            </defs>
+            <path class="cls-8"
+                d="M549.29,19.93H419.47A397.95,397.95,0,0,0,264.6,784.35a395.49,395.49,0,0,0,154.87,31.28H549.29A397.95,397.95,0,0,0,704.16,51.21,395.49,395.49,0,0,0,549.29,19.93Z" />
+            <path class="cls-9"
+                d="M817.25,149.83a377.76,377.76,0,0,0-268-111H419.45A379,379,0,0,0,272,766.93a376.67,376.67,0,0,0,147.5,29.78H549.3a378.83,378.83,0,0,0,268-646.88Z" />
+            <g id="field" data-name="field" data-id="field">
+                <rect class="cls-8" x="300.53" y="296.25" width="370.69" height="242.2" rx="14.17" />
+                <rect class="cls-10" x="311.29" y="307.8" width="349.16" height="219.11" rx="6.69" />
+                <rect class="cls-11" x="325.59" y="307.8" width="20.31" height="219.11" />
+                <rect class="cls-11" x="368.5" y="307.8" width="20.31" height="219.11" />
+                <rect class="cls-11" x="411.39" y="307.8" width="20.31" height="219.11" />
+                <rect class="cls-11" x="454.27" y="307.8" width="20.31" height="219.11" />
+                <rect class="cls-11" x="497.17" y="307.8" width="20.31" height="219.11" />
+                <rect class="cls-11" x="540.06" y="307.8" width="20.31" height="219.11" />
+                <rect class="cls-11" x="582.95" y="307.8" width="20.31" height="219.11" />
+                <rect class="cls-11" x="625.85" y="307.8" width="20.31" height="219.11" />
+                <path class="cls-12"
+                d="M652.59,314.08H319.8a3.06,3.06,0,0,0-3.06,3V517.57a3,3,0,0,0,3,3H652.56a3,3,0,0,0,3.05-3V317.14A3,3,0,0,0,652.59,314.08Zm-332.79-1a4.08,4.08,0,0,0-4.08,4.08h0V517.57a4.08,4.08,0,0,0,4.08,4.08H652.56a4.08,4.08,0,0,0,4.08-4.08V317.14a4.08,4.08,0,0,0-4.08-4.08Z" />
+                <path class="cls-12"
+                d="M348.85,376.54H316.76v81.63h32.09a1,1,0,0,0,1-1V377.56A1,1,0,0,0,348.85,376.54Zm-33.14-1v83.59h33.14a2,2,0,0,0,2-2V377.56a2,2,0,0,0-2-2Z" />
+                <path class="cls-12"
+                d="M326.32,398.23h-9.56v38.25h9.55a1,1,0,0,0,1-.92v-.1h0V399.25a1,1,0,0,0-.91-1h-.1Zm-10.52-1v40.35h10.57a2.06,2.06,0,0,0,2-2.05V399.25a2,2,0,0,0-2-2Z" />
+                <path class="cls-12"
+                d="M356.87,417.35a21.82,21.82,0,0,0-6.71-15.74l.7-.73a22.83,22.83,0,0,1,.68,32.27l0,0a8,8,0,0,1-.65.65l-.7-.73A21.8,21.8,0,0,0,356.87,417.35Z" />
+                <path class="cls-12"
+                d="M623.56,376.54h32v81.63h-32a1,1,0,0,1-1-1V377.56A1,1,0,0,1,623.56,376.54Zm33.15-1v83.59H623.56a2.06,2.06,0,0,1-2-2V377.56a2.06,2.06,0,0,1,2-2Z" />
+                <path class="cls-12"
+                d="M646.08,398.23h9.5v38.25H646a1,1,0,0,1-1-1v-36.2a1,1,0,0,1,1-1Zm10.59-1v40.35H646.08a2,2,0,0,1-2-2.05V399.25a2,2,0,0,1,2-2Z" />
+                <path class="cls-12"
+                d="M615.55,417.35a21.74,21.74,0,0,1,6.67-15.74l-.71-.73a22.83,22.83,0,0,0-.65,32.29c.22.23.43.45.65.65l.71-.73A21.74,21.74,0,0,1,615.55,417.35Z" />
+                <path class="cls-12"
+                d="M486.2,441.68A26.27,26.27,0,1,0,460,415.41v0h0a26.24,26.24,0,0,0,26.24,26.24Zm0,1a27.29,27.29,0,1,0-27.26-27.31v0h0a27.27,27.27,0,0,0,27.25,27.27h0Z" />
+                <path class="cls-12" d="M322.06,521.65a6.31,6.31,0,0,0-6.31-6.31h0v-1a7.31,7.31,0,0,1,7.33,7.3h0Z" />
+                <path class="cls-12" d="M650.35,521.65a6.31,6.31,0,0,1,6.32-6.31h0v-1a7.31,7.31,0,0,0-7.34,7.28v0h0Z" />
+                <path class="cls-12" d="M322.06,313.06a6.31,6.31,0,0,1-6.31,6.31h0v1a7.31,7.31,0,0,0,7.33-7.3h-1Z" />
+                <path class="cls-12" d="M650.35,313.06a6.31,6.31,0,0,0,6.32,6.31h0v1a7.31,7.31,0,0,1-7.34-7.28v0h1Z" />
+                <path class="cls-12" d="M485.7,521.56V313.48h1V521.56Z" />
+            </g>
+            {% set sector_names = match.sectors | map(attribute='name') | list %}
+            {% for sector_id in ['101', '102', '103', '104', '105', '106', '107', '108', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '122', '123', '124', '201', '202', '203', '204', '205', '206', '207', '208', '209', '210', '211', '212', '213', '214', '215', '216', '217', '218', '219', '220', '221', '222', '223', '224'] %}
+                {% set sector = match.sectors | selectattr('name', 'equalto', sector_id) | first %}
+                {% set is_active = sector_id in sector_names %}
+                {% set price = sector.price if sector else 0 %}
+                {% set color_class = '' %}
+                {% if is_active %}
+                    {% if price <= 500 %}
+                        {% set color_class = 'cls-1' %}
+                    {% elif price <= 1000 %}
+                        {% set color_class = 'cls-2' %}
+                    {% elif price <= 2000 %}
+                        {% set color_class = 'cls-3' %}
+                    {% elif price <= 5000 %}
+                        {% set color_class = 'cls-4' %}
+                    {% elif price <= 10000 %}
+                        {% set color_class = 'cls-5' %}
+                    {% else %}
+                        {% set color_class = 'cls-6' %}
+                    {% endif %}
+                {% endif %}
+                <g id="k{{ sector_id }}" data-name="{{ sector_id }}" data-id="{{ sector_id }}" class="sector {{ 'active' if is_active else 'inactive' }}" {% if is_active %}onclick="selectSector('{{ sector_id }}')"{% endif %}>
+                    <path class="{{ color_class if is_active else 'cls-13' }}"
+                        {% if sector_id == '101' %}
+                        d="M268.78,316.83A54.88,54.88,0,0,1,282.25,290a2.26,2.26,0,0,0-.13-3.15L225,232.4a2.26,2.26,0,0,0-3.15,0c-.37.36-.74.72-1.1,1.09A133.67,133.67,0,0,0,185.4,295.8a2.26,2.26,0,0,0,1.65,2.73l79,20.05A2.25,2.25,0,0,0,268.78,316.83Z"
+                        {% elif sector_id == '102' %}
+                        d="M265.34,384.48a2.26,2.26,0,0,0,2.47-2.25V327.14q0-1.58.09-3.12a2.24,2.24,0,0,0-1.7-2.3L186.55,301.5a2.26,2.26,0,0,0-2.78,1.76,135.79,135.79,0,0,0-2.38,25.35v46.28a2.26,2.26,0,0,0,2.06,2.25Z"
+                        {% elif sector_id == '103' %}
+                        d="M267.81,446.27V389.78a2.26,2.26,0,0,0-2.06-2.25l-81.9-7.34a2.26,2.26,0,0,0-2.46,2.25v70.63a2.26,2.26,0,0,0,2.45,2.25l81.89-6.79A2.27,2.27,0,054,446.27Z"
+                        {% elif sector_id == '104' %}
+                        d="M267.81,509.13V453.82a2.26,2.26,0,0,0-2.45-2.25l-81.9,6.79a2.26,2.26,0,0,0-2.07,2.26v47a135.4,135.4,0,0,0,2.28,24.83,2.26,2.26,0,0,0,2.78,1.77L266.18,514a2.27,2.27,0,0,0,1.7-2.3C267.83,510.86,267.81,510,267.81,509.13Z"
+                        {% elif sector_id == '105' %}
+                        d="M265.92,517.18l-79,20.05a2.27,2.27,0,0,0-1.65,2.72,133.62,133.62,0,0,0,35.51,62.81c.57.58,1.16,1.15,1.74,1.71a2.27,2.27,0,0,0,3.12,0l57.06-54.4a2.25,2.25,0,0,0,.1-3.17A54.84,54.84,0,0,1,268.7,519,2.25,2.25,0,0,0,265.92,517.18Z"
+                        {% elif sector_id == '106' %}
+                        d="M325.38,567.39a2.27,2.27,0,0,0-2.08-3.17h-.4a54.86,54.86,0,0,1-34.84-12.43,2.24,2.24,0,0,0-3,.14l-57,54.34a2.26,2.26,0,0,0,.07,3.34A133.22,133.22,0,0,0,292,640.05a2.27,2.27,0,0,0,2.47-1.34l33.19-76.57Z"
+                        {% elif sector_id == '107' %}
+                        d="M380.48,564.22h-49a2.26,2.26,0,0,0-2.08,1.37L298,638.06a2.26,2.26,0,0,0,1.79,3.14,135.77,135.77,0,0,0,16.06.95h55a2.27,2.27,0,0,0,2.25-2l9.6-73.4A2.26,2.26,0,0,0,380.48,564.22Z"
+                        {% elif sector_id == '108' %}
+                        d="M451.55,579.62V566.49a2.27,2.27,0,0,0-2.26-2.27H388.07a2.27,2.27,0,0,0-2.25,2l-6.29,48.14a2.25,2.25,0,0,0,2.24,2.55h98.85a2.26,2.26,0,0,0,2.26-2.26V584.14a2.26,2.26,0,0,0-2.26-2.26H453.81A2.26,2.26,0,0,1,451.55,579.62Z"
+                        {% elif sector_id == '110' %}
+                        d="M581.1,564.22H519.75a2.27,2.27,0,0,0-2.27,2.27v13.13a2.26,2.26,0,0,1-2.26,2.26H488.14a2.26,2.26,0,0,0-2.26,2.26v30.48a2.26,2.26,0,0,0,2.26,2.26h99.25a2.27,2.27,0,0,0,2.25-2.55l-6.3-48.14A2.27,2.27,0,0,0,581.1,564.22Z"
+                        {% elif sector_id == '111' %}
+                        d="M637.66,564.22h-49a2.26,2.26,0,0,0-2.25,2.56l9.61,73.4a2.25,2.25,0,0,0,2.24,2h54.59a135.39,135.39,0,0,0,16.41-1,2.27,2.27,0,0,0,1.82-3.15l-31.38-72.42A2.26,2.26,0,0,0,637.66,564.22Z"
+                        {% elif sector_id == '112' %}
+                        d="M740.88,606.08l-57-54.33a2.26,2.26,0,0,0-3-.13,54.82,54.82,0,0,1-35,12.6h0a2.27,2.27,0,0,0-2.08,3.17l30.87,71.25a2.27,2.27,0,0,0,2.48,1.34,133.15,133.15,0,0,0,63.68-30.55A2.27,2.27,0,0,0,740.88,606.08Z"
+                        {% elif sector_id == '113' %}
+                        d="M700.08,518.86a54.91,54.91,0,0,1-13.93,27.83,2.26,2.26,0,0,0,.1,3.17l57.07,54.41a2.28,2.28,0,0,0,3.15,0l1.51-1.49a133.6,133.6,0,0,0,35.53-62.9,2.27,2.27,0,0,0-1.65-2.73l-79-20A2.24,2.24,0,0,0,700.08,518.86Z"
+                        {% elif sector_id == '114' %}
+                        d="M703.4,451.54a2.26,2.26,0,0,0-2.45,2.25v55.34c0,.84,0,1.67-.07,2.49a2.25,2.25,0,0,0,1.7,2.29l79.74,20.25a2.27,2.27,0,0,0,2.79-1.77,136.15,136.15,0,0,0,2.26-24.73V460.59a2.27,2.27,0,0,0-2.08-2.26Z"
+                        {% elif sector_id == '115' %}
+                        d="M701,389.82v56.42a2.25,2.25,0,0,0,2.07,2.25l81.9,6.8a2.26,2.26,0,0,0,2.45-2.26V382.48a2.27,2.27,0,0,0-2.47-2.26L703,387.57A2.25,2.25,0,0,0,701,389.82Z"
+                        {% elif sector_id == '116' %}
+                        d="M701,327.14v55.12a2.26,2.26,0,0,0,2.46,2.26l81.9-7.34a2.28,2.28,0,0,0,2.06-2.26V328.61A135.56,135.56,0,0,0,785,303.36a2.27,2.27,0,0,0-2.79-1.76l-79.66,20.22a2.26,2.26,0,0,0-1.7,2.3C700.92,325.12,701,326.13,701,327.14Z"
+                        {% elif sector_id == '117' %}
+                        d="M702.76,318.68l79-20.05a2.27,2.27,0,0,0,1.65-2.73A133.63,133.63,0,0,0,748,233.51l-.9-.89a2.26,2.26,0,0,0-3.15,0L686.82,287a2.25,2.25,0,0,0-.13,3.14A54.94,54.94,0,0,1,700,316.92,2.25,2.25,0,0,0,702.76,318.68Z"
+                        {% elif sector_id == '118' %}
+                        d="M642.78,268.88a2.27,2.27,0,0,0,2.08,3.17h1a54.87,54.87,0,0,1,35.68,13.12,2.25,2.25,0,0,0,3-.11l57-54.32a2.26,2.26,0,0,0,0-3.33,133.14,133.14,0,0,0-65.29-31.28,2.28,2.28,0,0,0-2.46,1.33Z"
+                        {% elif sector_id == '119' %}
+                        d="M589.57,272.05h47.09a2.25,2.25,0,0,0,2.07-1.37l31.43-72.53a2.26,2.26,0,0,0-1.8-3.15,137,137,0,0,0-15.48-.88h-53.7a2.27,2.27,0,0,0-2.25,2l-9.6,73.4A2.26,2.26,0,0,0,589.57,272.05Z"
+                        {% elif sector_id == '120' %}
+                        d="M485.88,221.65v48.13a2.27,2.27,0,0,0,2.26,2.27H582a2.27,2.27,0,0,0,2.25-2l6.29-48.14a2.25,2.25,0,0,0-2.24-2.55H488.14A2.26,2.26,0,0,0,485.88,221.65Z"
+                        {% elif sector_id == '122' %}
+                        d="M378.64,221.94l6.3,48.14a2.26,2.26,0,0,0,2.24,2h93.44a2.27,2.27,0,0,0,2.26-2.27V221.65a2.26,2.26,0,0,0-2.26-2.26H380.88A2.26,2.26,0,0,0,378.64,221.94Z"
+                        {% elif sector_id == '123' %}
+                        d="M332.5,272.05h47.09a2.26,2.26,0,0,0,2.24-2.56l-9.6-73.4a2.26,2.26,0,0,0-2.24-2H315.88a136.18,136.18,0,0,0-15,.83A2.27,2.27,0,0,0,299,198.1l31.44,72.58A2.26,2.26,0,0,0,332.5,272.05Z"
+                        {% elif sector_id == '124' %}
+                        d="M326.38,268.88l-31-71.48a2.25,2.25,0,0,0-2.45-1.34,133.28,133.28,0,0,0-65.46,31.16,2.26,2.26,0,0,0-.05,3.33l57,54.33a2.26,2.26,0,0,0,3,.12,54.84,54.84,0,0,1,35.48-12.95h1.4A2.27,2.27,0,0,0,326.38,268.88Z"
+                        {% elif sector_id == '201' %}
+                        d="M89.25,273.7l82.77,21a2.27,2.27,0,0,0,2.75-1.66,145.3,145.3,0,0,1,39-68.13,2.25,2.25,0,0,0,0-3.25L158.54,169a2.29,2.29,0,0,0-3.22.08A364.34,364.34,0,0,0,87.73,270.59,2.27,2.27,0,0,0,89.25,273.7Z"
+                        {% elif sector_id == '202' %}
+                        d="M167.92,375.75a2.27,2.27,0,0,0,2.47-2.26V328.61a145.6,145.6,0,0,1,2.76-28.29,2.26,2.26,0,0,0-1.66-2.64L87.35,276.32a2.28,2.28,0,0,0-2.66,1.31,360.9,360.9,0,0,0-24.11,86.08,2.27,2.27,0,0,0,2,2.6Z"
+                        {% elif sector_id == '203' %}
+                        d="M168.33,378.8,62,369.26a2.26,2.26,0,0,0-2.45,2,366.55,366.55,0,0,0-3,46.9h0a366.86,366.86,0,0,0,2.81,45.34,2.27,2.27,0,0,0,2.44,2l106.54-8.84a2.26,2.26,0,0,0,2.08-2.25V381.05A2.26,2.26,0,0,0,168.33,378.8Z"
+                        {% elif sector_id == '204' %}
+                        d="M171.39,538.08a2.26,2.26,0,0,0,1.65-2.63,146.21,146.21,0,0,1-2.65-27.79V461.91a2.26,2.26,0,0,0-2.45-2.26L62.4,468.41A2.27,2.27,0,0,0,60.34,471a360.71,360.71,0,0,0,24.15,87.16,2.28,2.28,0,0,0,2.65,1.32Z"
+                        {% elif sector_id == '205' %}
+                        d="M214.4,611.91a145.21,145.21,0,0,1-39.76-69.2,2.26,2.26,0,0,0-2.75-1.66L89,562.08a2.27,2.27,0,0,0-1.52,3.11A363.87,363.87,0,0,0,155.91,667.8a2.27,2.27,0,0,0,3.21.08l55.28-52.7A2.27,2.27,0,0,0,214.4,611.91Z"
+                        {% elif sector_id == '206' %}
+                        d="M286.52,650.18A144.86,144.86,0,0,1,219.87,617a2.27,2.27,0,0,0-3.06,0l-55.58,53a2.26,2.26,0,0,0-.06,3.23,364.64,364.64,0,0,0,87.37,65.35,2.28,2.28,0,0,0,3.15-1.11l36.47-84.19A2.27,2.27,0,0,0,286.52,650.18Z"
+                        {% elif sector_id == '207' %}
+                        d="M355.69,773.36l15.4-117.65a2.27,2.27,0,0,0-2.25-2.56h-53A147,147,0,0,1,294,651.52a2.24,2.24,0,0,0-2.41,1.33l-37.41,86.34a2.28,2.28,0,0,0,1.05,2.92A360.91,360.91,0,0,0,353,775.3,2.27,2.27,0,0,0,355.69,773.36Z"
+                        {% elif sector_id == '208' %}
+                        d="M438,653.15H376.43a2.27,2.27,0,0,0-2.24,2l-15.56,119a2.27,2.27,0,0,0,1.87,2.53,365.72,365.72,0,0,0,59.31,4.82H438a2.27,2.27,0,0,0,2.27-2.26V655.42A2.27,2.27,0,0,0,438,653.15Z"
+                        {% elif sector_id == '209' %}
+                        d="M443.23,653.15H524.75a2.26,2.26,0,0,0,2.26-2.26V781.42a2.26,2.26,0,0,0-2.26-2.26H443.23a2.26,2.26,0,0,0-2.26,2.26V653.15A2.26,2.26,0,0,0,443.23,653.15Z"
+                        {% elif sector_id == '210' %}
+                        d="M592.73,653.15H530a2.27,2.27,0,0,0-2.26,2.27V779.16a2.26,2.26,0,0,0,2.26,2.26h19a364.83,364.83,0,0,0,59.7-4.89,2.26,2.26,0,0,0,1.88-2.53L595,655.12A2.26,2.26,0,0,0,592.73,653.15Z"
+                        {% elif sector_id == '211' %}
+                        d="M616.12,775.22a360.56,360.56,0,0,0,97.7-33.28,2.28,2.28,0,0,0,1-2.92l-37.36-86.23a2.24,2.24,0,0,0-2.42-1.33,146.52,146.52,0,0,1-22.21,1.69H600.32a2.26,2.26,0,0,0-2.24,2.56l15.38,117.58A2.27,2.27,0,0,0,616.12,775.22Z"
+                        {% elif sector_id == '212' %}
+                        d="M749.1,616.79a145,145,0,0,1-66.5,33.31,2.27,2.27,0,0,0-1.63,3.12l36.43,84.1a2.27,2.27,0,0,0,3.15,1.1,364.49,364.49,0,0,0,87.23-65.37,2.27,2.27,0,0,0,0-3.23l-55.57-53A2.26,2.26,0,0,0,749.1,616.79Z"
+                        {% elif sector_id == '213' %}
+                        d="M879.76,562l-82.87-21a2.26,2.26,0,0,0-2.75,1.67,145.22,145.22,0,0,1-39.59,69.1,2.26,2.26,0,0,0,0,3.26l55.27,52.7a2.27,2.27,0,0,0,3.21-.08,363.71,363.71,0,0,0,68.24-102.5A2.28,2.28,0,0,0,879.76,562Z"
+                        {% elif sector_id == '214' %}
+                        d="M800.82,459.62a2.26,2.26,0,0,0-2.45,2.25v45.79a146,146,0,0,1-2.64,27.69,2.25,2.25,0,0,0,1.66,2.63l84.27,21.4a2.27,2.27,0,0,0,2.65-1.33A360.55,360.55,0,0,0,908.42,471a2.26,2.26,0,0,0-2.06-2.58Z"
+                        {% elif sector_id == '215' %}
+                        d="M800.44,456.58,907,465.42a2.27,2.27,0,0,0,2.44-2,366.09,366.09,0,0,0,2.81-45.3h0a366.19,366.19,0,0,0-3-46.87,2.26,2.26,0,0,0-2.45-2l-106.35,9.53a2.26,2.26,0,0,0-2.06,2.26v73.23A2.26,2.26,0,0,0,800.44,456.58Z"
+                        {% elif sector_id == '216' %}
+                        d="M908.19,363.75a360.6,360.6,0,0,0-24.09-86,2.26,2.26,0,0,0-2.65-1.32l-84.16,21.37a2.25,2.25,0,0,0-1.66,2.63,146.32,146.32,0,0,1,2.74,28.2v44.92a2alka,2.26,0,0,0,2.46,2.25l105.31-9.44A2.27,2.27,0,0,0,908.19,363.75Z"
+                        {% elif sector_id == '217' %}
+                        d="M755.15,225.13a145.41,145.41,0,0,1,38.87,68,2.26,2.26,0,0,0,2.74,1.65l82.78-21a2.28,2.28,0,0,0,1.52-3.12,363.74,363.74,0,0,0-67.43-101.39,2.27,2.27,0,0,0-3.22-.08l-55.25,52.67A2.27,2.27,0,0,0,755.15,225.13Z"
+                        {% elif sector_id == '218' %}
+                        d="M681.7,186a145,145,0,0,1,68,34.05,2.25,2.25,0,0,0,3.07,0l55.53-52.93a2.28,2.28,0,0,0,.06-3.23,364.3,364.3,0,0,0-88.65-66.41,2.26,2.26,0,0,0-3.14,1.1l-36.54,84.33A2.28,2.28,0,0,0,681.7,186Z"
+                        {% elif sector_id == '219' %}
+                        d="M614.33,63.15,599,180.56a2.27,2.27,0,0,0,2.25,2.56h51.67a146.57,146.57,0,0,1,21.29,1.55,2.24,2.24,0,0,0,2.4-1.33l37.48-86.5a2.29,2.29,0,0,0-1-2.93,360.93,360.93,0,0,0-96-32.7A2.26,2.26,0,0,0,614.33,63.15Z"
+                        {% elif sector_id == '220' %}
+                        d="M530,183.12h63.62a2.27,2.27,0,0,0,2.24-2L611.4,62.42a2.28,2.28,0,0,0-1.87-2.54,365.42,365.42,0,0,0-60.58-5H530a2.26,2.26,0,0,0-2.26,2.26V180.85A2.27,2.27,0,0,0,530,183.12Z"
+                        {% elif sector_id == '221' %}
+                        d="M443.23,54.85H524.75a2.26,2.26,0,0,0,2.26-2.26V183.12a2.26,2.26,0,0,0-2.26-2.26H443.23a2.26,2.26,0,0,0-2.26,2.26V54.85A2.26,2.26,0,0,0,443.23,54.85Z"
+                        {% elif sector_id == '222' %}
+                        d="M375.54,183.12H438a2.27,2.27,0,0,0,2.27-2.27V57.11A2.27,2.27,0,0,0,438,54.85H419.81a366.1,366.1,0,0,0-60.18,5,2.28,2.28,0,0,0-1.87,2.54l15.54,118.8A2.27,2.27,0,0,0,375.54,183.12Z"
+                        {% elif sector_id == '223' %}
+                        d="M352.16,61.14a360.92,360.92,0,0,0-96.07,32.6,2.27,2.27,0,0,0-1,2.93l37.52,86.61a2.25,2.25,0,0,0,2.4,1.33,147.18,147.18,0,0,1,20.92-1.49H368a2.26,2.26,0,0,0,2.25-2.56L354.83,63.07A2.28,2.28,0,0,0,352.16,61.14Z"
+                        {% elif sector_id == '224' %}
+                        d="M219.24,219.85a145.06,145.06,0,0,1,68.18-33.95,2.27,2.27,0,0,0,1.66-3.12L252.5,98.35a2.27,2.27,0,0,0-3.15-1.11,364.54,364.54,0,0,0-88.77,66.39,2.26,2.26,0,0,0,.06,3.23l55.54,52.95A2.26,2.26,0,0,0,219.24,219.85Z"
+                        {% endif %}
+                    />
+                    <text class="cls-14" 
+                        {% if sector_id == '101' %}
+                        transform="matrix(0.89, 0.46, -0.46, 0.89, 223.45, 280.95)"
+                        {% elif sector_id == '102' %}
+                        transform="translate(213.46 348.78) rotate(7.34)"
+                        {% elif sector_id == '103' %}
+                        transform="translate(215.54 420.24)"
+                        {% elif sector_id == '104' %}
+                        transform="translate(216.98 494.37) rotate(-8.75)"
+                        {% elif sector_id == '105' %}
+                        transform="translate(230.44 561.79) rotate(-26.66)"
+                        {% elif sector_id == '106' %}
+                        transform="translate(278.24 602.65) rotate(-53.2)"
+                        {% elif sector_id == '107' %}
+                        transform="translate(336.62 607.52) rotate(1.19)"
+                        {% elif sector_id == '108' %}
+                        transform="translate(409.37 602.37)"
+                        {% elif sector_id == '110' %}
+                        transform="translate(516.59 604)"
+                        {% elif sector_id == '111' %}
+                        transform="translate(613.44 607.96) rotate(-1.19)"
+                        {% elif sector_id == '112' %}
+                        transform="translate(679.1 587.95) rotate(53.2)"
+                        {% elif sector_id == '113' %}
+                        transform="translate(720.14 553.53) rotate(26.66)"
+                        {% elif sector_id == '114' %}
+                        transform="translate(733.57 491.62) rotate(8.75)"
+                        {% elif sector_id == '115' %}
+                        transform="translate(735.05 420.24)"
+                        {% elif sector_id == '116' %}
+                        transform="translate(736.83 351.16) rotate(-7.34)"
+                        {% elif sector_id == '117' %}
+                        transform="matrix(0.89, -0.46, 0.46, 0.89, 728.74, 289.41)"
+                        {% elif sector_id == '118' %}
+                        transform="translate(687.03 251.25) rotate(-53.2)"
+                        {% elif sector_id == '119' %}
+                        transform="translate(613.38 235.77) rotate(1.19)"
+                        {% elif sector_id == '120' %}
+                        transform="translate(529.03 241.16)"
+                        {% elif sector_id == '122' %}
+                        transform="translate(421.57 241.16)"
+                        {% elif sector_id == '123' %}
+                        transform="matrix(1, -0.02, 0.02, 1, 336.74, 236.16)"
+                        {% elif sector_id == '124' %}
+                        transform="translate(273.55 236.5) rotate(53.2)"
+                        {% elif sector_id == '201' %}
+                        transform="matrix(0.89, 0.46, -0.46, 0.89, 141.73, 239.66)"
+                        {% elif sector_id == '202' %}
+                        transform="translate(107.67 331.37) rotate(7.34)"
+                        {% elif sector_id == '203' %}
+                        transform="translate(107.73 420)"
+                        {% elif sector_id == '204' %}
+                        transform="translate(108.74 510.93) rotate(-8.75)"
+                        {% elif sector_id == '205' %}
+                        transform="translate(147 603.14) rotate(-26.66)"
+                        {% elif sector_id == '206' %}
+                        transform="translate(225.49 682.72) rotate(-53.2)"
+                        {% elif sector_id == '207' %}
+                        transform="translate(309.26 709.09) rotate(10.97)"
+                        {% elif sector_id == '208' %}
+                        transform="translate(395.15 720.22)"
+                        {% elif sector_id == '209' %}
+                        transform="translate(474.81 720.22)"
+                        {% elif sector_id == '210' %}
+                        transform="translate(555.54 720.22)"
+                        {% elif sector_id == '211' %}
+                        transform="translate(640.78 712.51) rotate(-10.72)"
+                        {% elif sector_id == '212' %}
+                        transform="translate(735.52 668.02) rotate(53.2)"
+                        {% elif sector_id == '213' %}
+                        transform="translate(803.07 594.88) rotate(26.66)"
+                        {% elif sector_id == '214' %}
+                        transform="translate(838.2 508.19) rotate(8.75)"
+                        {% elif sector_id == '215' %}
+                        transform="translate(846.13 420)"
+                        {% elif sector_id == '216' %}
+                        transform="translate(838.99 333.75) rotate(-7.34)"
+                        {% elif sector_id == '217' %}
+                        transform="matrix(0.89, -0.46, 0.46, 0.89, 809.05, 248.11)"
+                        {% elif sector_id == '218' %}
+                        transform="translate(740.45 172.33) rotate(-53.2)"
+                        {% elif sector_id == '219' %}
+                        transform="translate(639.76 130) rotate(10.97)"
+                        {% elif sector_id == '220' %}
+                        transform="translate(555.54 121.92)"
+                        {% elif sector_id == '221' %}
+                        transform="translate(474.81 121.92)"
+                        {% elif sector_id == '222' %}
+                        transform="translate(395.15 121.92)"
+                        {% elif sector_id == '223' %}
+                        transform="translate(310.43 133.48) rotate(-10.97)"
+                        {% elif sector_id == '224' %}
+                        transform="translate(217.05 157.58) rotate(53.2)"
+                        {% endif %}
+                    >{{ sector_id }}</text>
+                    {% if sector_id in ['108', '110'] %}
+                        <text class="cls-14" transform="{% if sector_id == '108' %}translate(429.37 602.37){% else %}translate(536.59 604){% endif %}">VIP</text>
+                    {% elif sector_id in ['120', '122'] %}
+                        <text class="cls-14" transform="{% if sector_id == '120' %}translate(516.37 255.9){% else %}translate(408.9 255.9){% endif %}">Business</text>
+                    {% endif %}
+                </g>
+            {% endfor %}
+        </svg>
+    </div>
+    <div class="contact-section">
+        <div class="contact-text">
+            Если у вас возникли вопросы, звоните по номеру <a href="tel:8(861)203-64-04">8 (861) 203-64-04</a>
+        </div>
+        <div class="toggle-tickets" onclick="toggleTickets()">Список всех билетов</div>
+    </div>
+    <div class="tickets-section">
+        <h4 class="text-md font-semibold mb-2">Доступные секторы: </h4>
+        {% for sector in match.sectors %}
+            <div class="ticket-section">
+                <div>
+                    <p>Сектор {{ sector.name }}</p>
+                    <p class="text-sm text-gray-500">
+                        {% set ns = namespace(available_seats=0) %}
+                        {% for seat in sector.seats %}
+                            {% if seat.available %}
+                                {% set ns.available_seats = ns.available_seats + 1 %}
+                            {% endif %}
+                        {% endfor %}
+                        Доступно билетов: {{ ns.available_seats }}
+                    </p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <p>от {{ sector.price }} ₽</p>
+                    <a href="/sector_view/{{ match.id }}/{{ sector.name }}" class="select-button" {% if ns.available_seats == 0 %}disabled{% endif %}>Выбрать билет</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+</main>
+<footer class="bg-gray-800 text-white p-4 text-center">
+<p>© 2025 ФК Краснодар. Все права защищены.</p>
+</footer>
+</body>
+</html>
