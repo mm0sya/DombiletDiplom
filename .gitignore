@@ -6,4 +6,4 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
-kras v2/templates/.env
+kras v2/.env
