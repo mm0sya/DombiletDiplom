@@ -317,6 +317,35 @@ body {
 .tickets-section.active {
     display: block;
 }
+.tooltip {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    pointer-events: none; /* Чтобы tooltip не мешал взаимодействию с элементами под ним */
+    display: none; /* По умолчанию скрыт */
+    font-size: 14px;
+    color: #1F2A44;
+    text-align: center;
+}
+
+.tooltip p {
+    margin: 2px 0;
+}
+
+.tooltip .sector-name {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.tooltip .price {
+    font-weight: bold;
+    font-size: 16px;
+    color: #1F2A44;
+}
 </style>
 <script src="/static/js/utils.js"></script>
 <script>
@@ -354,6 +383,78 @@ window.onload = function() {
     const rawDate = dateElement.getAttribute('data-date');
     dateElement.textContent = formatDate(rawDate);
 };
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const tooltip = document.getElementById('sector-tooltip');
+    const sectors = document.querySelectorAll('.sector.active');
+
+    sectors.forEach(sector => {
+        sector.addEventListener('mouseover', function (e) {
+            const sectorName = sector.getAttribute('data-id');
+            const availableSeats = getAvailableSeats(sectorName);
+            const price = getSectorPrice(sectorName);
+
+            tooltip.querySelector('.sector-name').textContent = `Сектор ${sectorName}`;
+            tooltip.querySelector('#available-seats').textContent = availableSeats;
+            tooltip.querySelector('#sector-price').textContent = price;
+
+            tooltip.style.display = 'block';
+            tooltip.style.left = e.pageX + 10 + 'px';
+            tooltip.style.top = e.pageY + 10 + 'px';
+        });
+
+        sector.addEventListener('mousemove', function (e) {
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+
+            let left = e.pageX + 10;
+            let top = e.pageY + 10;
+
+            // Предотвращаем выход за правую границу
+            if (left + tooltipWidth > windowWidth) {
+                left = e.pageX - tooltipWidth - 10;
+            }
+
+            // Предотвращаем выход за нижнюю границу
+            if (top + tooltipHeight > windowHeight) {
+                top = e.pageY - tooltipHeight - 10;
+            }
+
+            // Предотвращаем выход за левую границу
+            if (left < 0) {
+                left = 10;
+            }
+
+            // Предотвращаем выход за верхнюю границу
+            if (top < 0) {
+                top = 10;
+            }
+
+            tooltip.style.left = left + 'px';
+            tooltip.style.top = top + 'px';
+        });
+
+        sector.addEventListener('mouseout', function () {
+            tooltip.style.display = 'none';
+        });
+    });
+
+    function getAvailableSeats(sectorName) {
+        const sector = {{ match.sectors | tojson | safe }}.find(s => s.name === sectorName);
+        if (sector && sector.seats) {
+            return sector.seats.filter(seat => seat.available).length;
+        }
+        return 0;
+    }
+
+    function getSectorPrice(sectorName) {
+        const sector = {{ match.sectors | tojson | safe }}.find(s => s.name === sectorName);
+        return sector ? sector.price : 0;
+    }
+});
 </script>
 </head>
 <body class="light-gray">
@@ -412,6 +513,12 @@ window.onload = function() {
 </div>
 
 {% include 'stadium_map.html' %} <!--  подгрузка svg стадиона   -->
+
+<div id="sector-tooltip" class="tooltip">
+    <p class="sector-name">Сектор</p>
+    <p>Свободных мест: <span id="available-seats">0</span></p>
+    <p class="price">Цена: <span id="sector-price">0</span> ₽</p>
+</div>
 
     <div class="contact-section">
         <div class="contact-text">
