@@ -178,18 +178,22 @@ body {
 }
 .stadium-map {
     width: 100%;
-    max-width: 1400px; /* Ограничиваем максимальную ширину */
-    height: 800px;
+    max-width: 1400px;
     background-color: white;
     border-radius: 18px;
-    margin: 0 auto; /* Отцентрировать блок */
+    margin: 0 auto;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    padding: 20px 0; /* Уменьшенные отступы сверху и снизу */
 }
+
 .stadium-map svg {
-    max-width: 100%;
-    max-height: 100%;
+    width: 85%; /* Растягиваем SVG на всю ширину контейнера */
+    max-width: 90%; /* Увеличиваем максимальную ширину для уменьшения боковых отступов */
+    height: auto; /* Позволяем высоте подстраиваться под пропорции */
+    max-height: 100%; /* Убираем ограничение по высоте или увеличиваем до 100% */
+    object-fit: contain;
 }
 .ticket-section {
     border-bottom: 1px solid #e5e7eb;
@@ -206,7 +210,7 @@ body {
     color: white;
     padding: 8px 16px;
     border-radius: 4px;
-    transition: background-color 0.2s;
+    transition: background-color 0.8s;
 }
 .select-button:hover {
     background-color: #2EB648;
@@ -214,13 +218,6 @@ body {
 .select-button:disabled {
     background-color: #d1d5db;
     cursor: not-allowed;
-}
-.sector {
-    transition: opacity 0.2s;
-}
-.sector.active:hover {
-    opacity: 0.8;
-    cursor: pointer;
 }
 .sector.inactive {
     pointer-events: none;
@@ -346,6 +343,9 @@ body {
     font-size: 16px;
     color: #1F2A44;
 }
+.sector.highlighted {
+    opacity: 1 !important; /* Полная яркость для подсвеченных секторов */
+}
 </style>
 <script src="/static/js/utils.js"></script>
 <script>
@@ -384,14 +384,16 @@ window.onload = function() {
     dateElement.textContent = formatDate(rawDate);
 };
 
-
 document.addEventListener('DOMContentLoaded', function () {
     const tooltip = document.getElementById('sector-tooltip');
     const sectors = document.querySelectorAll('.sector.active');
+    const filterButtons = document.querySelectorAll('.price-filter');
+    let activeFilter = null;
 
     sectors.forEach(sector => {
+        const sectorName = sector.getAttribute('data-id');
+
         sector.addEventListener('mouseover', function (e) {
-            const sectorName = sector.getAttribute('data-id');
             const availableSeats = getAvailableSeats(sectorName);
             const price = getSectorPrice(sectorName);
 
@@ -413,22 +415,18 @@ document.addEventListener('DOMContentLoaded', function () {
             let left = e.pageX + 10;
             let top = e.pageY + 10;
 
-            // Предотвращаем выход за правую границу
             if (left + tooltipWidth > windowWidth) {
                 left = e.pageX - tooltipWidth - 10;
             }
 
-            // Предотвращаем выход за нижнюю границу
             if (top + tooltipHeight > windowHeight) {
                 top = e.pageY - tooltipHeight - 10;
             }
 
-            // Предотвращаем выход за левую границу
             if (left < 0) {
                 left = 10;
             }
 
-            // Предотвращаем выход за верхнюю границу
             if (top < 0) {
                 top = 10;
             }
@@ -452,9 +450,126 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function getSectorPrice(sectorName) {
         const sector = {{ match.sectors | tojson | safe }}.find(s => s.name === sectorName);
-        return sector ? sector.price : 0;
+        const price = sector ? sector.price : 0;
+        return price;
     }
+
+    // Функция для применения подсветки и затемнения секторов
+    function applySectorHighlight(minPrice, maxPrice, isPreview = false) {
+        sectors.forEach(sector => {
+            const sectorName = sector.getAttribute('data-id');
+            const price = getSectorPrice(sectorName);
+
+            if (price >= minPrice && price <= maxPrice) {
+                sector.classList.remove('dimmed');
+                sector.classList.add('highlighted');
+            } else if (isPreview) {
+                sector.classList.add('dimmed');
+                sector.classList.remove('highlighted');
+            }
+        });
+    }
+
+    // Функция для восстановления состояния секторов
+    function restoreSectorState() {
+        sectors.forEach(sector => {
+            const sectorName = sector.getAttribute('data-id');
+            const price = getSectorPrice(sectorName);
+
+            if (activeFilter) {
+                const minPrice = parseInt(activeFilter.getAttribute('data-min'));
+                const maxPrice = parseInt(activeFilter.getAttribute('data-max'));
+                if (price >= minPrice && price <= maxPrice) {
+                    sector.classList.remove('dimmed');
+                    sector.classList.add('highlighted');
+                } else {
+                    sector.classList.add('dimmed');
+                    sector.classList.remove('highlighted');
+                }
+            } else {
+                sector.classList.remove('dimmed', 'highlighted');
+            }
+        });
+
+        // Восстанавливаем состояние кнопок
+        filterButtons.forEach(btn => {
+            if (activeFilter && btn !== activeFilter) {
+                btn.classList.add('dimmed');
+            } else {
+                btn.classList.remove('dimmed');
+            }
+        });
+    }
+
+    // Код для фильтрации и предпросмотра
+    filterButtons.forEach(button => {
+        // Обработка клика для установки активного фильтра
+        button.addEventListener('click', function () {
+            const minPrice = parseInt(button.getAttribute('data-min'));
+            const maxPrice = parseInt(button.getAttribute('data-max'));
+
+            // Если фильтр уже активен, сбрасываем его
+            if (activeFilter === button) {
+                sectors.forEach(sector => {
+                    sector.classList.remove('dimmed', 'highlighted');
+                });
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('dimmed');
+                });
+                activeFilter.classList.remove('active');
+                activeFilter = null;
+                return;
+            }
+
+            // Удаляем предыдущий активный фильтр
+            if (activeFilter) {
+                activeFilter.classList.remove('active');
+            }
+
+            // Применяем новый фильтр
+            button.classList.add('active');
+            activeFilter = button;
+
+            // Применяем подсветку секторов
+            applySectorHighlight(minPrice, maxPrice);
+
+            // Затемняем кнопки фильтров, не соответствующие активному фильтру
+            filterButtons.forEach(btn => {
+                if (btn !== activeFilter) {
+                    btn.classList.add('dimmed');
+                } else {
+                    btn.classList.remove('dimmed');
+                }
+            });
+        });
+
+        // Обработка наведения для предпросмотра
+        button.addEventListener('mouseover', function () {
+            const minPrice = parseInt(button.getAttribute('data-min'));
+            const maxPrice = parseInt(button.getAttribute('data-max'));
+
+            // Применяем подсветку для предпросмотра
+            applySectorHighlight(minPrice, maxPrice, true);
+
+            // Затемняем остальные кнопки фильтров
+            filterButtons.forEach(btn => {
+                if (btn !== button) {
+                    btn.classList.add('dimmed');
+                } else {
+                    btn.classList.remove('dimmed');
+                }
+            });
+        });
+
+        // Обработка отведения курсора
+        button.addEventListener('mouseout', function () {
+
+            // Восстанавливаем состояние секторов и кнопок
+            restoreSectorState();
+        });
+    });
 });
+</script>
 </script>
 </head>
 <body class="light-gray">

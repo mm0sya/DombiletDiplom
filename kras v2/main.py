@@ -5,7 +5,6 @@ from fastapi.staticfiles import StaticFiles
 from starlette.middleware.base import BaseHTTPMiddleware
 from typing import Optional
 import motor.motor_asyncio
-from passlib.context import CryptContext
 import os
 import re
 from datetime import datetime
@@ -13,6 +12,22 @@ import json
 import traceback
 from bson import ObjectId
 import secrets
+from cryptography.fernet import Fernet
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+ENCRYPTION_KEY = os.getenv("ENCRYPTION_KEY")
+SUPERADMIN_USERNAME = os.getenv("SUPERADMIN_USERNAME")
+SUPERADMIN_PASSWORD_ENCRYPTED = os.getenv("SUPERADMIN_PASSWORD_ENCRYPTED")
+
+if not all([ENCRYPTION_KEY, SUPERADMIN_USERNAME, SUPERADMIN_PASSWORD_ENCRYPTED]):
+    raise ValueError("Missing required environment variables")
+
+try:
+    fernet = Fernet(ENCRYPTION_KEY.encode())
+except Exception as e:
+    raise ValueError(f"Invalid encryption key: {e}")
 
 app = FastAPI(redirect_slashes=False)
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -40,10 +55,12 @@ except Exception as e:
     print(f"Failed to connect to MongoDB: {e}")
     raise
 
-pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
-
-def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
+def verify_password(plain_password: str, encrypted_password: str) -> bool:
+    try:
+        decrypted_password = fernet.decrypt(encrypted_password.encode()).decode()
+        return plain_password == decrypted_password
+    except Exception:
+        return False
 
 def validate_password(password: str) -> bool:
     """Проверка пароля: ≥8 символов, минимум 1 заглавная латинская буква, 1 специальный символ."""
@@ -379,13 +396,50 @@ async def admin_login(request: Request):
 
 @app.post("/admin-panel/login", response_class=HTMLResponse)
 async def admin_login_post(request: Request, username: str = Form(...), password: str = Form(...)):
+    # Проверка superadmin
+    if username == SUPERADMIN_USERNAME:
+        if verify_password(password, SUPERADMIN_PASSWORD_ENCRYPTED):
+            auth_token = secrets.token_hex(16)
+            # Для superadmin создаем временную запись в MongoDB
+            admin = {
+                "username": username,
+                "role": "superadmin",
+                "auth_token": auth_token,
+                "password_encrypted": SUPERADMIN_PASSWORD_ENCRYPTED
+            }
+            await admins_collection.update_one(
+                {"username": username},
+                {"$set": admin},
+                upsert=True
+            )
+            response = RedirectResponse(url="/admin-panel", status_code=303)
+            response.set_cookie(key="auth_token", value=auth_token, httponly=True, secure=False)
+            response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+            response.headers["Pragma"] = "no-cache"
+            response.headers["Expires"] = "0"
+            return response
+        else:
+            response = templates.TemplateResponse(
+                "admin_login.html",
+                {"request": request, "error": "Неверный логин или пароль"}
+            )
+            response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+            response.headers["Pragma"] = "no-cache"
+            response.headers["Expires"] = "0"
+            return response
+
+    # Проверка admin из MongoDB
     admin = await admins_collection.find_one({"username": username})
-    if not admin or not verify_password(password, admin["password_hash"]):
-        response = templates.TemplateResponse("admin_login.html", {"request": request, "error": "Неверный логин или пароль"})
+    if not admin or not verify_password(password, admin["password_encrypted"]):
+        response = templates.TemplateResponse(
+            "admin_login.html",
+            {"request": request, "error": "Неверный логин или пароль"}
+        )
         response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
         response.headers["Pragma"] = "no-cache"
         response.headers["Expires"] = "0"
         return response
+
     auth_token = secrets.token_hex(16)
     await admins_collection.update_one(
         {"_id": admin["_id"]},
@@ -484,10 +538,10 @@ async def create_admin(
     existing_admin = await admins_collection.find_one({"username": username})
     if existing_admin:
         raise HTTPException(status_code=400, detail="Username already exists")
-    password_hash = pwd_context.hash(password)
+    password_encrypted = fernet.encrypt(password.encode()).decode()
     new_admin = {
         "username": username,
-        "password_hash": password_hash,
+        "password_encrypted": password_encrypted,
         "role": "admin"
     }
     result = await admins_collection.insert_one(new_admin)
@@ -549,7 +603,7 @@ async def edit_admin(
         if password:
             if not validate_password(password):
                 raise HTTPException(status_code=400, detail="Password must be at least 8 characters long, contain at least one uppercase Latin letter and one special character")
-            update_data["password_hash"] = pwd_context.hash(password)
+            update_data["password_encrypted"] = fernet.encrypt(password.encode()).decode()
             log_details["password_changed"] = True
         await admins_collection.update_one({"_id": ObjectId(id)}, {"$set": update_data})
         await admin_logs_collection.insert_one({
