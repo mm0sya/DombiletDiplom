@@ -182,7 +182,7 @@
         async function selectSeat(row, seat, price) {
             const button = document.querySelector(`button[data-row="${row}"][data-seat="${seat}"]`);
             const alreadyInCart = cart.some(item => 
-                item.match_id === '{{ match.id }}' && 
+                item.match_id === '{{ match.slug }}' && 
                 item.sector_name === '{{ sector_name }}' && 
                 item.row === row && 
                 item.seat === seat
@@ -190,13 +190,13 @@
 
             if (alreadyInCart) {
                 cart = cart.filter(item => 
-                    !(item.match_id === '{{ match.id }}' && 
+                    !(item.match_id === '{{ match.slug }}' && 
                       item.sector_name === '{{ sector_name }}' && 
                       item.row === row && 
                       item.seat === seat)
                 );
                 updateCart(cart);
-                const isAvailable = await checkSeatAvailability('{{ match.id }}', '{{ sector_name }}', row, seat);
+                const isAvailable = await checkSeatAvailability('{{ match.slug }}', '{{ sector_name }}', row, seat);
                 if (isAvailable) {
                     button.classList.remove('seat-taken');
                     button.classList.add('seat-button');
@@ -207,7 +207,7 @@
                 return;
             }
 
-            const isAvailable = await checkSeatAvailability('{{ match.id }}', '{{ sector_name }}', row, seat);
+            const isAvailable = await checkSeatAvailability('{{ match.slug }}', '{{ sector_name }}', row, seat);
             if (!isAvailable) {
                 alert('Это место уже занято!');
                 button.classList.remove('seat-button');
@@ -216,7 +216,7 @@
             }
 
             cart.push({
-                match_id: '{{ match.id }}',
+                match_id: '{{ match.slug }}',
                 sector_name: '{{ sector_name }}',
                 row: row,
                 seat: seat,
@@ -235,12 +235,12 @@
                 const row = parseInt(button.getAttribute('data-row'));
                 const seat = parseInt(button.getAttribute('data-seat'));
                 const inCart = cart.some(item => 
-                    item.match_id === '{{ match.id }}' && 
+                    item.match_id === '{{ match.slug }}' && 
                     item.sector_name === '{{ sector_name }}' && 
                     item.row === row && 
                     item.seat === seat
                 );
-                const isAvailable = await checkSeatAvailability('{{ match.id }}', '{{ sector_name }}', row, seat);
+                const isAvailable = await checkSeatAvailability('{{ match.slug }}', '{{ sector_name }}', row, seat);
 
                 if (inCart) {
                     button.classList.remove('seat-button');
@@ -249,7 +249,7 @@
                     button.classList.remove('seat-button');
                     button.classList.add('seat-taken');
                     cart = cart.filter(item => 
-                        !(item.match_id === '{{ match.id }}' && 
+                        !(item.match_id === '{{ match.slug }}' && 
                           item.sector_name === '{{ sector_name }}' && 
                           item.row === row && 
                           item.seat === seat)
@@ -333,11 +333,14 @@
         </div>
         <div class="flex justify-center space-x-4">
             <a href="/cart" class="cart-button">Перейти в корзину</a>
-            <a href="/tickets/{{ match.id }}" class="back-button">Назад</a>
+            <a href="/tickets/{{ match.slug }}" class="back-button">Назад</a>
         </div>
     </main>
     <footer class="bg-gray-800 text-white p-4 text-center">
         <p>© 2025 ФК Краснодар. Все права защищены.</p>
     </footer>
+    <form action="/sector_view/{{ match.slug }}/{{ sector_name }}/select_seat" method="POST" id="seat-selection-form">
+        <input type="hidden" name="match_slug" value="{{ match.slug }}">
+    </form>
 </body>
 </html>
