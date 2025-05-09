@@ -1,69 +1,128 @@
 <div class="mb-4 mx-auto">
     <h1 class="text-lg mt-10 font-semibold mb-1">Выбор мест</h1>
-    <h2 class="mb-4">Выберите интересующий вас доступный сектор, далее на схеме сектора выберите место и перейдите к покупке:</h3>
+    <h2 class="mb-4">Выберите интересующий вас доступный сектор, далее на схеме сектора выберите место и перейдите к покупке:</h2>
+
     <div class="stadium-map">
+            <!-- Блок фильтров -->
+        <div class="price-filters mb-4 flex justify-center gap-2">
+            {% set price_ranges = [
+                {'min': 0, 'max': 500, 'class': 'cls-1'},
+                {'min': 501, 'max': 1000, 'class': 'cls-2'},
+                {'min': 1001, 'max': 2000, 'class': 'cls-3'},
+                {'min': 2001, 'max': 5000, 'class': 'cls-4'},
+                {'min': 5001, 'max': 10000, 'class': 'cls-5'}
+            ] %}
+            {% set active_sectors = match.sectors | map(attribute='price') | list %}
+            
+            <!-- Обрабатываем стандартные диапазоны -->
+            {% for range in price_ranges %}
+                {% set sectors_in_range = active_sectors | select('ge', range.min) | select('le', range.max) | list %}
+                {% if sectors_in_range | length > 0 %}
+                    {% set min_price_in_range = sectors_in_range | min %}
+                    <button class="price-filter px-4 py-2 rounded-lg text-white font-semibold" 
+                            style="background-color: {% if range.class == 'cls-1' %}#00cc00{% elif range.class == 'cls-2' %}#66cc00{% elif range.class == 'cls-3' %}#ffcc00{% elif range.class == 'cls-4' %}#ff6600{% elif range.class == 'cls-5' %}#ff3333{% else %}#cc00cc{% endif %}" 
+                            data-min="{{ range.min }}" 
+                            data-max="{{ range.max }}">
+                        {% if range.max == 500 %}
+                            До {{ range.max }}
+                        {% elif range.max == 1000 %}
+                            {{ min_price_in_range }}-{{ range.max }}
+                        {% else %}
+                            {{ min_price_in_range }}+
+                        {% endif %}
+                    </button>
+                {% endif %}
+            {% endfor %}
+
+            <!--  
+            {% for range in price_ranges %}
+                {% set sectors_in_range = active_sectors | select('ge', range.min) | select('le', range.max) | list %}
+                {% if sectors_in_range | length > 0 %}
+                    {% set min_price_in_range = sectors_in_range | min %}
+                    <button class="price-filter px-4 py-2 rounded-lg text-white font-semibold" 
+                            style="background-color: {% if range.class == 'cls-1' %}#00cc00{% elif range.class == 'cls-2' %}#66cc00{% elif range.class == 'cls-3' %}#ffcc00{% elif range.class == 'cls-4' %}#ff6600{% elif range.class == 'cls-5' %}#ff3333{% else %}#cc00cc{% endif %}" 
+                            data-min="{{ range.min }}" 
+                            data-max="{{ range.max }}">
+                        {% if range.max == 500 %}
+                            До {{ range.max }}
+                        {% elif range.max == 1000 %}
+                            {{ min_price_in_range }}-{{ range.max }}
+                        {% else %}
+                            {% if sectors_in_range | length == 1 %}
+                                {{ min_price_in_range }}
+                            {% else %}
+                                {{ min_price_in_range }}+
+                            {% endif %}
+                        {% endif %}
+                    </button>
+                {% endif %}
+            {% endfor %}
+            Если нужно выводить 1500+ при 2+ сектора
+            -->
+        
+            <!-- Обрабатываем диапазон "Более 10000" -->
+            {% set over_10000_sectors = active_sectors | select('gt', 10000) | list %}
+            {% if over_10000_sectors | length > 0 %}
+                {% set min_price_over_10000 = over_10000_sectors | min %}
+                <button class="price-filter px-4 py-2 rounded-lg text-white font-semibold" 
+                        style="background-color: #cc00cc" 
+                        data-min="10001" 
+                        data-max="999999">
+                    {% if over_10000_sectors | length == 1 %}
+                        {{ min_price_over_10000 }}
+                    {% else %}
+                        {{ min_price_over_10000 }}+
+                    {% endif %}
+                </button>
+            {% endif %}
+            <span class="price-currency px-4 py-2 rounded-lg text-white font-semibold" 
+                style="background-color: #aab4c7; margin-left: 4px;">
+                ₽
+            </span>
+        </div>
+
         <svg id="sector_scheme" data-version="2" xmlns="http://www.w3.org/2000/svg" width="1259.39" height="1092.72"
             viewBox="0 0 968.76 840.55">
             <defs>
                 <style>
-                #sector_scheme .cls-1 {
-                    fill: #00cc00 !important; /* До 500 */
-                    opacity: 0.6;
-                }
-                #sector_scheme .cls-2 {
-                    fill: #66cc00 !important; /* 501-1000 */
-                    opacity: 0.6;
-                }
-                #sector_scheme .cls-3 {
-                    fill: #ffcc00 !important; /* 1001-2000 */
-                    opacity: 0.6;
-                }
-                #sector_scheme .cls-4 {
-                    fill: #ff6600 !important; /* 2001-5000 */
-                    opacity: 0.6;
-                }
-                #sector_scheme .cls-5 {
-                    fill: #ff3333 !important; /* 5001-10000 */
-                    opacity: 0.6;
-                }
-                #sector_scheme .cls-6 {
-                    fill: #cc00cc !important; /* Более 10001 */
-                    opacity: 0.6;
-                }
-                #sector_scheme .cls-7 {
-                    isolation: isolate !important;
-                    font-size: 11px !important;
-                    font-family: Arial-BoldMT, Arial !important;
-                    font-weight: 700 !important;
-                    fill: #fff !important;
-                }
-                #sector_scheme .cls-8 {
-                    fill: #f4f4f4 !important;
-                }
-                #sector_scheme .cls-9 {
-                    fill: #e3e7ea !important;
-                }
-                #sector_scheme .cls-10 {
-                    fill: #8cc497 !important;
-                }
-                #sector_scheme .cls-11 {
-                    fill: #6fad6f !important;
-                }
-                #sector_scheme .cls-12 {
-                    fill: #fff !important;
-                    fill-rule: evenodd !important;
-                }
-                #sector_scheme .cls-13 {
-                    fill: #fff !important;
-                }
-                #sector_scheme .cls-14 {
-                    font-size: 11px;
-                    fill: #8e9ca7 !important;
-                    font-family: ArialMT, Arial !important;
-                }
-                #spartak text.cls-7 {
-                    fill: transparent;
-                }
+                    #sector_scheme .dimmed path,
+                    #sector_scheme .dimmed text {
+                        opacity: 0.5 !important;
+                        transition: opacity 0.5s ease;
+                    }
+                
+                    .price-filter {
+                        transition: opacity 0.5s ease;
+                    }
+                
+                    .price-filter.dimmed {
+                        opacity: 0.5 !important;
+                        transition: opacity 0.5s ease;
+                    }
+                
+                    #sector_scheme .cls-1 { fill: #00cc00 !important; }
+                    #sector_scheme .cls-2 { fill: #66cc00 !important; }
+                    #sector_scheme .cls-3 { fill: #ffcc00 !important; }
+                    #sector_scheme .cls-4 { fill: #ff6600 !important; }
+                    #sector_scheme .cls-5 { fill: #fc1111 !important; }
+                    #sector_scheme .cls-6 { fill: #cc00cc !important; }
+                    #sector_scheme .cls-7 { isolation: isolate !important; font-size: 11px !important; font-family: Arial-BoldMT, Arial !important; font-weight: 700 !important; fill: #fff !important; }
+                    #sector_scheme .cls-8 { fill: #f4f4f4 !important; }
+                    #sector_scheme .cls-9 { fill: #e3e7ea !important; }
+                    #sector_scheme .cls-10 { fill: #8cc497 !important; }
+                    #sector_scheme .cls-11 { fill: #6fad6f !important; }
+                    #sector_scheme .cls-12 { fill: #fff !important; fill-rule: evenodd !important; }
+                    #sector_scheme .cls-13 { fill: #fff !important; }
+                    #sector_scheme .cls-14 { font-size: 11px; fill: #373c3f; font-family: ArialMT, Arial !important; }
+                    #spartak text.cls-7 { fill: transparent; }
+                    #sector_scheme .sector {
+                        opacity: 0.7;
+                        transition: opacity 0.5s ease;
+                    }
+                    #sector_scheme .sector.highlighted {
+                        opacity: 1 !important;
+                        transition: opacity 0.5s ease;
+                    }
                 </style>
             </defs>
             <path class="cls-8"

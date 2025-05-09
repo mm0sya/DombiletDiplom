@@ -132,6 +132,9 @@
             return;
         }
 
+        // Получаем список матчей из шаблона
+        const matches = {{ matches | tojson | safe }};
+
         let totalPrice = 0;
         cart.forEach((item, index) => {
             const remainingTime = Math.max(0, Math.floor((RESERVATION_DURATION - (Date.now() - item.reservationTime)) / 1000));
@@ -139,12 +142,21 @@
             const seconds = remainingTime % 60;
             const timeLeft = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
+            // Находим матч по slug
+            const match = matches.find(m => m.slug === item.match_id);
+            let matchInfo = '';
+            if (match) {
+                matchInfo = `<p class="font-semibold">Матч: <a href="/tickets/${match.slug}" class="text-blue-500 hover:underline">${match.teams}</a></p>`;
+            } else {
+                matchInfo = `<p class="font-semibold">Матч: <span class="text-red-500">Не найден</span></p>`;
+            }
+
             const cartItem = document.createElement('div');
             cartItem.className = 'cart-item';
             cartItem.innerHTML = `
                 <div class="flex justify-between items-center">
                     <div>
-                        <p class="font-semibold">Матч: ${item.match_id}</p>
+                        ${matchInfo}
                         <p>Сектор: ${item.sector_name}</p>
                         <p>Ряд: ${item.row}, Место: ${item.seat}</p>
                         <p>Цена: ${item.price} ₽</p>

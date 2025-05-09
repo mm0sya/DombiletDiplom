@@ -341,7 +341,7 @@
                     <div class="match-info">
                         <p class="match-teams">{{ match.teams }}</p>
                         <p class="match-details">{{ match.tournament | default('Футбол') }}</p>
-                        <a href="/tickets/{{ match.id }}" 
+                        <a href="/tickets/{{ match.slug }}" 
                            class="buy-button {% if not available_sectors %}disabled{% endif %}" 
                            {% if not available_sectors %}disabled onclick="return false;"{% endif %}>
                             {% if not available_sectors %}

@@ -131,7 +131,7 @@
             }
         }
 
-        async function updateSectorPrice(matchId, sectorName, formId) {
+        async function updateSectorPrice(matchSlug, sectorName, formId) {
             const form = document.getElementById(formId);
             const priceInput = form.querySelector('input[name="price"]');
             const newPrice = priceInput.value;
@@ -142,7 +142,7 @@
             }
 
             try {
-                const response = await fetch(`/admin-panel/edit_sector/${matchId}/${sectorName}`, {
+                const response = await fetch(`/admin-panel/edit_sector/${matchSlug}/${sectorName}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -204,7 +204,7 @@
             }
         }
 
-        function toggleSeatStatus(matchId, sectorName, seatNumber, action, buttonElement) {
+        function toggleSeatStatus(matchSlug, sectorName, seatNumber, action, buttonElement) {
             const statusSpan = buttonElement.closest('li').querySelector('.seat-status');
             const liElement = buttonElement.closest('li');
             const currentStatus = statusSpan.textContent === 'Свободно' ? 'available' : 'occupied';
@@ -238,13 +238,13 @@
                 buttonElement.textContent = 'Активировать';
                 buttonElement.classList.remove('text-red-500');
                 buttonElement.classList.add('text-green-500');
-                buttonElement.onclick = () => toggleSeatStatus(matchId, sectorName, seatNumber, 'activate', buttonElement);
+                buttonElement.onclick = () => toggleSeatStatus(matchSlug, sectorName, seatNumber, 'activate', buttonElement);
             } else {
                 statusSpan.textContent = 'Свободно';
                 buttonElement.textContent = 'Деактивировать';
                 buttonElement.classList.remove('text-green-500');
                 buttonElement.classList.add('text-red-500');
-                buttonElement.onclick = () => toggleSeatStatus(matchId, sectorName, seatNumber, 'deactivate', buttonElement);
+                buttonElement.onclick = () => toggleSeatStatus(matchSlug, sectorName, seatNumber, 'deactivate', buttonElement);
             }
 
             updateAvailableSeats(sectorName);
@@ -275,7 +275,7 @@
             document.querySelectorAll('.sector-seats').forEach(sector => {
                 const sectorData = JSON.parse(sector.getAttribute('data-sector'));
                 const sectorId = sectorData.sectorName;
-                const matchId = sectorData.matchId;
+                const matchSlug = sectorData.matchId;
                 const sectorPrice = parseInt(sector.getAttribute('data-price'));
                 const seats = Array.from(sector.querySelectorAll('.seat-item')).map(seat => ({
                     number: parseInt(seat.getAttribute('data-number')),
@@ -311,8 +311,8 @@
                                     <li class="flex justify-between items-center py-1">
                                         <span>Место ${seat.localNumber}: <span class="seat-status">${seat.available ? 'Свободно' : 'Занято'}</span></span>
                                         <div class="flex items-center space-x-2">
-                                            <button onclick="toggleSeatStatus('${matchId}', '${sectorId}', ${seat.number}, '${seat.available ? 'deactivate' : 'activate'}', this)" class="${seat.available ? 'text-red-500' : 'text-green-500'} hover:underline">${seat.available ? 'Деактивировать' : 'Активировать'}</button>
-                                            <a href="${seat.deleteUrl}" class="text-red-500 hover:underline">Удалить</a>
+                                            <button onclick="toggleSeatStatus('${matchSlug}', '${sectorId}', ${seat.number}, '${seat.available ? 'deactivate' : 'activate'}', this)" class="${seat.available ? 'text-red-500' : 'text-green-500'} hover:underline">${seat.available ? 'Деактивировать' : 'Активировать'}</button>
+                                            <a href="/admin-panel/deactivate_seat/${matchSlug}/${sectorId}/${seat.number}" class="text-red-500 hover:underline">Удалить</a>
                                         </div>
                                     </li>
                                 `).join('')}
@@ -348,12 +348,12 @@
                     }
 
                     if (Object.keys(pendingSeatChanges).length > 0) {
-                        const matchId = '{{ match.id }}';
+                        const matchSlug = '{{ match.slug }}';
                         const payload = {
                             seat_changes: pendingSeatChanges,
                             total_seats: totalSeats
                         };
-                        const response = await fetch(`/admin-panel/update_seats/${matchId}`, {
+                        const response = await fetch(`/admin-panel/update_seats/${matchSlug}`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -403,10 +403,17 @@
     <main class="max-w-7xl mx-auto p-4">
         <div class="section-box">
             <h2 class="section-title">Основная информация</h2>
-            <form id="edit-match-form" method="POST" action="/admin-panel/edit_match/{{ match.id }}" enctype="multipart/form-data" class="mb-6">
+            <form id="edit-match-form" method="POST" action="/admin-panel/edit_match/{{ match.slug }}" enctype="multipart/form-data" class="mb-6">
                 <div class="mb-4">
-                    <label for="teams" class="block text-sm font-medium text-gray-700">Команды</label>
+                    <div class="flex items-center mb-4">
+                        <label for="is_active" class="mr-2 font-medium">Активен</label>
+                        <input type="checkbox" id="is_active" name="is_active" {% if match.is_active %}checked{% endif %}>
+                    </div>
                     <input type="text" id="teams" name="teams" value="{{ match.teams }}" required class="mt-1 block w-full border rounded p-2">
+                    <div class="flex items-center mt-2">
+                        <label for="slug" class="mr-2 font-medium">URL (транслит)</label>
+                        <input type="text" id="slug" name="slug" value="{{ match.slug }}" class="block w-full border rounded p-2" style="max-width: 400px;">
+                    </div>
                 </div>
                 <div class="mb-4">
                     <label for="date" class="block text-sm font-medium text-gray-700">Дата</label>
@@ -446,19 +453,19 @@
                                 <div class="w-full max-w-md flex items-center">
                                     <form id="price-form-{{ sector.name }}" class="flex items-center w-full">
                                         <input type="number" name="price" placeholder="Новая цена" class="mt-1 block w-full border rounded p-2 mr-2" value="{{ sector.price }}" min="1" required>
-                                        <button type="button" onclick="updateSectorPrice('{{ match.id }}', '{{ sector.name }}', 'price-form-{{ sector.name }}')" class="text-blue-500 hover:underline whitespace-nowrap">Изменить</button>
+                                        <button type="button" onclick="updateSectorPrice('{{ match.slug }}', '{{ sector.name }}', 'price-form-{{ sector.name }}')" class="text-blue-500 hover:underline whitespace-nowrap">Изменить</button>
                                     </form>
-                                    <form method="POST" action="/admin-panel/delete_sector/{{ match.id }}/{{ sector.name }}" class="ml-4">
+                                    <form method="POST" action="/admin-panel/delete_sector/{{ match.slug }}/{{ sector.name }}" class="ml-4">
                                         <button type="submit" class="text-red-500 hover:underline whitespace-nowrap">Удалить</button>
                                     </form>
                                 </div>
                             </div>
                         </div>
                         <div id="sector-{{ sector.name }}" class="toggle-content">
-                            <div class="sector-seats" data-sector='{"matchId": "{{ match.id }}", "sectorName": "{{ sector.name }}"}' data-price="{{ sector.price }}">
+                            <div class="sector-seats" data-sector='{"matchId": "{{ match.slug }}", "sectorName": "{{ sector.name }}"}' data-price="{{ sector.price }}">
                                 {% if sector.seats %}
                                     {% for seat in sector.seats %}
-                                        <div class="seat-item" data-number="{{ seat.number }}" data-available="{{ 'true' if seat.available else 'false' }}" data-delete-url="/admin-panel/delete_seat/{{ match.id }}/{{ sector.name }}/{{ seat.number }}"></div>
+                                        <div class="seat-item" data-number="{{ seat.number }}" data-available="{{ 'true' if seat.available else 'false' }}" data-delete-url="/admin-panel/deactivate_seat/{{ match.slug }}/{{ sector.name }}/{{ seat.number }}"></div>
                                     {% endfor %}
                                 {% else %}
                                     <p>Нет мест в этом секторе.</p>
@@ -470,25 +477,9 @@
             {% else %}
                 <p>Сектора отсутствуют.</p>
             {% endif %}
-        </div>
-
-        <div class="section-box">
-            <h2 class="section-title">Добавление сектора</h2>
-            <form method="POST" action="/admin-panel/add_sector/{{ match.id }}" class="mb-6">
-                <div class="mb-4">
-                    <label for="sector_name" class="block text-sm font-medium text-gray-700">Название сектора</label>
-                    <input type="text" id="sector_name" name="sector_name" required class="mt-1 block w-full border rounded p-2">
-                </div>
-                <div class="mb-4">
-                    <label for="rows_and_seats" class="block text-sm font-medium text-gray-700">Ряды и места (например, 20:14-18,23:16,27)</label>
-                    <input type="text" id="rows_and_seats" name="rows_and_seats" required class="mt-1 block w-full border rounded p-2">
-                </div>
-                <div class="mb-4">
-                    <label for="price" class="block text-sm font-medium text-gray-700">Цена билета (₽)</label>
-                    <input type="number" id="price" name="price" required class="mt-1 block w-full border rounded p-2">
-                </div>
-                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Добавить сектор</button>
-            </form>
+            <div class="mt-4">
+                <a href="/admin-panel/bulk_add_sectors/{{ match.slug }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Добавить сектора</a>
+            </div>
         </div>
 
         <div class="mt-6">
