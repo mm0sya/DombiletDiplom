@@ -13,10 +13,12 @@
         .dark-green:hover { background-color: #2A5C4A; }
         .light-gray { background-color: #F5F7FA; }
         .table-header { font-weight: bold; background: #f3f4f6; }
-        .remove-btn { background-color: #EF4444; color: white; border-radius: 4px; padding: 6px 16px; }
+        .remove-btn { background-color: #EF4444; color: white; border-radius: 6px; padding: 6px 0; font-weight: 500; }
         .remove-btn:hover { background-color: #DC2626; }
         .add-btn, .save-btn, .back-btn { background-color: #34C759; color: white; border-radius: 4px; padding: 8px 16px; margin-right: 8px; }
         .add-btn:hover, .save-btn:hover, .back-btn:hover { background-color: #2EB648; }
+        .back-btn-gray { background-color: #6B7280; color: white; border-radius: 4px; padding: 8px 16px; }
+        .back-btn-gray:hover { background-color: #4A505E; }
     </style>
 </head>
 <body class="light-gray">
@@ -36,29 +38,23 @@
     <h2 class="text-2xl font-bold mb-6">Выставление мест по диапазону</h2>
     <form id="bulk-add-form" method="POST" action="/admin-panel/bulk_add_sectors/{{ match.slug }}">
         <div class="overflow-x-auto">
-            <table class="min-w-full bg-white border rounded">
+            <table class="min-w-full bg-white border border-gray-300 rounded" style="border-collapse: separate; border-spacing: 0;">
                 <thead>
                     <tr class="table-header">
-                        <th class="px-4 py-2">Сектор</th>
-                        <th class="px-4 py-2">Ряд</th>
-                        <th class="px-4 py-2">Места</th>
-                        <th class="px-4 py-2">Цена</th>
-                        <th></th>
+                        <th class="border border-gray-300 bg-gray-50 font-semibold text-base p-2">Сектор</th>
+                        <th class="border border-gray-300 bg-gray-50 font-semibold text-base p-2">Ряд</th>
+                        <th class="border border-gray-300 bg-gray-50 font-semibold text-base p-2">Места</th>
+                        <th class="border border-gray-300 bg-gray-50 font-semibold text-base p-2">Цена</th>
+                        <th class="border border-gray-300 bg-gray-50 p-2"></th>
                     </tr>
                 </thead>
                 <tbody id="sector-rows">
                     <tr>
-                        <td>
-                            <select name="sector_name" class="border rounded p-2" required>
-                                {% for sector in sectors %}
-                                    <option value="{{ sector }}">{{ sector }}</option>
-                                {% endfor %}
-                            </select>
-                        </td>
-                        <td><input type="number" name="row" class="border rounded p-2" min="1" required></td>
-                        <td><input type="text" name="places" class="border rounded p-2" placeholder="1-10" required></td>
-                        <td><input type="number" name="price" class="border rounded p-2" min="1" required></td>
-                        <td><button type="button" class="remove-btn" onclick="removeRow(this)">Удалить</button></td>
+                        <td class="border border-gray-300 p-0"><div class="p-2"><select name="sector_name" class="w-full h-10 px-2 rounded border border-gray-300 focus:outline-none" required>{% for sector in sectors %}<option value="{{ sector }}">{{ sector }}</option>{% endfor %}</select></div></td>
+                        <td class="border border-gray-300 p-0"><div class="p-2"><input type="number" name="row" class="w-full h-10 px-2 rounded border border-gray-300 focus:outline-none" min="1" required></div></td>
+                        <td class="border border-gray-300 p-0"><div class="p-2"><input type="text" name="places" class="w-full h-10 px-2 rounded border border-gray-300 focus:outline-none" placeholder="1-10" required></div></td>
+                        <td class="border border-gray-300 p-0"><div class="p-2"><input type="number" name="price" class="w-full h-10 px-2 rounded border border-gray-300 focus:outline-none" min="1" required></div></td>
+                        <td class="border border-gray-300 p-0"><div class="p-2"><button type="button" class="remove-btn w-full h-10" onclick="removeRow(this)">Удалить</button></div></td>
                     </tr>
                 </tbody>
             </table>
@@ -66,7 +62,7 @@
         <div class="mt-4 flex gap-2">
             <button type="button" class="add-btn" onclick="addRow()">Добавить строку</button>
             <button type="submit" class="save-btn">Сохранить</button>
-            <a href="/admin-panel/edit_match/{{ match.slug }}" class="back-btn">Назад</a>
+            <a href="/admin-panel/edit_match/{{ match.slug }}" class="back-btn-gray">Назад</a>
         </div>
     </form>
 </main>

@@ -947,4 +947,14 @@ async def update_seats(
         print(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
+@admin_router.post("/delete_sector/{match_slug}/{sector_name}", response_class=RedirectResponse)
+async def delete_sector(request: Request, match_slug: str, sector_name: str, admin: dict = Depends(check_auth)):
+    match = await matches_collection.find_one({"slug": match_slug})
+    if not match:
+        raise HTTPException(status_code=404, detail="Match not found")
+    sectors = match.get("sectors", [])
+    new_sectors = [sector for sector in sectors if sector["name"] != sector_name]
+    await matches_collection.update_one({"slug": match_slug}, {"$set": {"sectors": new_sectors}})
+    return RedirectResponse(url=f"/admin-panel/edit_match/{match_slug}", status_code=303)
+
 app.include_router(admin_router, prefix="/admin-panel")

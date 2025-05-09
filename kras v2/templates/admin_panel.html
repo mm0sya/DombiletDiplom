@@ -208,7 +208,7 @@
                         </ul>
                         <div class="mt-2 space-x-4">
                             <a href="/admin-panel/edit_match/{{ match.slug }}" class="text-blue-500 hover:underline">Редактировать</a>
-                            <a href="/admin-panel/delete_match/{{ match.slug }}" class="text-red-500 hover:underline">Удалить</a>
+                            <button onclick="deleteMatch('{{ match.slug }}')" class="text-red-500 hover:underline">Удалить</button>
                         </div>
                     </div>
                 {% endfor %}
