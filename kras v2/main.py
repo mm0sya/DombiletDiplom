@@ -5,7 +5,6 @@ from fastapi.staticfiles import StaticFiles
 from starlette.middleware.base import BaseHTTPMiddleware
 from typing import Optional
 import motor.motor_asyncio
-from passlib.context import CryptContext
 import os
 import re
 from datetime import datetime
@@ -13,6 +12,23 @@ import json
 import traceback
 from bson import ObjectId
 import secrets
+from cryptography.fernet import Fernet
+from dotenv import load_dotenv
+import os
+from transliterate import translit
+
+load_dotenv()
+ENCRYPTION_KEY = os.getenv("ENCRYPTION_KEY")
+SUPERADMIN_USERNAME = os.getenv("SUPERADMIN_USERNAME")
+SUPERADMIN_PASSWORD_ENCRYPTED = os.getenv("SUPERADMIN_PASSWORD_ENCRYPTED")
+
+if not all([ENCRYPTION_KEY, SUPERADMIN_USERNAME, SUPERADMIN_PASSWORD_ENCRYPTED]):
+    raise ValueError("Missing required environment variables")
+
+try:
+    fernet = Fernet(ENCRYPTION_KEY.encode())
+except Exception as e:
+    raise ValueError(f"Invalid encryption key: {e}")
 
 app = FastAPI(redirect_slashes=False)
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -40,10 +56,12 @@ except Exception as e:
     print(f"Failed to connect to MongoDB: {e}")
     raise
 
-pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
-
-def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
+def verify_password(plain_password: str, encrypted_password: str) -> bool:
+    try:
+        decrypted_password = fernet.decrypt(encrypted_password.encode()).decode()
+        return plain_password == decrypted_password
+    except Exception:
+        return False
 
 def validate_password(password: str) -> bool:
     """Проверка пароля: ≥8 символов, минимум 1 заглавная латинская буква, 1 специальный символ."""
@@ -113,42 +131,17 @@ def convert_objectid_to_str(data):
         return {key: convert_objectid_to_str(value) if key != "_id" else str(value) for key, value in data.items()}
     return data
 
-def get_seats_per_row_for_sector_201(row):
-    if row <= 14:
-        return 35
-    elif row == 15:
-        return 35
-    elif row == 16:
-        return 34
-    elif row == 17:
-        return 33
-    elif row == 18:
-        return 32
-    elif row == 19:
-        return 31
-    elif row == 20:
-        return 30
-    elif row == 21:
-        return 29
-    elif row == 22:
-        return 28
-    elif row == 23:
-        return 27
-    elif row == 24:
-        return 26
-    return 0
-
 admin_router = APIRouter()
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
-    matches = await matches_collection.find().to_list(1000)
+    matches = await matches_collection.find({"is_active": True}).to_list(1000)
     matches = convert_objectid_to_str(matches)
     return templates.TemplateResponse("index.html", {"request": request, "matches": matches})
 
 @app.get("/matches", response_class=HTMLResponse)
 async def read_matches(request: Request):
-    matches = await matches_collection.find().to_list(1000)
+    matches = await matches_collection.find({"is_active": True}).to_list(1000)
     matches = convert_objectid_to_str(matches)
     return templates.TemplateResponse("matches.html", {"request": request, "matches": matches})
 
@@ -156,35 +149,56 @@ async def read_matches(request: Request):
 async def stadium(request: Request):
     return templates.TemplateResponse("stadium.html", {"request": request})
 
-@app.get("/tickets/{match_id}", response_class=HTMLResponse)
-async def get_tickets(request: Request, match_id: str):
-    match = await matches_collection.find_one({"id": match_id})
+@app.get("/tickets/{match_slug}", response_class=HTMLResponse)
+async def get_tickets(request: Request, match_slug: str):
+    match = await matches_collection.find_one({"slug": match_slug})
     if not match:
         raise HTTPException(status_code=404, detail="Match not found")
     match = convert_objectid_to_str(match)
     return templates.TemplateResponse("tickets.html", {"request": request, "match": match})
 
-@app.get("/sector_view/{match_id}/{sector_name}", response_class=HTMLResponse)
-async def get_sector_view(request: Request, match_id: str, sector_name: str):
-    match = await matches_collection.find_one({"id": match_id})
+@app.get("/sector_view/{match_slug}/{sector_name}", response_class=HTMLResponse)
+async def get_sector_view(request: Request, match_slug: str, sector_name: str):
+    match = await matches_collection.find_one({"slug": match_slug})
     if not match:
         raise HTTPException(status_code=404, detail="Match not found")
     match = convert_objectid_to_str(match)
+    # ... предыдущий код ...
     for sector in match["sectors"]:
         if sector["name"] == sector_name:
             if not sector.get("seats"):
                 raise HTTPException(status_code=400, detail="No seats available in this sector")
+            # Чтение SVG-файла
+            svg_path = os.path.join("static", "svg", f"{sector_name}.svg")
+            try:
+                with open(svg_path, encoding="utf-8") as f:
+                    svg_code = f.read()
+            except Exception:
+                svg_code = "<svg><!-- SVG не найден --></svg>"
+            # Формируем список доступных мест с полной информацией
+            available_seats = [
+                {
+                    "row": (seat["number"] - 1) // 35 + 1,
+                    "seat": (seat["number"] - 1) % 35 + 1,
+                    "price": seat["price"],
+                    "sector_name": sector_name,
+                    "match_id": match["slug"]
+                }
+                for seat in sector["seats"] if seat["available"]
+            ]
             return templates.TemplateResponse("sector_view.html", {
                 "request": request,
                 "match": match,
                 "sector_name": sector_name,
-                "sector": sector
+                "sector": sector,
+                "svg_code": svg_code,
+                "available_seats": available_seats
             })
     raise HTTPException(status_code=404, detail="Sector not found")
 
-@app.get("/check_seat/{match_id}/{sector_name}/{row}/{seat}", response_class=JSONResponse)
-async def check_seat(match_id: str, sector_name: str, row: int, seat: int):
-    match = await matches_collection.find_one({"id": match_id})
+@app.get("/check_seat/{match_slug}/{sector_name}/{row}/{seat}", response_class=JSONResponse)
+async def check_seat(match_slug: str, sector_name: str, row: int, seat: int):
+    match = await matches_collection.find_one({"slug": match_slug})
     if not match:
         raise HTTPException(status_code=404, detail="Match not found")
     for sector in match["sectors"]:
@@ -192,13 +206,13 @@ async def check_seat(match_id: str, sector_name: str, row: int, seat: int):
             seat_number = (row - 1) * 35 + seat
             for st in sector["seats"]:
                 if st["number"] == seat_number:
-                    return {"available": st["available"]}
+                    return {"available": st["available"], "price": st["price"]}
             return {"available": False}
     raise HTTPException(status_code=404, detail="Sector not found")
 
-@app.post("/sector_view/{match_id}/{sector_name}/select_seat", response_class=HTMLResponse)
-async def select_seat(match_id: str, sector_name: str, row: int = Form(...), seat: int = Form(...)):
-    match = await matches_collection.find_one({"id": match_id})
+@app.post("/sector_view/{match_slug}/{sector_name}/select_seat", response_class=HTMLResponse)
+async def select_seat(match_slug: str, sector_name: str, row: int = Form(...), seat: int = Form(...)):
+    match = await matches_collection.find_one({"slug": match_slug})
     if not match:
         raise HTTPException(status_code=404, detail="Match not found")
     for sector in match["sectors"]:
@@ -214,7 +228,7 @@ async def select_seat(match_id: str, sector_name: str, row: int = Form(...), sea
             break
     else:
         raise HTTPException(status_code=404, detail="Sector not found")
-    return RedirectResponse(url=f"/sector_view/{match_id}/{sector_name}", status_code=303)
+    return RedirectResponse(url=f"/sector_view/{match_slug}/{sector_name}", status_code=303)
 
 @app.get("/cart", response_class=HTMLResponse)
 async def get_cart(request: Request):
@@ -270,7 +284,7 @@ async def submit_order(
                 seats_by_match_and_sector[key] = []
             seats_by_match_and_sector[key].append(seat_info)
         for (match_id, sector_name), seats in seats_by_match_and_sector.items():
-            match = await matches_collection.find_one({"id": match_id})
+            match = await matches_collection.find_one({"slug": match_id})
             if not match:
                 raise HTTPException(status_code=404, detail=f"Match not found: {match_id}")
             for sector in match["sectors"]:
@@ -283,6 +297,8 @@ async def submit_order(
                             if st["number"] == seat_number:
                                 if not st["available"]:
                                     raise HTTPException(status_code=400, detail=f"Seat {seat_number} already taken")
+                                if st["price"] != seat_info["price"]:
+                                    raise HTTPException(status_code=400, detail=f"Price mismatch for seat {seat_number}")
                                 st["available"] = False
                                 break
                         else:
@@ -290,7 +306,7 @@ async def submit_order(
                     break
             else:
                 raise HTTPException(status_code=404, detail=f"Sector not found: {sector_name}")
-            await matches_collection.update_one({"id": match_id}, {"$set": {"sectors": match["sectors"]}})
+            await matches_collection.update_one({"slug": match_id}, {"$set": {"sectors": match["sectors"]}})
             for seat_info in seats:
                 order = {
                     "match_id": match_id,
@@ -299,6 +315,7 @@ async def submit_order(
                     "phone": phone,
                     "sector": sector_name,
                     "seat": (seat_info["row"] - 1) * 35 + seat_info["seat"],
+                    "price": seat_info["price"],
                     "timestamp": datetime.utcnow()
                 }
                 await orders_collection.insert_one(order)
@@ -379,13 +396,50 @@ async def admin_login(request: Request):
 
 @app.post("/admin-panel/login", response_class=HTMLResponse)
 async def admin_login_post(request: Request, username: str = Form(...), password: str = Form(...)):
+    # Проверка superadmin
+    if username == SUPERADMIN_USERNAME:
+        if verify_password(password, SUPERADMIN_PASSWORD_ENCRYPTED):
+            auth_token = secrets.token_hex(16)
+            # Для superadmin создаем временную запись в MongoDB
+            admin = {
+                "username": username,
+                "role": "superadmin",
+                "auth_token": auth_token,
+                "password_encrypted": SUPERADMIN_PASSWORD_ENCRYPTED
+            }
+            await admins_collection.update_one(
+                {"username": username},
+                {"$set": admin},
+                upsert=True
+            )
+            response = RedirectResponse(url="/admin-panel", status_code=303)
+            response.set_cookie(key="auth_token", value=auth_token, httponly=True, secure=False)
+            response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+            response.headers["Pragma"] = "no-cache"
+            response.headers["Expires"] = "0"
+            return response
+        else:
+            response = templates.TemplateResponse(
+                "admin_login.html",
+                {"request": request, "error": "Неверный логин или пароль"}
+            )
+            response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+            response.headers["Pragma"] = "no-cache"
+            response.headers["Expires"] = "0"
+            return response
+
+    # Проверка admin из MongoDB
     admin = await admins_collection.find_one({"username": username})
-    if not admin or not verify_password(password, admin["password_hash"]):
-        response = templates.TemplateResponse("admin_login.html", {"request": request, "error": "Неверный логин или пароль"})
+    if not admin or not verify_password(password, admin["password_encrypted"]):
+        response = templates.TemplateResponse(
+            "admin_login.html",
+            {"request": request, "error": "Неверный логин или пароль"}
+        )
         response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
         response.headers["Pragma"] = "no-cache"
         response.headers["Expires"] = "0"
         return response
+
     auth_token = secrets.token_hex(16)
     await admins_collection.update_one(
         {"_id": admin["_id"]},
@@ -426,6 +480,19 @@ async def admin_panel(
     if date:
         query["date"] = date
     matches = await matches_collection.find(query).to_list(1000)
+    # Проверка и обновление статуса матчей
+    for match in matches:
+        if match.get('date'):
+            try:
+                match_date = datetime.strptime(match['date'], '%Y-%m-%d')
+                if match_date < datetime.now():
+                    await matches_collection.update_one(
+                        {"id": match["id"]},
+                        {"$set": {"is_active": False}}
+                    )
+                    match['is_active'] = False
+            except ValueError:
+                pass
     matches = convert_objectid_to_str(matches)
     return templates.TemplateResponse("admin_panel.html", {
         "request": request,
@@ -484,10 +551,10 @@ async def create_admin(
     existing_admin = await admins_collection.find_one({"username": username})
     if existing_admin:
         raise HTTPException(status_code=400, detail="Username already exists")
-    password_hash = pwd_context.hash(password)
+    password_encrypted = fernet.encrypt(password.encode()).decode()
     new_admin = {
         "username": username,
-        "password_hash": password_hash,
+        "password_encrypted": password_encrypted,
         "role": "admin"
     }
     result = await admins_collection.insert_one(new_admin)
@@ -549,7 +616,7 @@ async def edit_admin(
         if password:
             if not validate_password(password):
                 raise HTTPException(status_code=400, detail="Password must be at least 8 characters long, contain at least one uppercase Latin letter and one special character")
-            update_data["password_hash"] = pwd_context.hash(password)
+            update_data["password_encrypted"] = fernet.encrypt(password.encode()).decode()
             log_details["password_changed"] = True
         await admins_collection.update_one({"_id": ObjectId(id)}, {"$set": update_data})
         await admin_logs_collection.insert_one({
@@ -591,6 +658,59 @@ async def delete_admin(request: Request, id: str, admin: dict = Depends(check_au
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Invalid admin ID: {str(e)}")
 
+SECTOR_LIST = [
+    '101', '102', '103', '104', '105', '106', '107', '108', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '122', '123', '124',
+    '201', '202', '203', '204', '205', '206', '207', '208', '209', '210', '211', '212', '213', '214', '215', '216', '217', '218', '219', '220', '221', '222', '223', '224'
+]
+
+@app.get("/admin-panel/bulk_add_sectors/{match_slug}", response_class=HTMLResponse)
+async def bulk_add_sectors_form(request: Request, match_slug: str, admin: dict = Depends(check_auth)):
+    match = await matches_collection.find_one({"slug": match_slug})
+    if not match:
+        raise HTTPException(status_code=404, detail="Match not found")
+    return templates.TemplateResponse(
+        "bulk_add_sectors.html",
+        {"request": request, "match": match, "sectors": SECTOR_LIST}
+    )
+
+@app.post("/admin-panel/bulk_add_sectors/{match_slug}", response_class=RedirectResponse)
+async def bulk_add_sectors(
+    request: Request,
+    match_slug: str,
+    admin: dict = Depends(check_auth)
+):
+    form = await request.form()
+    sector_names = form.getlist("sector_name")
+    rows = form.getlist("row")
+    places = form.getlist("places")
+    prices = form.getlist("price")
+
+    match = await matches_collection.find_one({"slug": match_slug})
+    if not match:
+        raise HTTPException(status_code=404, detail="Match not found")
+
+    for sector_name, row, places_str, price in zip(sector_names, rows, places, prices):
+        seat_numbers = []
+        for part in places_str.split(","):
+            if "-" in part:
+                start, end = map(int, part.split("-"))
+                seat_numbers.extend(range(start, end + 1))
+            else:
+                seat_numbers.append(int(part))
+        # Создаём места с индивидуальной ценой
+        seats = [{"number": (int(row) - 1) * 35 + s, "available": True, "price": int(price)} for s in seat_numbers]
+        for sector in match["sectors"]:
+            if sector["name"] == sector_name:
+                # Добавляем новые места, сохраняя существующие
+                existing_seat_numbers = {seat["number"] for seat in sector["seats"]}
+                seats = [seat for seat in seats if seat["number"] not in existing_seat_numbers]
+                sector["seats"].extend(seats)
+                break
+        else:
+            match["sectors"].append({"name": sector_name, "seats": seats})
+    await matches_collection.update_one({"slug": match_slug}, {"$set": {"sectors": match["sectors"]}})
+    return RedirectResponse(url=f"/admin-panel/edit_match/{match_slug}", status_code=303)
+
 @admin_router.post("/add_match", response_class=HTMLResponse)
 async def add_match(
     request: Request,
@@ -598,15 +718,18 @@ async def add_match(
     date: str = Form(...),
     time: str = Form(...),
     tournament: str = Form(...),
+    slug: str = Form(None),
     image: Optional[UploadFile] = File(None),
     admin: dict = Depends(check_auth)
 ):
     match_id = str(await matches_collection.count_documents({}) + 1)
-    image_filename = "default_match.jpg"  # Устанавливаем дефолтное изображение
-    if image and image.filename:  # Проверяем, загружено ли изображение
+    image_filename = "default_match.jpg"
+    if image and image.filename:
         image_filename = f"match_{match_id}.jpg"
         with open(f"static/backgrounds/{image_filename}", "wb") as f:
             f.write(await image.read())
+    if not slug or slug.strip() == "":
+        slug = translit(teams, 'ru', reversed=True).lower().replace(' ', '-').replace(':', '-').replace('/', '-')
     match = {
         "id": match_id,
         "teams": teams,
@@ -614,7 +737,9 @@ async def add_match(
         "time": time,
         "tournament": tournament,
         "image": image_filename,
-        "sectors": []
+        "sectors": [],
+        "is_active": True,
+        "slug": slug
     }
     await matches_collection.insert_one(match)
     response = RedirectResponse(url="/admin-panel", status_code=303)
@@ -623,190 +748,27 @@ async def add_match(
     response.headers["Expires"] = "0"
     return response
 
-@admin_router.post("/add_sector/{match_id}", response_class=HTMLResponse)
-async def add_sector(
-    request: Request,
-    match_id: str,
-    sector_name: str = Form(...),
-    rows_and_seats: str = Form(...),
-    price: int = Form(...),
-    admin: dict = Depends(check_auth)
-):
-    try:
-        match = await matches_collection.find_one({"id": match_id})
-        if not match:
-            raise HTTPException(status_code=404, detail="Match not found")
-        pattern = r'^(\d+:((\d+-\d+)|(\d+))(,\d+:((\d+-\d+)|(\d+)))*)$'
-        if not re.match(pattern, rows_and_seats):
-            raise HTTPException(status_code=400, detail="Invalid format for rows_and_seats. Use format like '20:14-18,23:16,27'")
-        if price <= 0:
-            raise HTTPException(status_code=400, detail="Price must be a positive number")
-        seats = []
-        rows_seats = rows_and_seats.split(",")
-        for row_seat in rows_seats:
-            row, seat_nums = row_seat.split(":")
-            row = int(row)
-            if row < 1 or row > 24:
-                raise HTTPException(status_code=400, detail=f"Row {row} is out of range (1-24)")
-            max_seats = get_seats_per_row_for_sector_201(row) if sector_name == "201" else 35
-            seat_nums = seat_nums.split(",")
-            for seat in seat_nums:
-                if "-" in seat:
-                    start, end = map(int, seat.split("-"))
-                    if start > end or start < 1 or end > 35:
-                        raise HTTPException(status_code=400, detail=f"Seat range {start}-{end} is invalid (must be between 1-35)")
-                    for s in range(start, end + 1):
-                        if sector_name == "201" and s > max_seats:
-                            continue
-                        seat_number = (row - 1) * 35 + s
-                        seats.append({"number": seat_number, "available": True})
-                else:
-                    s = int(seat)
-                    if s < 1 or s > 35:
-                        raise HTTPException(status_code=400, detail=f"Seat {s} is out of range (1-35)")
-                    if sector_name == "201" and s > max_seats:
-                        continue
-                    seat_number = (row - 1) * 35 + s
-                    seats.append({"number": seat_number, "available": True})
-        if not seats:
-            raise HTTPException(status_code=400, detail="No valid seats were added. Check the seat ranges for sector restrictions (e.g., sector 201 has row-specific limits).")
-        for sector in match["sectors"]:
-            if sector["name"] == sector_name:
-                existing_seat_numbers = {seat["number"] for seat in sector["seats"]}
-                new_seats = [seat for seat in seats if seat["number"] not in existing_seat_numbers]
-                sector["seats"].extend(new_seats)
-                sector["price"] = price
-                break
-        else:
-            match["sectors"].append({"name": sector_name, "seats": seats, "price": price})
-        await matches_collection.update_one({"id": match_id}, {"$set": {"sectors": match["sectors"]}})
-        response = RedirectResponse(url=f"/admin-panel/edit_match/{match_id}", status_code=303)
-        response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
-        response.headers["Pragma"] = "no-cache"
-        response.headers["Expires"] = "0"
-        return response
-    except Exception as e:
-        print(f"Error in add_sector: {str(e)}")
-        print(traceback.format_exc())
-        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
-
-@admin_router.post("/edit_sector/{match_id}/{sector_name}", response_class=HTMLResponse)
-async def edit_sector(
-    request: Request,
-    match_id: str,
-    sector_name: str,
-    price: int = Form(...),
-    rows_and_seats: Optional[str] = Form(None),
-    admin: dict = Depends(check_auth)
-):
-    match = await matches_collection.find_one({"id": match_id})
-    if not match:
-        raise HTTPException(status_code=404, detail="Match not found")
-    if price <= 0:
-        raise HTTPException(status_code=400, detail="Price must be a positive number")
-    seats = []
-    if rows_and_seats:
-        pattern = r'^(\d+:((\d+-\d+)|(\d+))(,\d+:((\d+-\d+)|(\d+)))*)$'
-        if not re.match(pattern, rows_and_seats):
-            raise HTTPException(status_code=400, detail="Invalid format for rows_and_seats")
-        rows_seats = rows_and_seats.split(",")
-        for row_seat in rows_seats:
-            row, seat_nums = row_seat.split(":")
-            row = int(row)
-            if row < 1 or row > 24:
-                raise HTTPException(status_code=400, detail=f"Row {row} is out of range (1-24)")
-            max_seats = get_seats_per_row_for_sector_201(row) if sector_name == "201" else 35
-            seat_nums = seat_nums.split(",")
-            for seat in seat_nums:
-                if "-" in seat:
-                    start, end = map(int, seat.split("-"))
-                    if start > end or start < 1 or end > 35:
-                        raise HTTPException(status_code=400, detail=f"Seat range {start}-{end} is invalid")
-                    for s in range(start, end + 1):
-                        if sector_name == "201" and s > max_seats:
-                            continue
-                        seat_number = (row - 1) * 35 + s
-                        seats.append({"number": seat_number, "available": True})
-                else:
-                    s = int(seat)
-                    if s < 1 or s > 35:
-                        raise HTTPException(status_code=400, detail=f"Seat {s} is out of range")
-                    if sector_name == "201" and s > max_seats:
-                        continue
-                    seat_number = (row - 1) * 35 + s
-                    seats.append({"number": seat_number, "available": True})
-    for sector in match["sectors"]:
-        if sector["name"] == sector_name:
-            if seats:
-                existing_seat_numbers = {seat["number"] for seat in sector["seats"]}
-                new_seats = [seat for seat in seats if seat["number"] not in existing_seat_numbers]
-                sector["seats"].extend(new_seats)
-            sector["price"] = price
-            break
-    else:
-        raise HTTPException(status_code=404, detail="Sector not found")
-    await matches_collection.update_one({"id": match_id}, {"$set": {"sectors": match["sectors"]}})
-    return RedirectResponse(url="/admin-panel", status_code=303)
-
-@admin_router.post("/delete_sector/{match_id}/{sector_name}", response_class=HTMLResponse)
-async def delete_sector(
-    request: Request,
-    match_id: str,
-    sector_name: str,
-    admin: dict = Depends(check_auth)
-):
-    match = await matches_collection.find_one({"id": match_id})
-    if not match:
-        raise HTTPException(status_code=404, detail="Match not found")
-    match["sectors"] = [sector for sector in match["sectors"] if sector["name"] != sector_name]
-    await matches_collection.update_one({"id": match_id}, {"$set": {"sectors": match["sectors"]}})
-    response = RedirectResponse(url=f"/admin-panel/edit_match/{match_id}", status_code=303)
-    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "0"
-    return response
-
-@admin_router.post("/edit_match/{match_id}", response_class=HTMLResponse)
-async def edit_match(
-    request: Request,
-    match_id: str,
-    teams: str = Form(...),
-    date: str = Form(...),
-    time: str = Form(...),
-    tournament: str = Form(...),
-    image: Optional[UploadFile] = File(None),
-    admin: dict = Depends(check_auth)
-):
-    match = await matches_collection.find_one({"id": match_id})
-    if not match:
-        raise HTTPException(status_code=404, detail="Match not found")
-    update_data = {"teams": teams, "date": date, "time": time, "tournament": tournament}
-    if image and image.filename:
-        if match.get("image"):
-            try:
-                os.remove(f"static/backgrounds/{match['image']}")
-            except FileNotFoundError:
-                pass
-        image_filename = f"match_{match_id}.jpg"
-        with open(f"static/backgrounds/{image_filename}", "wb") as f:
-            f.write(await image.read())
-        update_data["image"] = image_filename
-    await matches_collection.update_one({"id": match_id}, {"$set": update_data})
-    response = RedirectResponse(url="/admin-panel", status_code=303)
-    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "0"
-    return response
-
-@admin_router.get("/edit_match/{match_id}", response_class=HTMLResponse)
+@admin_router.get("/edit_match/{match_slug}", response_class=HTMLResponse)
 async def edit_match_form(
     request: Request,
-    match_id: str,
+    match_slug: str,
     admin: dict = Depends(check_auth)
 ):
-    match = await matches_collection.find_one({"id": match_id})
+    match = await matches_collection.find_one({"slug": match_slug})
     if not match:
         raise HTTPException(status_code=404, detail="Match not found")
+    # Проверка даты матча
+    if match.get('date'):
+        try:
+            match_date = datetime.strptime(match['date'], '%Y-%m-%d')
+            if match_date < datetime.now():
+                await matches_collection.update_one(
+                    {"slug": match_slug},
+                    {"$set": {"is_active": False}}
+                )
+                match['is_active'] = False
+        except ValueError:
+            pass
     match = convert_objectid_to_str(match)
     response = templates.TemplateResponse("edit_match.html", {
         "request": request,
@@ -818,14 +780,50 @@ async def edit_match_form(
     response.headers["Expires"] = "0"
     return response
 
-
-@admin_router.delete("/delete_match/{match_id}", response_class=HTMLResponse)
-async def delete_match(
+@admin_router.post("/edit_match/{match_slug}", response_class=HTMLResponse)
+async def edit_match(
     request: Request,
-    match_id: str,
+    match_slug: str,
+    teams: str = Form(...),
+    date: str = Form(...),
+    time: str = Form(...),
+    tournament: str = Form(...),
+    is_active: bool = Form(False),
+    slug: str = Form(None),
+    image: Optional[UploadFile] = File(None),
     admin: dict = Depends(check_auth)
 ):
-    match = await matches_collection.find_one({"id": match_id})
+    match = await matches_collection.find_one({"slug": match_slug})
+    if not match:
+        raise HTTPException(status_code=404, detail="Match not found")
+    update_data = {"teams": teams, "date": date, "time": time, "tournament": tournament, "is_active": is_active}
+    if not slug or slug.strip() == "":
+        slug = translit(teams, 'ru', reversed=True).lower().replace(' ', '-').replace(':', '-').replace('/', '-')
+    update_data["slug"] = slug
+    if image and image.filename:
+        if match.get("image"):
+            try:
+                os.remove(f"static/backgrounds/{match['image']}")
+            except FileNotFoundError:
+                pass
+        image_filename = f"match_{match['id']}.jpg"
+        with open(f"static/backgrounds/{image_filename}", "wb") as f:
+            f.write(await image.read())
+        update_data["image"] = image_filename
+    await matches_collection.update_one({"slug": match_slug}, {"$set": update_data})
+    response = RedirectResponse(url="/admin-panel", status_code=303)
+    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    return response
+
+@admin_router.delete("/delete_match/{match_slug}", response_class=HTMLResponse)
+async def delete_match(
+    request: Request,
+    match_slug: str,
+    admin: dict = Depends(check_auth)
+):
+    match = await matches_collection.find_one({"slug": match_slug})
     if not match:
         raise HTTPException(status_code=404, detail="Match not found")
     if match.get("image"):
@@ -835,23 +833,23 @@ async def delete_match(
                 os.remove(image_path)
         except FileNotFoundError:
             pass
-    await matches_collection.delete_one({"id": match_id})
+    await matches_collection.delete_one({"slug": match_slug})
     response = RedirectResponse(url="/admin-panel", status_code=303)
     response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "0"
     return response
 
-@admin_router.get("/deactivate_seat/{match_id}/{sector_name}/{seat_number}", response_class=RedirectResponse)
+@admin_router.get("/deactivate_seat/{match_slug}/{sector_name}/{seat_number}", response_class=RedirectResponse)
 async def deactivate_seat(
     request: Request,
-    match_id: str,
+    match_slug: str,
     sector_name: str,
     seat_number: int,
     admin: dict = Depends(check_auth)
 ):
     try:
-        match = await matches_collection.find_one({"id": match_id})
+        match = await matches_collection.find_one({"slug": match_slug})
         if not match:
             raise HTTPException(status_code=404, detail="Match not found")
         for sector in match["sectors"]:
@@ -865,8 +863,8 @@ async def deactivate_seat(
                 break
         else:
             raise HTTPException(status_code=404, detail="Sector not found")
-        await matches_collection.update_one({"id": match_id}, {"$set": {"sectors": match["sectors"]}})
-        response = RedirectResponse(url=f"/admin-panel/edit_match/{match_id}", status_code=303)
+        await matches_collection.update_one({"slug": match_slug}, {"$set": {"sectors": match["sectors"]}})
+        response = RedirectResponse(url=f"/admin-panel/edit_match/{match_slug}", status_code=303)
         response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
         response.headers["Pragma"] = "no-cache"
         response.headers["Expires"] = "0"
@@ -876,16 +874,16 @@ async def deactivate_seat(
         print(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
-@admin_router.get("/activate_seat/{match_id}/{sector_name}/{seat_number}", response_class=RedirectResponse)
+@admin_router.get("/activate_seat/{match_slug}/{sector_name}/{seat_number}", response_class=RedirectResponse)
 async def activate_seat(
     request: Request,
-    match_id: str,
+    match_slug: str,
     sector_name: str,
     seat_number: int,
     admin: dict = Depends(check_auth)
 ):
     try:
-        match = await matches_collection.find_one({"id": match_id})
+        match = await matches_collection.find_one({"slug": match_slug})
         if not match:
             raise HTTPException(status_code=404, detail="Match not found")
         for sector in match["sectors"]:
@@ -899,8 +897,8 @@ async def activate_seat(
                 break
         else:
             raise HTTPException(status_code=404, detail="Sector not found")
-        await matches_collection.update_one({"id": match_id}, {"$set": {"sectors": match["sectors"]}})
-        response = RedirectResponse(url=f"/admin-panel/edit_match/{match_id}", status_code=303)
+        await matches_collection.update_one({"slug": match_slug}, {"$set": {"sectors": match["sectors"]}})
+        response = RedirectResponse(url=f"/admin-panel/edit_match/{match_slug}", status_code=303)
         response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
         response.headers["Pragma"] = "no-cache"
         response.headers["Expires"] = "0"
@@ -910,14 +908,14 @@ async def activate_seat(
         print(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
-@admin_router.post("/update_seats/{match_id}", response_class=JSONResponse)
+@admin_router.post("/update_seats/{match_slug}", response_class=JSONResponse)
 async def update_seats(
     request: Request,
-    match_id: str,
+    match_slug: str,
     admin: dict = Depends(check_auth)
 ):
     try:
-        match = await matches_collection.find_one({"id": match_id})
+        match = await matches_collection.find_one({"slug": match_slug})
         if not match:
             raise HTTPException(status_code=404, detail="Match not found")
         data = await request.json()
@@ -936,10 +934,11 @@ async def update_seats(
                         for st in sector["seats"]:
                             if st["number"] == seat_number:
                                 st["available"] = (new_status == "available")
+                                # Сохраняем существующую цену
                                 break
                     break
         await matches_collection.update_one(
-            {"id": match_id},
+            {"slug": match_slug},
             {"$set": {"sectors": match["sectors"], "total_seats": total_seats}}
         )
         return {"status": "success"}
@@ -950,5 +949,15 @@ async def update_seats(
         print(f"Error in update_seats: {str(e)}")
         print(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+
+@admin_router.post("/delete_sector/{match_slug}/{sector_name}", response_class=RedirectResponse)
+async def delete_sector(request: Request, match_slug: str, sector_name: str, admin: dict = Depends(check_auth)):
+    match = await matches_collection.find_one({"slug": match_slug})
+    if not match:
+        raise HTTPException(status_code=404, detail="Match not found")
+    sectors = match.get("sectors", [])
+    new_sectors = [sector for sector in sectors if sector["name"] != sector_name]
+    await matches_collection.update_one({"slug": match_slug}, {"$set": {"sectors": new_sectors}})
+    return RedirectResponse(url=f"/admin-panel/edit_match/{match_slug}", status_code=303)
 
 app.include_router(admin_router, prefix="/admin-panel")

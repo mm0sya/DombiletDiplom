@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Массовое добавление секторов</title>
+    <link rel="icon" href="/static/image/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .dark-green { background-color: #1A3C34; }
+        .dark-green:hover { background-color: #2A5C4A; }
+        .light-gray { background-color: #F5F7FA; }
+        .table-header { font-weight: bold; background: #f3f4f6; }
+        .remove-btn { background-color: #EF4444; color: white; border-radius: 6px; padding: 6px 0; font-weight: 500; }
+        .remove-btn:hover { background-color: #DC2626; }
+        .add-btn, .save-btn, .back-btn { background-color: #34C759; color: white; border-radius: 4px; padding: 8px 16px; margin-right: 8px; }
+        .add-btn:hover, .save-btn:hover, .back-btn:hover { background-color: #2EB648; }
+        .back-btn-gray { background-color: #6B7280; color: white; border-radius: 4px; padding: 8px 16px; }
+        .back-btn-gray:hover { background-color: #4A505E; }
+    </style>
+</head>
+<body class="light-gray">
+<header class="dark-green text-white p-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="flex items-center">
+            <img src="/static/image/favicon.ico" alt="Логотип ФК Краснодар" class="h-10 mr-4">
+            <Ссылка на основное меню>
+        </div>
+    </div>
+</header>
+<main class="max-w-7xl mx-auto p-4">
+    <h2 class="text-2xl font-bold mb-6">Выставление мест по диапазону</h2>
+    <form id="bulk-add-form" method="POST" action="/admin-panel/bulk_add_sectors/{{ match.slug }}">
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-300 rounded" style="border-collapse: separate; border-spacing: 0;">
+                <thead>
+                    <tr class="table-header">
+                        <th class="border border-gray-300 bg-gray-50 font-semibold text-base p-2">Сектор</th>
+                        <th class="border border-gray-300 bg-gray-50 font-semibold text-base p-2">Ряд</th>
+                        <th class="border border-gray-300 bg-gray-50 font-semibold text-base p-2">Места</th>
+                        <th class="border border-gray-300 bg-gray-50 font-semibold text-base p-2">Цена</th>
+                        <th class="border border-gray-300 bg-gray-50 p-2"></th>
+                    </tr>
+                </thead>
+                <tbody id="sector-rows">
+                    <tr>
+                        <td class="border border-gray-300 p-0"><div class="p-2"><select name="sector_name" class="w-full h-10 px-2 rounded border border-gray-300 focus:outline-none" required>{% for sector in sectors %}<option value="{{ sector }}">{{ sector }}</option>{% endfor %}</select></div></td>
+                        <td class="border border-gray-300 p-0"><div class="p-2"><input type="number" name="row" class="w-full h-10 px-2 rounded border border-gray-300 focus:outline-none" min="1" required></div></td>
+                        <td class="border border-gray-300 p-0"><div class="p-2"><input type="text" name="places" class="w-full h-10 px-2 rounded border border-gray-300 focus:outline-none" placeholder="1-10" required></div></td>
+                        <td class="border border-gray-300 p-0"><div class="p-2"><input type="number" name="price" class="w-full h-10 px-2 rounded border border-gray-300 focus:outline-none" min="1" required></div></td>
+                        <td class="border border-gray-300 p-0"><div class="p-2"><button type="button" class="remove-btn w-full h-10" onclick="removeRow(this)">Удалить</button></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-4 flex gap-2">
+            <button type="button" class="add-btn" onclick="addRow()">Добавить строку</button>
+            <button type="submit" class="save-btn">Сохранить</button>
+            <a href="/admin-panel/edit_match/{{ match.slug }}" class="back-btn-gray">Назад</a>
+        </div>
+    </form>
+</main>
+<footer class="bg-gray-800 text-white p-4 text-center mt-6">
+    <p>© 2025 ФК Краснодар. Все права защищены.</p>
+</footer>
+<script>
+function addRow() {
+    const tbody = document.getElementById('sector-rows');
+    const firstRow = tbody.querySelector('tr');
+    const newRow = firstRow.cloneNode(true);
+    newRow.querySelectorAll('input').forEach(input => input.value = '');
+    tbody.appendChild(newRow);
+}
+function removeRow(btn) {
+    const tbody = document.getElementById('sector-rows');
+    if (tbody.rows.length > 1) {
+        btn.closest('tr').remove();
+    }
+}
+</script>
+</body>
+</html>
