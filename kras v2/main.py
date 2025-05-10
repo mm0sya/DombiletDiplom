@@ -163,15 +163,36 @@ async def get_sector_view(request: Request, match_slug: str, sector_name: str):
     if not match:
         raise HTTPException(status_code=404, detail="Match not found")
     match = convert_objectid_to_str(match)
+    # ... предыдущий код ...
     for sector in match["sectors"]:
         if sector["name"] == sector_name:
             if not sector.get("seats"):
                 raise HTTPException(status_code=400, detail="No seats available in this sector")
+            # Чтение SVG-файла
+            svg_path = os.path.join("static", "svg", f"{sector_name}.svg")
+            try:
+                with open(svg_path, encoding="utf-8") as f:
+                    svg_code = f.read()
+            except Exception:
+                svg_code = "<svg><!-- SVG не найден --></svg>"
+            # Формируем список доступных мест с полной информацией
+            available_seats = [
+                {
+                    "row": (seat["number"] - 1) // 35 + 1,
+                    "seat": (seat["number"] - 1) % 35 + 1,
+                    "price": seat["price"],
+                    "sector_name": sector_name,
+                    "match_id": match["slug"]
+                }
+                for seat in sector["seats"] if seat["available"]
+            ]
             return templates.TemplateResponse("sector_view.html", {
                 "request": request,
                 "match": match,
                 "sector_name": sector_name,
-                "sector": sector
+                "sector": sector,
+                "svg_code": svg_code,
+                "available_seats": available_seats
             })
     raise HTTPException(status_code=404, detail="Sector not found")
 
