@@ -131,31 +131,6 @@ def convert_objectid_to_str(data):
         return {key: convert_objectid_to_str(value) if key != "_id" else str(value) for key, value in data.items()}
     return data
 
-def get_seats_per_row_for_sector_201(row):
-    if row <= 14:
-        return 35
-    elif row == 15:
-        return 35
-    elif row == 16:
-        return 34
-    elif row == 17:
-        return 33
-    elif row == 18:
-        return 32
-    elif row == 19:
-        return 31
-    elif row == 20:
-        return 30
-    elif row == 21:
-        return 29
-    elif row == 22:
-        return 28
-    elif row == 23:
-        return 27
-    elif row == 24:
-        return 26
-    return 0
-
 admin_router = APIRouter()
 
 @app.get("/", response_class=HTMLResponse)
@@ -210,7 +185,7 @@ async def check_seat(match_slug: str, sector_name: str, row: int, seat: int):
             seat_number = (row - 1) * 35 + seat
             for st in sector["seats"]:
                 if st["number"] == seat_number:
-                    return {"available": st["available"]}
+                    return {"available": st["available"], "price": st["price"]}
             return {"available": False}
     raise HTTPException(status_code=404, detail="Sector not found")
 
@@ -301,6 +276,8 @@ async def submit_order(
                             if st["number"] == seat_number:
                                 if not st["available"]:
                                     raise HTTPException(status_code=400, detail=f"Seat {seat_number} already taken")
+                                if st["price"] != seat_info["price"]:
+                                    raise HTTPException(status_code=400, detail=f"Price mismatch for seat {seat_number}")
                                 st["available"] = False
                                 break
                         else:
@@ -317,6 +294,7 @@ async def submit_order(
                     "phone": phone,
                     "sector": sector_name,
                     "seat": (seat_info["row"] - 1) * 35 + seat_info["seat"],
+                    "price": seat_info["price"],
                     "timestamp": datetime.utcnow()
                 }
                 await orders_collection.insert_one(order)
@@ -698,14 +676,17 @@ async def bulk_add_sectors(
                 seat_numbers.extend(range(start, end + 1))
             else:
                 seat_numbers.append(int(part))
-        seats = [{"number": (int(row) - 1) * 35 + s, "available": True} for s in seat_numbers]
+        # Создаём места с индивидуальной ценой
+        seats = [{"number": (int(row) - 1) * 35 + s, "available": True, "price": int(price)} for s in seat_numbers]
         for sector in match["sectors"]:
             if sector["name"] == sector_name:
+                # Добавляем новые места, сохраняя существующие
+                existing_seat_numbers = {seat["number"] for seat in sector["seats"]}
+                seats = [seat for seat in seats if seat["number"] not in existing_seat_numbers]
                 sector["seats"].extend(seats)
-                sector["price"] = int(price)
                 break
         else:
-            match["sectors"].append({"name": sector_name, "seats": seats, "price": int(price)})
+            match["sectors"].append({"name": sector_name, "seats": seats})
     await matches_collection.update_one({"slug": match_slug}, {"$set": {"sectors": match["sectors"]}})
     return RedirectResponse(url=f"/admin-panel/edit_match/{match_slug}", status_code=303)
 
@@ -932,6 +913,7 @@ async def update_seats(
                         for st in sector["seats"]:
                             if st["number"] == seat_number:
                                 st["available"] = (new_status == "available")
+                                # Сохраняем существующую цену
                                 break
                     break
         await matches_collection.update_one(

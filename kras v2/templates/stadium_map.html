@@ -6,79 +6,41 @@
             <!-- Блок фильтров -->
         <div class="price-filters mb-4 flex justify-center gap-2">
             {% set price_ranges = [
-                {'min': 0, 'max': 500, 'class': 'cls-1'},
-                {'min': 501, 'max': 1000, 'class': 'cls-2'},
-                {'min': 1001, 'max': 2000, 'class': 'cls-3'},
-                {'min': 2001, 'max': 5000, 'class': 'cls-4'},
-                {'min': 5001, 'max': 10000, 'class': 'cls-5'}
+                {'min': 0, 'max': 500, 'class': 'cls-1', 'color': '#00cc00'},
+                {'min': 501, 'max': 1000, 'class': 'cls-2', 'color': '#66cc00'},
+                {'min': 1001, 'max': 2000, 'class': 'cls-3', 'color': '#ffcc00'},
+                {'min': 2001, 'max': 5000, 'class': 'cls-4', 'color': '#ff6600'},
+                {'min': 5001, 'max': 10000, 'class': 'cls-5', 'color': '#fc1111'},
+                {'min': 10001, 'max': 999999, 'class': 'cls-6', 'color': '#cc00cc'}
             ] %}
-            {% set active_sectors = match.sectors | map(attribute='price') | list %}
-            
-            <!-- Обрабатываем стандартные диапазоны -->
-            {% for range in price_ranges %}
-                {% set sectors_in_range = active_sectors | select('ge', range.min) | select('le', range.max) | list %}
-                {% if sectors_in_range | length > 0 %}
-                    {% set min_price_in_range = sectors_in_range | min %}
-                    <button class="price-filter px-4 py-2 rounded-lg text-white font-semibold" 
-                            style="background-color: {% if range.class == 'cls-1' %}#00cc00{% elif range.class == 'cls-2' %}#66cc00{% elif range.class == 'cls-3' %}#ffcc00{% elif range.class == 'cls-4' %}#ff6600{% elif range.class == 'cls-5' %}#ff3333{% else %}#cc00cc{% endif %}" 
-                            data-min="{{ range.min }}" 
-                            data-max="{{ range.max }}">
-                        {% if range.max == 500 %}
-                            До {{ range.max }}
-                        {% elif range.max == 1000 %}
-                            {{ min_price_in_range }}-{{ range.max }}
-                        {% else %}
-                            {{ min_price_in_range }}+
-                        {% endif %}
-                    </button>
+            {% set active_sectors = [] %}
+            {% for sector in match.sectors %}
+                {% set available_seats = sector.seats | selectattr('available', 'equalto', true) | list %}
+                {% if available_seats %}
+                    {% set _ = active_sectors.append(sector) %}
                 {% endif %}
             {% endfor %}
 
-            <!--  
+            <!-- Генерация кнопок для всех диапазонов -->
             {% for range in price_ranges %}
-                {% set sectors_in_range = active_sectors | select('ge', range.min) | select('le', range.max) | list %}
-                {% if sectors_in_range | length > 0 %}
-                    {% set min_price_in_range = sectors_in_range | min %}
-                    <button class="price-filter px-4 py-2 rounded-lg text-white font-semibold" 
-                            style="background-color: {% if range.class == 'cls-1' %}#00cc00{% elif range.class == 'cls-2' %}#66cc00{% elif range.class == 'cls-3' %}#ffcc00{% elif range.class == 'cls-4' %}#ff6600{% elif range.class == 'cls-5' %}#ff3333{% else %}#cc00cc{% endif %}" 
-                            data-min="{{ range.min }}" 
-                            data-max="{{ range.max }}">
-                        {% if range.max == 500 %}
-                            До {{ range.max }}
-                        {% elif range.max == 1000 %}
-                            {{ min_price_in_range }}-{{ range.max }}
-                        {% else %}
-                            {% if sectors_in_range | length == 1 %}
-                                {{ min_price_in_range }}
-                            {% else %}
-                                {{ min_price_in_range }}+
-                            {% endif %}
+                {% set prices = [] %}
+                {% for sector in active_sectors %}
+                    {% for seat in sector.seats %}
+                        {% if seat.available and seat.price >= range.min and seat.price <= range.max %}
+                            {% set _ = prices.append(seat.price) %}
                         {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                {% if prices|length > 0 %}
+                    {% set min_price = prices|min %}
+                    <button class="price-filter px-4 py-2 rounded-lg text-white font-semibold {{ range.class }}"
+                            style="background-color: {{ range.color }}"
+                            data-min="{{ range.min }}"
+                            data-max="{{ range.max }}">
+                        {{ min_price }}{% if prices|length > 1 %}+{% endif %}
                     </button>
                 {% endif %}
             {% endfor %}
-            Если нужно выводить 1500+ при 2+ сектора
-            -->
-        
-            <!-- Обрабатываем диапазон "Более 10000" -->
-            {% set over_10000_sectors = active_sectors | select('gt', 10000) | list %}
-            {% if over_10000_sectors | length > 0 %}
-                {% set min_price_over_10000 = over_10000_sectors | min %}
-                <button class="price-filter px-4 py-2 rounded-lg text-white font-semibold" 
-                        style="background-color: #cc00cc" 
-                        data-min="10001" 
-                        data-max="999999">
-                    {% if over_10000_sectors | length == 1 %}
-                        {{ min_price_over_10000 }}
-                    {% else %}
-                        {{ min_price_over_10000 }}+
-                    {% endif %}
-                </button>
-            {% endif %}
-            <span class="price-currency px-4 py-2 rounded-lg text-white font-semibold" 
-                style="background-color: #aab4c7; margin-left: 4px;">
-                ₽
-            </span>
         </div>
 
         <svg id="sector_scheme" data-version="2" xmlns="http://www.w3.org/2000/svg" width="1259.39" height="1092.72"
@@ -166,7 +128,7 @@
             {% for sector_id in ['101', '102', '103', '104', '105', '106', '107', '108', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '122', '123', '124', '201', '202', '203', '204', '205', '206', '207', '208', '209', '210', '211', '212', '213', '214', '215', '216', '217', '218', '219', '220', '221', '222', '223', '224'] %}
                 {% set sector = match.sectors | selectattr('name', 'equalto', sector_id) | first %}
                 {% set is_active = sector_id in sector_names %}
-                {% set price = sector.price if sector else 0 %}
+                {% set price = (sector.seats | selectattr('available', 'equalto', true) | map(attribute='price') | list | min) if sector and (sector.seats | selectattr('available', 'equalto', true) | list) else 0 %}
                 {% set color_class = '' %}
                 {% if is_active %}
                     {% if price <= 500 %}

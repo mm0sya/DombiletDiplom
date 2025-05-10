@@ -305,7 +305,7 @@
                     {% if row not in rows %}
                         {% set _ = rows.update({row: []}) %}
                     {% endif %}
-                    {% set _ = rows[row].append({'number': seat_num, 'available': seat.available}) %}
+                    {% set _ = rows[row].append({'number': seat_num, 'available': seat.available, 'price': seat.price}) %}
                 {% endif %}
             {% endfor %}
             {% for row in rows.keys() | sort %}
@@ -322,7 +322,7 @@
                                 class="seat-button"
                                 data-row="{{ row }}"
                                 data-seat="{{ seat.number }}"
-                                onclick="selectSeat({{ row }}, {{ seat.number }}, {{ sector.price }})"
+                                onclick="selectSeat({{ row }}, {{ seat.number }}, {{ seat.price }})"
                             >
                                 {{ seat.number }}
                             </button>
