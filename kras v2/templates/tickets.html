@@ -601,13 +601,22 @@ document.addEventListener('DOMContentLoaded', function () {
 <main>
 <div class="match-banner" style="background-image: url('/static/backgrounds/{{ match.image }}')"></div>
 
+{% set all_prices = [] %}
+{% for sector in match.sectors %}
+    {% for seat in sector.seats %}
+        {% if seat.available %}
+            {% set _ = all_prices.append(seat.price) %}
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
 <div class="match-info">
     <div style="position: relative; width: 100%;">
         <div class="header-info">
             <div class="match-type">⚽ Футбольный матч</div>
             <div class="location">📍 г. Краснодар, площадка: Краснодар Арена</div>
             <div class="price-section">
-                <div class="price">Стоимость: <span>От {{ match.sectors | map('attr', 'seats') | map('selectattr', 'available', 'equalto', true) | map('map', attribute='price') | map('list') | select | map('min') | min | default(1500) }} ₽</span></div>
+                <div class="price">Стоимость: <span>От {{ all_prices|min }} ₽</span></div>
             </div>
         </div>
         <h2>Билеты на <span>{{ match.teams }}</span></h2>
