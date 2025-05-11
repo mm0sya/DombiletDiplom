@@ -142,7 +142,7 @@
         }
         main {
             flex: 1 0 auto;
-            width: 100%; /* Гарантирует, что main занимает всю доступную ширину */
+            width: 100%;
         }
         .sector-image {
             max-width: 100%; /* Убедимся, что изображение не выходит за пределы контейнера */
@@ -150,15 +150,75 @@
             box-sizing: border-box; /* Учитываем border и padding в ширине */
         }
         html, body {
-        height: 100%;
-        margin: 0;
+            height: 100%;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
         }
         body {
             display: flex;
             flex-direction: column;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: #F5F7FA;
         }
         footer {
             flex-shrink: 0;
+            margin-top: auto;
+        }
+        /* --- Центрирование SVG и увеличение кликабельной зоны --- */
+        #svg-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        #svg-container svg {
+            width: 1050px;
+            display: block;
+            height: auto;
+            max-width: 100%;
+        }
+        #svg-container rect[data-row][data-seat] {
+            cursor: pointer;
+            pointer-events: all;
+        }
+        /* Стили для номеров мест поверх SVG */
+        .svg-seat-label {
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            font-weight: bold;
+            fill: #fff;
+            pointer-events: none;
+            text-anchor: middle;
+            dominant-baseline: middle;
+            user-select: none;
+        }
+        .tooltip {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            pointer-events: none;
+            display: none;
+            font-size: 14px;
+            color: #1F2A44;
+            text-align: center;
+            min-width: 120px;
+        }
+        .tooltip .sector-name {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .tooltip .price {
+            font-weight: bold;
+            font-size: 16px;
+            color: #1F2A44;
         }
     </style>
     <script src="/static/js/utils.js"></script>
@@ -182,7 +242,7 @@
         async function selectSeat(row, seat, price) {
             const button = document.querySelector(`button[data-row="${row}"][data-seat="${seat}"]`);
             const alreadyInCart = cart.some(item => 
-                item.match_id === '{{ match.id }}' && 
+                item.match_id === '{{ match.slug }}' && 
                 item.sector_name === '{{ sector_name }}' && 
                 item.row === row && 
                 item.seat === seat
@@ -190,13 +250,13 @@
 
             if (alreadyInCart) {
                 cart = cart.filter(item => 
-                    !(item.match_id === '{{ match.id }}' && 
+                    !(item.match_id === '{{ match.slug }}' && 
                       item.sector_name === '{{ sector_name }}' && 
                       item.row === row && 
                       item.seat === seat)
                 );
                 updateCart(cart);
-                const isAvailable = await checkSeatAvailability('{{ match.id }}', '{{ sector_name }}', row, seat);
+                const isAvailable = await checkSeatAvailability('{{ match.slug }}', '{{ sector_name }}', row, seat);
                 if (isAvailable) {
                     button.classList.remove('seat-taken');
                     button.classList.add('seat-button');
@@ -207,7 +267,7 @@
                 return;
             }
 
-            const isAvailable = await checkSeatAvailability('{{ match.id }}', '{{ sector_name }}', row, seat);
+            const isAvailable = await checkSeatAvailability('{{ match.slug }}', '{{ sector_name }}', row, seat);
             if (!isAvailable) {
                 alert('Это место уже занято!');
                 button.classList.remove('seat-button');
@@ -216,7 +276,7 @@
             }
 
             cart.push({
-                match_id: '{{ match.id }}',
+                match_id: '{{ match.slug }}',
                 sector_name: '{{ sector_name }}',
                 row: row,
                 seat: seat,
@@ -235,12 +295,12 @@
                 const row = parseInt(button.getAttribute('data-row'));
                 const seat = parseInt(button.getAttribute('data-seat'));
                 const inCart = cart.some(item => 
-                    item.match_id === '{{ match.id }}' && 
+                    item.match_id === '{{ match.slug }}' && 
                     item.sector_name === '{{ sector_name }}' && 
                     item.row === row && 
                     item.seat === seat
                 );
-                const isAvailable = await checkSeatAvailability('{{ match.id }}', '{{ sector_name }}', row, seat);
+                const isAvailable = await checkSeatAvailability('{{ match.slug }}', '{{ sector_name }}', row, seat);
 
                 if (inCart) {
                     button.classList.remove('seat-button');
@@ -249,7 +309,7 @@
                     button.classList.remove('seat-button');
                     button.classList.add('seat-taken');
                     cart = cart.filter(item => 
-                        !(item.match_id === '{{ match.id }}' && 
+                        !(item.match_id === '{{ match.slug }}' && 
                           item.sector_name === '{{ sector_name }}' && 
                           item.row === row && 
                           item.seat === seat)
@@ -291,53 +351,232 @@
         </div>
     </header>
     <main class="max-w-7xl mx-auto p-4">
-        <h2 class="text-2xl font-bold mb-4 text-center">{{ match.teams }} - {{ match.date }}</h2>
-        <div class="text-center">
-            <div class="sector-image" style="background-image: url('/static/svg/{{ sector_name }}.svg');"></div>
+        <div class="match-info" style="background-color: white; border-radius: 18px; padding: 40px; margin: 0 auto 24px auto; max-width: 1400px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: flex-start;">
+            <div class="header-info" style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 16px;">
+                <div class="match-type" style="font-size: 14px; color: #6B7280;">⚽ Футбольный матч</div>
+                <div class="location" style="font-size: 14px; color: #6B7280;">📍 г. Краснодар, площадка: Краснодар Арена</div>
+            </div>
+            <h2 style="font-size: 32px; font-weight: bold; color: #1F2A44; margin: 0;">{{ match.teams }}</h2>
+            <p id="match-date" style="font-size: 16px; color: #6B7280; margin: 8px 0 0 0;"></p>
+        </div>
+        <div class="stadium-map mx-auto" style="background: white; border-radius: 18px; padding: 10px 0 10px 0; max-width: 1400px; display: flex; flex-direction: column; align-items: center;">
             <h3 class="text-xl font-semibold mb-4">Сектор {{ sector_name }}</h3>
+            <div id="svg-container">
+                {{ svg_code | safe }}
+            </div>
         </div>
-        <div class="mb-4">
-            {% set rows = {} %}
-            {% for seat in sector.seats %}
-                {% if seat.available %}
-                    {% set row = (seat.number - 1) // 35 + 1 %}
-                    {% set seat_num = (seat.number - 1) % 35 + 1 %}
-                    {% if row not in rows %}
-                        {% set _ = rows.update({row: []}) %}
-                    {% endif %}
-                    {% set _ = rows[row].append({'number': seat_num, 'available': seat.available}) %}
-                {% endif %}
-            {% endfor %}
-            {% for row in rows.keys() | sort %}
-                <div class="row-section">
-                    <div class="row-toggle" onclick="toggleRow({{ row }})">
-                        <p>Ряд {{ row }}</p>
-                        <p class="text-sm text-gray-500">
-                            Доступно мест: {{ rows[row] | length }}
-                        </p>
-                    </div>
-                    <div id="row-{{ row }}" class="row-content">
-                        {% for seat in rows[row] | sort(attribute='number') %}
-                            <button
-                                class="seat-button"
-                                data-row="{{ row }}"
-                                data-seat="{{ seat.number }}"
-                                onclick="selectSeat({{ row }}, {{ seat.number }}, {{ sector.price }})"
-                            >
-                                {{ seat.number }}
-                            </button>
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="flex justify-center space-x-4">
+
+        <div class="flex justify-center space-x-4 mt-6">
             <a href="/cart" class="cart-button">Перейти в корзину</a>
-            <a href="/tickets/{{ match.id }}" class="back-button">Назад</a>
+            <a href="/tickets/{{ match.slug }}" class="back-button">Назад</a>
         </div>
     </main>
     <footer class="bg-gray-800 text-white p-4 text-center">
         <p>© 2025 ФК Краснодар. Все права защищены.</p>
     </footer>
+
+    <!-- Tooltip для мест -->
+    <div id="seat-tooltip" class="tooltip" style="display:none; position:absolute; z-index:1000;">
+        <p class="sector-name"></p>
+        <p>Ряд: <span id="tooltip-row"></span> &nbsp; Место: <span id="tooltip-seat"></span></p>
+        <p class="price">Цена: <span id="tooltip-price"></span> ₽</p>
+    </div>
+
+    <script>
+        const availableSeats = {{ available_seats | tojson }};
+        let cartSeats = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function isSeatAvailable(row, seat) {
+            return availableSeats.some(function(s) { return s.row == row && s.seat == seat; });
+        }
+
+        function isSeatInCart(row, seat) {
+            return cartSeats.some(function(s) { return s.row == row && s.seat == seat && s.sector_name == "{{ sector_name }}"; });
+        }
+
+        function updateCartCount() {
+            document.getElementById('cart-count').textContent = cartSeats.length;
+        }
+
+        function updateSVGSeatsAndLabels() {
+            // Переместить rect в конец группы
+            document.querySelectorAll('#svg-container g').forEach(function(g) {
+                const rects = g.querySelectorAll('rect[data-row][data-seat]');
+                rects.forEach(function(rect) {
+                    g.appendChild(rect);
+                });
+            });
+
+            // Удалить все старые подписи
+            document.querySelectorAll('#svg-container text.svg-seat-label').forEach(function(label) {
+                label.remove();
+            });
+
+            // Добавить подписи для всех доступных мест
+            document.querySelectorAll('#svg-container rect[data-row][data-seat]').forEach(function(rect) {
+                const row = parseInt(rect.getAttribute('data-row'));
+                const seat = parseInt(rect.getAttribute('data-seat'));
+                if (isSeatAvailable(row, seat)) {
+                    const x = parseFloat(rect.getAttribute('x')) + parseFloat(rect.getAttribute('width')) / 2;
+                    const y = parseFloat(rect.getAttribute('y')) + parseFloat(rect.getAttribute('height')) / 2;
+                    const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    label.setAttribute('x', x);
+                    label.setAttribute('y', y);
+                    label.setAttribute('data-row', row);
+                    label.setAttribute('data-seat', seat);
+                    label.setAttribute('class', 'svg-seat-label');
+                    label.textContent = seat;
+                    rect.parentNode.appendChild(label);
+                }
+            });
+
+            // Подсветка и обработчики клика
+            document.querySelectorAll('#svg-container rect[data-row][data-seat]').forEach(function(rect) {
+                const row = parseInt(rect.getAttribute('data-row'));
+                const seat = parseInt(rect.getAttribute('data-seat'));
+                var seatInfo = availableSeats.find(function(s) { return s.row == row && s.seat == seat; });
+                var price = seatInfo ? seatInfo.price : 0;
+                var match_id = seatInfo ? seatInfo.match_id : "{{ match.slug }}";
+                var sector_name = seatInfo ? seatInfo.sector_name : "{{ sector_name }}";
+
+                // Удаляем все старые обработчики клика (cloneNode)
+                const newRect = rect.cloneNode(true);
+                rect.parentNode.replaceChild(newRect, rect);
+            });
+
+            // Повторно навешиваем обработчики клика и обновляем цвета
+            document.querySelectorAll('#svg-container rect[data-row][data-seat]').forEach(function(rect) {
+                const row = parseInt(rect.getAttribute('data-row'));
+                const seat = parseInt(rect.getAttribute('data-seat'));
+                var seatInfo = availableSeats.find(function(s) { return s.row == row && s.seat == seat; });
+                var price = seatInfo ? seatInfo.price : 0;
+                var match_id = seatInfo ? seatInfo.match_id : "{{ match.slug }}";
+                var sector_name = seatInfo ? seatInfo.sector_name : "{{ sector_name }}";
+
+                if (isSeatInCart(row, seat)) {
+                    rect.style.fill = '#d1aaff'; // светло-фиолетовый
+                    rect.style.stroke = '#4B006E';
+                    rect.style.cursor = 'pointer';
+                } else if (isSeatAvailable(row, seat)) {
+                    rect.style.fill = '#ae6ceb';
+                    rect.style.stroke = '#4B006E';
+                    rect.style.cursor = 'pointer';
+                } else {
+                    rect.style.fill = '#d1d5db';
+                    rect.style.stroke = '#bbb';
+                    rect.style.cursor = 'not-allowed';
+                }
+
+                rect.addEventListener('click', function() {
+                    if (isSeatAvailable(row, seat)) {
+                        if (isSeatInCart(row, seat)) {
+                            // Удалить из корзины
+                            cartSeats = cartSeats.filter(function(s) {
+                                return !(s.row == row && s.seat == seat && s.sector_name == sector_name && s.match_id == match_id);
+                            });
+                            localStorage.setItem('cart', JSON.stringify(cartSeats));
+                            cartSeats = JSON.parse(localStorage.getItem('cart')) || [];
+                            updateSVGSeatsAndLabels();
+                            updateCartCount();
+                        } else {
+                            // Добавить в корзину
+                            cartSeats.push({
+                                row: row,
+                                seat: seat,
+                                price: price,
+                                sector_name: sector_name,
+                                match_id: match_id,
+                                reservationTime: Date.now()
+                            });
+                            localStorage.setItem('cart', JSON.stringify(cartSeats));
+                            cartSeats = JSON.parse(localStorage.getItem('cart')) || [];
+                            updateSVGSeatsAndLabels();
+                            updateCartCount();
+                            showNotification('Место добавлено в корзину!');
+                        }
+                    }
+                });
+            });
+
+            updateCartCount();
+            // Больше не скрываю тултип после обновления SVG
+            // Навешиваю обработчики на новые элементы после обновления SVG
+            document.querySelectorAll('#svg-container rect[data-row][data-seat]').forEach(function(rect) {
+                rect.onmousemove = function(e) {
+                    const row = rect.getAttribute('data-row');
+                    const seat = rect.getAttribute('data-seat');
+                    const seatInfo = availableSeats.find(s => s.row == row && s.seat == seat);
+                    if (!seatInfo) return;
+                    const tooltip = document.getElementById('seat-tooltip');
+                    tooltip.querySelector('.sector-name').textContent = `Сектор {{ sector_name }}`;
+                    tooltip.querySelector('#tooltip-row').textContent = row;
+                    tooltip.querySelector('#tooltip-seat').textContent = seat;
+                    tooltip.querySelector('#tooltip-price').textContent = seatInfo.price;
+                    tooltip.style.display = 'block';
+                    const tooltipRect = tooltip.getBoundingClientRect();
+                    let left = e.pageX - tooltipRect.width / 2;
+                    let top = e.pageY - tooltipRect.height - 12;
+                    if (left < 0) left = 10;
+                    if (left + tooltipRect.width > window.innerWidth) left = window.innerWidth - tooltipRect.width - 10;
+                    if (top < 0) top = e.pageY + 12;
+                    tooltip.style.left = left + 'px';
+                    tooltip.style.top = top + 'px';
+                };
+                rect.onmouseleave = function() {
+                    const tooltip = document.getElementById('seat-tooltip');
+                    tooltip.style.display = 'none';
+                };
+            });
+        }
+
+        // Всплывающее уведомление
+        function showNotification(message) {
+            let notif = document.createElement('div');
+            notif.textContent = message;
+            notif.style.position = 'fixed';
+            notif.style.top = '30px';
+            notif.style.left = '50%';
+            notif.style.transform = 'translateX(-50%)';
+            notif.style.background = '#34C759';
+            notif.style.color = '#fff';
+            notif.style.padding = '12px 24px';
+            notif.style.borderRadius = '8px';
+            notif.style.fontWeight = 'bold';
+            notif.style.zIndex = 9999;
+            document.body.appendChild(notif);
+            setTimeout(function() { notif.remove(); }, 1200);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSVGSeatsAndLabels();
+        });
+
+        // Форматирование даты как в tickets.html
+        function formatDate(dateString, timeString) {
+            const months = [
+                'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня',
+                'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'
+            ];
+            const date = new Date(dateString + (timeString ? 'T' + timeString : ''));
+            const day = date.getDate();
+            const month = months[date.getMonth()];
+            const year = date.getFullYear();
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            return `${day} ${month} ${year}, ${hours}:${minutes}`;
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateElem = document.getElementById('match-date');
+            if (dateElem) {
+                dateElem.textContent = formatDate("{{ match.date }}", "{{ match.time|default('00:00') }}");
+            }
+        });
+
+        // Глобально сохраняем координаты мыши
+        window._lastMouse = window._lastMouse || {x: 0, y: 0};
+        document.addEventListener('mousemove', function(e) {
+            window._lastMouse = {x: e.clientX, y: e.clientY, pageX: e.pageX, pageY: e.pageY};
+        });
+    </script>
 </body>
 </html>

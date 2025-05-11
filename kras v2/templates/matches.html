@@ -258,7 +258,15 @@
                         {% set _ = available_sectors.append(sector) %}
                     {% endif %}
                 {% endfor %}
-                {% set min_price = available_sectors | map(attribute='price') | min | default(1500) %}
+                {% set prices = [] %}
+                {% for sector in available_sectors %}
+                    {% for seat in sector.seats %}
+                        {% if seat.available %}
+                            {% set _ = prices.append(seat.price) %}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                {% set min_price = prices | min | default(1500) %}
                 {% set date_parts = match.date.split('-') %}
                 {% set year = date_parts[0] %}
                 {% set month_num = date_parts[1] | int %}
@@ -281,7 +289,7 @@
                     <div class="match-info">
                         <p class="match-teams">{{ match.teams }}</p>
                         <p class="match-details">{{ match.tournament | default('Футбол') }}</p>
-                        <a href="/tickets/{{ match.id }}" 
+                        <a href="/tickets/{{ match.slug }}" 
                            class="buy-button {% if not available_sectors %}disabled{% endif %}" 
                            {% if not available_sectors %}disabled onclick="return false;"{% endif %}>
                             {% if not available_sectors %}

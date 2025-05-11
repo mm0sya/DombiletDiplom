@@ -86,10 +86,8 @@
             Array.from(matchElements).forEach(matchElement => {
                 const matchTournament = matchElement.getAttribute('data-tournament') || 'РПЛ';
                 const matchDate = matchElement.getAttribute('data-date');
-
                 const matchesTournament = selectedTournament === 'Все лиги' || matchTournament === selectedTournament;
                 const matchesDate = !selectedDate || matchDate === selectedDate;
-
                 if (matchesTournament && matchesDate) {
                     matchElement.style.display = 'block';
                 } else {
@@ -122,6 +120,17 @@
                 console.error("Ошибка:", error);
                 alert("Не удалось удалить матч");
             });
+        }
+
+        function toggleShowInactive() {
+            const showInactive = document.getElementById('show-inactive').checked;
+            const url = new URL(window.location.href);
+            if (showInactive) {
+                url.searchParams.set('show_inactive', '1');
+            } else {
+                url.searchParams.delete('show_inactive');
+            }
+            window.location.href = url.toString();
         }
 
         window.onload = function() {
@@ -179,7 +188,13 @@
         </div>
 
         <div class="section-box">
-            <h2 class="text-2xl font-bold mb-4">Сектора матчей</h2>
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold">Сектора матчей</h2>
+                <div class="flex items-center ml-4">
+                    <input type="checkbox" id="show-inactive" class="mr-2" onchange="toggleShowInactive()" {% if request.query_params.get('show_inactive') in ['1', 'true', 'True'] %}checked{% endif %}>
+                    <label for="show-inactive" class="text-sm font-medium text-gray-700 select-none cursor-pointer">Показывать неактивные</label>
+                </div>
+            </div>
             <div class="mb-4 flex space-x-4">
                 <div class="flex-1">
                     <label for="tournament-filter" class="block text-sm font-medium text-gray-700">Фильтр по турниру</label>
@@ -197,18 +212,26 @@
             </div>
             <div id="matches-list">
                 {% for match in matches %}
-                    <div class="match-item border rounded p-4 mb-4" data-tournament="{{ match.tournament | default('РПЛ') }}" data-date="{{ match.date }}">
-                        <h3 class="text-xl font-semibold">{{ match.teams }} - {{ match.date }} {{ match.time }} ({{ match.tournament | default('РПЛ') }})</h3>
+                    <div class="match-item border rounded p-4 mb-4" data-tournament="{{ match.tournament | default('РПЛ') }}" data-date="{{ match.date }}" data-active="{{ match.is_active|default(true) }}">
+                        <h3 class="text-xl font-semibold">{{ match.teams }} - {{ match.date }} {{ match.time }} ({{ match.tournament | default('РПЛ') }}) {% if not match.is_active %}<span class="text-red-500 text-sm ml-2">(неактивен)</span>{% endif %}</h3>
                         <ul class="mt-2">
                             {% for sector in match.sectors %}
+                                {% set prices = sector.seats | map(attribute='price') | list %}
+                                {% set min_price = prices|min if prices else 0 %}
+                                {% set max_price = prices|max if prices else 0 %}
                                 <li>
-                                    Сектор: {{ sector.name }} (доступно: {{ sector.seats | selectattr('available', 'equalto', true) | list | length }} шт.) - {{ sector.price }} ₽
+                                    Сектор: {{ sector.name }} (доступно: {{ sector.seats | selectattr('available', 'equalto', true) | list | length }} шт.) -
+                                    {% if min_price == max_price %}
+                                        {{ min_price }} ₽
+                                    {% else %}
+                                        {{ min_price }}–{{ max_price }} ₽
+                                    {% endif %}
                                 </li>
                             {% endfor %}
                         </ul>
                         <div class="mt-2 space-x-4">
-                            <a href="/admin-panel/edit_match/{{ match.id }}" class="text-blue-500 hover:underline">Редактировать</a>
-                            <button onclick="deleteMatch('{{ match.id }}')" class="text-red-500 hover:underline">Удалить</button>
+                            <a href="/admin-panel/edit_match/{{ match.slug }}" class="text-blue-500 hover:underline">Редактировать</a>
+                            <button onclick="deleteMatch('{{ match.slug }}')" class="text-red-500 hover:underline">Удалить</button>
                         </div>
                     </div>
                 {% endfor %}
