@@ -1,51 +1,6 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Редактировать матч</title>
-    <link rel="icon" href="/static/image/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="/static/css/styles.css">
-    <script src="https://cdn.tailwindcss.com"></script>
+{% extends "base.html" %}
+{% block title %}Редактирование матча{% endblock %}
+{% block head %}
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -113,6 +68,46 @@
             background-color: #2EB648;
         }
     </style>
+    <script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+            return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+    
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+    
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                    row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                    headerRowIndex = 0;
+                }
+    
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+    </script>
     <script>
         var pendingSeatChanges = {};
         var totalSeats = 0;
@@ -131,7 +126,7 @@
             }
         }
 
-        async function updateSectorPrice(matchId, sectorName, formId) {
+        async function updateSectorPrice(matchSlug, sectorName, formId) {
             const form = document.getElementById(formId);
             const priceInput = form.querySelector('input[name="price"]');
             const newPrice = priceInput.value;
@@ -142,7 +137,7 @@
             }
 
             try {
-                const response = await fetch(`/admin-panel/edit_sector/${matchId}/${sectorName}`, {
+                const response = await fetch(`/admin-panel/edit_sector/${matchSlug}/${sectorName}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -167,7 +162,7 @@
             let availableCount = 0;
             seats.forEach(seat => {
                 const seatNumber = seat.closest('li')?.querySelector('.seat-item')?.getAttribute('data-number') ||
-                                  seat.closest('.seat-item')?.getAttribute('data-number');
+                                seat.closest('.seat-item')?.getAttribute('data-number');
                 const isPendingOccupied = pendingSeatChanges[sectorId]?.[seatNumber] === 'occupied';
                 const isPendingAvailable = pendingSeatChanges[sectorId]?.[seatNumber] === 'available';
                 
@@ -188,7 +183,7 @@
                 const seats = document.querySelectorAll(`#sector-${sectorId} .seat-status`);
                 seats.forEach(seat => {
                     const seatNumber = seat.closest('li')?.querySelector('.seat-item')?.getAttribute('data-number') ||
-                                      seat.closest('.seat-item')?.getAttribute('data-number');
+                                    seat.closest('.seat-item')?.getAttribute('data-number');
                     const isPendingOccupied = pendingSeatChanges[sectorId]?.[seatNumber] === 'occupied';
                     const isPendingAvailable = pendingSeatChanges[sectorId]?.[seatNumber] === 'available';
                     
@@ -204,7 +199,7 @@
             }
         }
 
-        function toggleSeatStatus(matchId, sectorName, seatNumber, action, buttonElement) {
+        function toggleSeatStatus(matchSlug, sectorName, seatNumber, action, buttonElement) {
             const statusSpan = buttonElement.closest('li').querySelector('.seat-status');
             const liElement = buttonElement.closest('li');
             const currentStatus = statusSpan.textContent === 'Свободно' ? 'available' : 'occupied';
@@ -238,13 +233,13 @@
                 buttonElement.textContent = 'Активировать';
                 buttonElement.classList.remove('text-red-500');
                 buttonElement.classList.add('text-green-500');
-                buttonElement.onclick = () => toggleSeatStatus(matchId, sectorName, seatNumber, 'activate', buttonElement);
+                buttonElement.onclick = () => toggleSeatStatus(matchSlug, sectorName, seatNumber, 'activate', buttonElement);
             } else {
                 statusSpan.textContent = 'Свободно';
                 buttonElement.textContent = 'Деактивировать';
                 buttonElement.classList.remove('text-green-500');
                 buttonElement.classList.add('text-red-500');
-                buttonElement.onclick = () => toggleSeatStatus(matchId, sectorName, seatNumber, 'deactivate', buttonElement);
+                buttonElement.onclick = () => toggleSeatStatus(matchSlug, sectorName, seatNumber, 'deactivate', buttonElement);
             }
 
             updateAvailableSeats(sectorName);
@@ -275,12 +270,14 @@
             document.querySelectorAll('.sector-seats').forEach(sector => {
                 const sectorData = JSON.parse(sector.getAttribute('data-sector'));
                 const sectorId = sectorData.sectorName;
-                const matchId = sectorData.matchId;
+                const matchSlug = sectorData.matchId;
                 const sectorPrice = parseInt(sector.getAttribute('data-price'));
                 const seats = Array.from(sector.querySelectorAll('.seat-item')).map(seat => ({
                     number: parseInt(seat.getAttribute('data-number')),
                     available: seat.getAttribute('data-available') === 'true' || seat.getAttribute('data-available') === 'True',
-                    deleteUrl: seat.getAttribute('data-delete-url')
+                    deleteUrl: seat.getAttribute('data-delete-url'),
+                    price: seat.getAttribute('data-price') ? Number(seat.getAttribute('data-price')) : 0,
+                    originalPrice: seat.getAttribute('data-price') ? Number(seat.getAttribute('data-price')) : 0
                 }));
 
                 const rows = {};
@@ -309,10 +306,11 @@
                             <ul class="ml-4 mt-2">
                                 ${localSeats.map(seat => `
                                     <li class="flex justify-between items-center py-1">
-                                        <span>Место ${seat.localNumber}: <span class="seat-status">${seat.available ? 'Свободно' : 'Занято'}</span></span>
+                                        <span>Место ${seat.localNumber}: <span class="seat-status">${seat.available ? 'Свободно' : 'Занято'}</span> <span class="seat-price">${typeof seat.price !== 'undefined' && seat.price !== null ? seat.price : 0} ₽</span></span>
                                         <div class="flex items-center space-x-2">
-                                            <button onclick="toggleSeatStatus('${matchId}', '${sectorId}', ${seat.number}, '${seat.available ? 'deactivate' : 'activate'}', this)" class="${seat.available ? 'text-red-500' : 'text-green-500'} hover:underline">${seat.available ? 'Деактивировать' : 'Активировать'}</button>
-                                            <a href="${seat.deleteUrl}" class="text-red-500 hover:underline">Удалить</a>
+                                            <button onclick="startEditSeatPrice(this, '${sectorId}', ${seat.number}, ${seat.originalPrice})" class="text-blue-500 hover:underline mx-1">Изменить цену</button>
+                                            <button onclick="toggleSeatStatus('${matchSlug}', '${sectorId}', ${seat.number}, '${seat.available ? 'deactivate' : 'activate'}', this)" class="${seat.available ? 'text-red-500' : 'text-green-500'} hover:underline">${seat.available ? 'Деактивировать' : 'Активировать'}</button>
+                                            <a href="/admin-panel/deactivate_seat/${matchSlug}/${sectorId}/${seat.number}" class="text-red-500 hover:underline">Удалить</a>
                                         </div>
                                     </li>
                                 `).join('')}
@@ -326,6 +324,42 @@
             });
             restoreToggleState();
             updateTotalSeats();
+        }
+
+        function startEditSeatPrice(button, sectorId, seatNumber, currentPrice) {
+            const li = button.closest('li');
+            const priceSpan = li.querySelector('.seat-price');
+            button.style.display = 'none';
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.value = currentPrice;
+            input.min = 1;
+            input.className = 'border rounded p-1 w-20 mx-2';
+            input.style.width = '70px';
+            const okBtn = document.createElement('button');
+            okBtn.textContent = 'Ок';
+            okBtn.className = 'text-green-500 hover:underline mx-1';
+            okBtn.onclick = function() {
+                const newPrice = Number(input.value.trim());
+                if (!newPrice || isNaN(newPrice) || newPrice <= 0) {
+                    alert('Пожалуйста, введите корректную цену (положительное число).');
+                    return;
+                }
+                if (!pendingSeatChanges[sectorId]) pendingSeatChanges[sectorId] = {};
+                if (!pendingSeatChanges[sectorId][seatNumber]) pendingSeatChanges[sectorId][seatNumber] = {};
+                const statusSpan = li.querySelector('.seat-status');
+                const currentStatus = statusSpan.textContent === 'Свободно' ? 'available' : 'occupied';
+                pendingSeatChanges[sectorId][seatNumber].price = newPrice;
+                pendingSeatChanges[sectorId][seatNumber].status = currentStatus;
+                li.classList.add('pending-change');
+                priceSpan.textContent = newPrice + ' ₽';
+                input.remove();
+                okBtn.remove();
+                button.style.display = '';
+            };
+            priceSpan.parentNode.appendChild(input);
+            priceSpan.parentNode.appendChild(okBtn);
+            input.focus();
         }
 
         window.onload = function() {
@@ -348,12 +382,12 @@
                     }
 
                     if (Object.keys(pendingSeatChanges).length > 0) {
-                        const matchId = '{{ match.id }}';
+                        const matchSlug = '{{ match.slug }}';
                         const payload = {
                             seat_changes: pendingSeatChanges,
                             total_seats: totalSeats
                         };
-                        const response = await fetch(`/admin-panel/update_seats/${matchId}`, {
+                        const response = await fetch(`/admin-panel/update_seats/${matchSlug}`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -382,31 +416,28 @@
             });
         };
     </script>
-</head>
-<body class="light-gray">
-    <header class="dark-green text-white p-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center">
-                <img src="/static/image/favicon.ico" alt="Логотип ФК Краснодар" class="h-10 mr-4">
-                <nav class="flex space-x-8">
-                    <a href="/" class="hover:underline">Главная</a>
-                    <a href="/matches" class="hover:underline">Матчи</a>
-                    <a href="/stadium" class="hover:underline">Стадион</a>
-                </nav>
-            </div>
-            <div class="flex items-center space-x-4">
-                <a href="/admin-panel" class="hover:underline">{{ username }}</a>
-                <a href="/admin-panel/logout" class="hover:underline">Выход</a>
-            </div>
-        </div>
-    </header>
+{% endblock %}
+
+{% block user_menu %}
+    <a href="/admin-panel" class="hover:underline">{{ username }}</a>
+    <a href="/admin-panel/logout" class="hover:underline">Выход</a>
+{% endblock %}
+
+{% block content %}
     <main class="max-w-7xl mx-auto p-4">
         <div class="section-box">
             <h2 class="section-title">Основная информация</h2>
-            <form id="edit-match-form" method="POST" action="/admin-panel/edit_match/{{ match.id }}" enctype="multipart/form-data" class="mb-6">
+            <form id="edit-match-form" method="POST" action="/admin-panel/edit_match/{{ match.slug }}" enctype="multipart/form-data" class="mb-6">
                 <div class="mb-4">
-                    <label for="teams" class="block text-sm font-medium text-gray-700">Команды</label>
+                    <div class="flex items-center mb-4">
+                        <label for="is_active" class="mr-2 font-medium">Активен</label>
+                        <input type="checkbox" id="is_active" name="is_active" {% if match.is_active %}checked{% endif %}>
+                    </div>
                     <input type="text" id="teams" name="teams" value="{{ match.teams }}" required class="mt-1 block w-full border rounded p-2">
+                    <div class="flex items-center mt-2">
+                        <label for="slug" class="mr-2 font-medium">URL (транслит)</label>
+                        <input type="text" id="slug" name="slug" value="{{ match.slug }}" class="block w-full border rounded p-2" style="max-width: 400px;">
+                    </div>
                 </div>
                 <div class="mb-4">
                     <label for="date" class="block text-sm font-medium text-gray-700">Дата</label>
@@ -444,21 +475,17 @@
                             </h4>
                             <div class="flex items-center space-x-2">
                                 <div class="w-full max-w-md flex items-center">
-                                    <form id="price-form-{{ sector.name }}" class="flex items-center w-full">
-                                        <input type="number" name="price" placeholder="Новая цена" class="mt-1 block w-full border rounded p-2 mr-2" value="{{ sector.price }}" min="1" required>
-                                        <button type="button" onclick="updateSectorPrice('{{ match.id }}', '{{ sector.name }}', 'price-form-{{ sector.name }}')" class="text-blue-500 hover:underline whitespace-nowrap">Изменить</button>
-                                    </form>
-                                    <form method="POST" action="/admin-panel/delete_sector/{{ match.id }}/{{ sector.name }}" class="ml-4">
+                                    <form method="POST" action="/admin-panel/delete_sector/{{ match.slug }}/{{ sector.name }}" class="ml-4">
                                         <button type="submit" class="text-red-500 hover:underline whitespace-nowrap">Удалить</button>
                                     </form>
                                 </div>
                             </div>
                         </div>
                         <div id="sector-{{ sector.name }}" class="toggle-content">
-                            <div class="sector-seats" data-sector='{"matchId": "{{ match.id }}", "sectorName": "{{ sector.name }}"}' data-price="{{ sector.price }}">
+                            <div class="sector-seats" data-sector='{"matchId": "{{ match.slug }}", "sectorName": "{{ sector.name }}"}' data-price="{{ sector.price }}">
                                 {% if sector.seats %}
                                     {% for seat in sector.seats %}
-                                        <div class="seat-item" data-number="{{ seat.number }}" data-available="{{ 'true' if seat.available else 'false' }}" data-delete-url="/admin-panel/delete_seat/{{ match.id }}/{{ sector.name }}/{{ seat.number }}"></div>
+                                        <div class="seat-item" data-number="{{ seat.number }}" data-available="{{ 'true' if seat.available else 'false' }}" data-delete-url="/admin-panel/deactivate_seat/{{ match.slug }}/{{ sector.name }}/{{ seat.number }}" data-price="{{ seat.price }}"></div>
                                     {% endfor %}
                                 {% else %}
                                     <p>Нет мест в этом секторе.</p>
@@ -470,25 +497,9 @@
             {% else %}
                 <p>Сектора отсутствуют.</p>
             {% endif %}
-        </div>
-
-        <div class="section-box">
-            <h2 class="section-title">Добавление сектора</h2>
-            <form method="POST" action="/admin-panel/add_sector/{{ match.id }}" class="mb-6">
-                <div class="mb-4">
-                    <label for="sector_name" class="block text-sm font-medium text-gray-700">Название сектора</label>
-                    <input type="text" id="sector_name" name="sector_name" required class="mt-1 block w-full border rounded p-2">
-                </div>
-                <div class="mb-4">
-                    <label for="rows_and_seats" class="block text-sm font-medium text-gray-700">Ряды и места (например, 20:14-18,23:16,27)</label>
-                    <input type="text" id="rows_and_seats" name="rows_and_seats" required class="mt-1 block w-full border rounded p-2">
-                </div>
-                <div class="mb-4">
-                    <label for="price" class="block text-sm font-medium text-gray-700">Цена билета (₽)</label>
-                    <input type="number" id="price" name="price" required class="mt-1 block w-full border rounded p-2">
-                </div>
-                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Добавить сектор</button>
-            </form>
+            <div class="mt-4">
+                <a href="/admin-panel/bulk_add_sectors/{{ match.slug }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Добавить сектора</a>
+            </div>
         </div>
 
         <div class="mt-6">
@@ -496,7 +507,4 @@
             <a href="/admin-panel" class="back-button text-white px-4 py-2 rounded ml-4 inline-block text-base">Назад</a>
         </div>
     </main>
-    <footer class="bg-gray-800 text-white p-4 text-center mt-6">
-        <p>© 2025 ФК Краснодар. Все права защищены.</p>
-    </footer>
-</html>
+{% endblock %}

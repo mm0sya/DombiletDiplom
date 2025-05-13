@@ -1,90 +1,7 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
+{% extends 'base.html' %}
+{% block title %}Матчи ФК Краснодар{% endblock %}
 
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Матчи ФК Краснодар</title>
-    <link rel="icon" href="/static/image/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="/static/css/styles.css">
-    <script src="https://cdn.tailwindcss.com"></script>
+{% block head %}
     <style>
         .match-card {
             border-radius: 12px;
@@ -206,23 +123,9 @@
             filterMatches();
         };
     </script>
-</head>
-<body class="light-gray">
-    <header class="dark-green text-white p-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center">
-                <img src="/static/image/favicon.ico" alt="Логотип ФК Краснодар" class="h-10 mr-4" loading="lazy">
-                <nav class="flex space-x-8">
-                    <a href="/" class="hover:underline">Главная</a>
-                    <a href="/matches" class="hover:underline">Матчи</a>
-                    <a href="/stadium" class="hover:underline">Стадион</a>
-                </nav>
-            </div>
-            <div>
-                <a href="/cart" class="hover:underline">Корзина (<span id="cart-count">0</span>)</a>
-            </div>
-        </div>
-    </header>
+{% endblock %}
+
+{% block content %}
     <main class="max-w-7xl mx-auto p-6">
         <h2 class="text-3xl font-bold mb-6 text-center">Билеты и расписание матчей футбольного клуба Краснодар</h2>
         <div class="flex justify-between mb-4 ">
@@ -258,7 +161,15 @@
                         {% set _ = available_sectors.append(sector) %}
                     {% endif %}
                 {% endfor %}
-                {% set min_price = available_sectors | map(attribute='price') | min | default(1500) %}
+                {% set prices = [] %}
+                {% for sector in available_sectors %}
+                    {% for seat in sector.seats %}
+                        {% if seat.available %}
+                            {% set _ = prices.append(seat.price) %}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                {% set min_price = prices | min | default(1500) %}
                 {% set date_parts = match.date.split('-') %}
                 {% set year = date_parts[0] %}
                 {% set month_num = date_parts[1] | int %}
@@ -281,7 +192,7 @@
                     <div class="match-info">
                         <p class="match-teams">{{ match.teams }}</p>
                         <p class="match-details">{{ match.tournament | default('Футбол') }}</p>
-                        <a href="/tickets/{{ match.id }}" 
+                        <a href="/tickets/{{ match.slug }}" 
                            class="buy-button {% if not available_sectors %}disabled{% endif %}" 
                            {% if not available_sectors %}disabled onclick="return false;"{% endif %}>
                             {% if not available_sectors %}
@@ -295,9 +206,4 @@
             {% endfor %}
         </div>
     </main>
-    <footer class="bg-gray-800 text-white p-4 text-center mt-6">
-        <div class="max-w-7xl mx-auto">
-            <p>© 2025 ФК Краснодар. Все права защищены.</p>
-        </div>
-    </footer>
-</html>
+{% endblock %}

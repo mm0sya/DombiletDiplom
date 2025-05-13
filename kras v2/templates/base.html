@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ФК Краснодар{% endblock %}</title>
+    <link rel="icon" href="/static/image/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    {% block head %}{% endblock %}
+</head>
+<body class="light-gray">
+    <header class="dark-green text-white p-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="/static/image/favicon.ico" alt="Логотип ФК Краснодар" class="h-10 mr-4" loading="lazy">
+                <nav class="flex space-x-8">
+                    <a href="/" class="hover:underline">Главная</a>
+                    <a href="/matches" class="hover:underline">Матчи</a>
+                    <a href="/stadium" class="hover:underline">Стадион</a>
+                </nav>
+            </div>
+            <div>
+                {% block user_menu %}
+                    <a href="/cart" class="hover:underline">Корзина (<span id="cart-count">0</span>)</a>
+                {% endblock %}
+            </div>
+        </div>
+    </header>
+    
+    {% block content %}{% endblock %}
+    
+    <footer class="bg-gray-800 text-white p-4 text-center mt-6">
+        <div class="max-w-7xl mx-auto">
+            <p>&copy; 2025 ФК Краснодар. Все права защищены.</p>
+        </div>
+    </footer>
+</body>
+</html> 
