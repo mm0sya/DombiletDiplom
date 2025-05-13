@@ -7,7 +7,7 @@ from typing import Optional
 import motor.motor_asyncio
 import os
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import traceback
 from bson import ObjectId
@@ -163,7 +163,6 @@ async def get_sector_view(request: Request, match_slug: str, sector_name: str):
     if not match:
         raise HTTPException(status_code=404, detail="Match not found")
     match = convert_objectid_to_str(match)
-    # ... предыдущий код ...
     for sector in match["sectors"]:
         if sector["name"] == sector_name:
             if not sector.get("seats"):
@@ -377,7 +376,7 @@ async def submit_contact(
             "name": name,
             "phone": phone,
             "email": email,
-            "timestamp": datetime.utcnow()
+            "timestamp": datetime.utcnow() + timedelta(hours=3)
         }
         await contact_requests_collection.insert_one(contact_request)
         return RedirectResponse(url="/?success=true", status_code=303)
