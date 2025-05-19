@@ -75,11 +75,10 @@
                                 {% if sector.seats %}
                                     {% for seat in sector.seats %}
                                         <div class="seat-item"
-                                             data-number="{{ seat.number }}"
                                              data-row="{{ seat.row if seat.row is defined else '' }}"
                                              data-seat="{{ seat.seat if seat.seat is defined else '' }}"
                                              data-available="{{ 'true' if seat.available else 'false' }}"
-                                             data-delete-url="/admin-panel/deactivate_seat/{{ match.slug }}/{{ sector.name }}/{{ seat.number }}"
+                                             data-delete-url="/admin-panel/deactivate_seat/{{ match.slug }}/{{ sector.name }}/{{ seat.row }}/{{ seat.seat }}"
                                              data-price="{{ seat.price }}"></div>
                                     {% endfor %}
                                 {% else %}

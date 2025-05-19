@@ -278,30 +278,32 @@ async def delete_match_route(
     response.headers["Expires"] = "0"
     return response
 
-@admin_router.get("/deactivate_seat/{match_slug}/{sector_name}/{seat_number}", response_class=RedirectResponse)
+@admin_router.get("/deactivate_seat/{match_slug}/{sector_name}/{row}/{seat}", response_class=RedirectResponse)
 async def deactivate_seat_route(
     request: Request,
     match_slug: str,
     sector_name: str,
-    seat_number: int,
+    row: int,
+    seat: int,
     admin: dict = Depends(get_current_admin)
 ):
-    await deactivate_seat(match_slug, sector_name, seat_number, matches_collection)
+    await deactivate_seat(match_slug, sector_name, row, seat, matches_collection)
     response = RedirectResponse(url=f"/admin-panel/edit_match/{match_slug}", status_code=303)
     response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "0"
     return response
 
-@admin_router.get("/activate_seat/{match_slug}/{sector_name}/{seat_number}", response_class=RedirectResponse)
+@admin_router.get("/activate_seat/{match_slug}/{sector_name}/{row}/{seat}", response_class=RedirectResponse)
 async def activate_seat_route(
     request: Request,
     match_slug: str,
     sector_name: str,
-    seat_number: int,
+    row: int,
+    seat: int,
     admin: dict = Depends(get_current_admin)
 ):
-    await activate_seat(match_slug, sector_name, seat_number, matches_collection)
+    await activate_seat(match_slug, sector_name, row, seat, matches_collection)
     response = RedirectResponse(url=f"/admin-panel/edit_match/{match_slug}", status_code=303)
     response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
     response.headers["Pragma"] = "no-cache"
@@ -325,17 +327,18 @@ async def delete_sector_route(request: Request, match_slug: str, sector_name: st
     await delete_sector(match_slug, sector_name, matches_collection)
     return RedirectResponse(url=f"/admin-panel/edit_match/{match_slug}", status_code=303)
 
-@admin_router.post("/update_seat_price/{match_slug}/{sector_name}/{seat_number}", response_class=JSONResponse)
+@admin_router.post("/update_seat_price/{match_slug}/{sector_name}/{row}/{seat}", response_class=JSONResponse)
 async def update_seat_price_route(
     request: Request,
     match_slug: str,
     sector_name: str,
-    seat_number: int,
+    row: int,
+    seat: int,
     admin: dict = Depends(get_current_admin)
 ):
     data = await request.json()
     new_price = data.get("price")
-    await update_seat_price(match_slug, sector_name, seat_number, new_price, matches_collection)
+    await update_seat_price(match_slug, sector_name, row, seat, new_price, matches_collection)
     return {"status": "success"}
 
 @admin_router.get("/admin-panel/", include_in_schema=False)

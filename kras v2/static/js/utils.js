@@ -453,23 +453,24 @@ function updateTotalSeats() {
     }
 }
 
-function toggleSeatStatus(matchSlug, sectorName, seatNumber, action, buttonElement) {
+function toggleSeatStatus(matchSlug, sectorName, row, seat, action, buttonElement) {
     const statusSpan = buttonElement.closest('li').querySelector('.seat-status');
     const liElement = buttonElement.closest('li');
     const currentStatus = statusSpan.textContent === 'Свободно' ? 'available' : 'occupied';
+    const seatKey = `${row}-${seat}`;
     if (!pendingSeatChanges[sectorName]) {
         pendingSeatChanges[sectorName] = {};
     }
-    if (!pendingSeatChanges[sectorName][seatNumber]?.originalStatus) {
-        pendingSeatChanges[sectorName][seatNumber] = {
+    if (!pendingSeatChanges[sectorName][seatKey]?.originalStatus) {
+        pendingSeatChanges[sectorName][seatKey] = {
             originalStatus: currentStatus,
             status: currentStatus
         };
     }
     const newStatus = action === 'deactivate' ? 'occupied' : 'available';
-    pendingSeatChanges[sectorName][seatNumber].status = newStatus;
-    if (pendingSeatChanges[sectorName][seatNumber].status === pendingSeatChanges[sectorName][seatNumber].originalStatus) {
-        delete pendingSeatChanges[sectorName][seatNumber];
+    pendingSeatChanges[sectorName][seatKey].status = newStatus;
+    if (pendingSeatChanges[sectorName][seatKey].status === pendingSeatChanges[sectorName][seatKey].originalStatus) {
+        delete pendingSeatChanges[sectorName][seatKey];
         liElement.classList.remove('pending-change');
         if (Object.keys(pendingSeatChanges[sectorName]).length === 0) {
             delete pendingSeatChanges[sectorName];
@@ -482,13 +483,13 @@ function toggleSeatStatus(matchSlug, sectorName, seatNumber, action, buttonEleme
         buttonElement.textContent = 'Активировать';
         buttonElement.classList.remove('text-red-500');
         buttonElement.classList.add('text-green-500');
-        buttonElement.onclick = () => toggleSeatStatus(matchSlug, sectorName, seatNumber, 'activate', buttonElement);
+        buttonElement.onclick = () => toggleSeatStatus(matchSlug, sectorName, row, seat, 'activate', buttonElement);
     } else {
         statusSpan.textContent = 'Свободно';
         buttonElement.textContent = 'Деактивировать';
         buttonElement.classList.remove('text-green-500');
         buttonElement.classList.add('text-red-500');
-        buttonElement.onclick = () => toggleSeatStatus(matchSlug, sectorName, seatNumber, 'deactivate', buttonElement);
+        buttonElement.onclick = () => toggleSeatStatus(matchSlug, sectorName, row, seat, 'deactivate', buttonElement);
     }
     updateAvailableSeats(sectorName);
 }
@@ -523,7 +524,6 @@ function groupSeatsByRows() {
         const seats = Array.from(sector.querySelectorAll('.seat-item')).map(seat => ({
             row: parseInt(seat.getAttribute('data-row')),
             seat: parseInt(seat.getAttribute('data-seat')),
-            number: parseInt(seat.getAttribute('data-number')), // на всякий случай
             available: seat.getAttribute('data-available') === 'true' || seat.getAttribute('data-available') === 'True',
             deleteUrl: seat.getAttribute('data-delete-url'),
             price: seat.getAttribute('data-price') ? Number(seat.getAttribute('data-price')) : 0,
@@ -555,9 +555,9 @@ function groupSeatsByRows() {
                             <li class="flex justify-between items-center py-1">
                                 <span>Место ${seat.seat}: <span class="seat-status">${seat.available ? 'Свободно' : 'Занято'}</span> <span class="seat-price">${typeof seat.price !== 'undefined' && seat.price !== null ? seat.price : 0} ₽</span></span>
                                 <div class="flex items-center space-x-2">
-                                    <button onclick="startEditSeatPrice(this, '${sectorId}', ${seat.number}, ${seat.originalPrice})" class="text-blue-500 hover:underline mx-1">Изменить цену</button>
-                                    <button onclick="toggleSeatStatus('${matchSlug}', '${sectorId}', ${seat.number}, '${seat.available ? 'deactivate' : 'activate'}', this)" class="${seat.available ? 'text-red-500' : 'text-green-500'} hover:underline">${seat.available ? 'Деактивировать' : 'Активировать'}</button>
-                                    <a href="/admin-panel/deactivate_seat/${matchSlug}/${sectorId}/${seat.number}" class="text-red-500 hover:underline">Удалить</a>
+                                    <button onclick="startEditSeatPrice(this, '${sectorId}', ${rowNumber}, ${seat.seat}, ${seat.originalPrice})" class="text-blue-500 hover:underline mx-1">Изменить цену</button>
+                                    <button onclick="toggleSeatStatus('${matchSlug}', '${sectorId}', ${rowNumber}, ${seat.seat}, '${seat.available ? 'deactivate' : 'activate'}', this)" class="${seat.available ? 'text-red-500' : 'text-green-500'} hover:underline">${seat.available ? 'Деактивировать' : 'Активировать'}</button>
+                                    <a href="/admin-panel/deactivate_seat/${matchSlug}/${sectorId}/${rowNumber}/${seat.seat}" class="text-red-500 hover:underline">Удалить</a>
                                 </div>
                             </li>
                         `).join('')}
@@ -572,7 +572,7 @@ function groupSeatsByRows() {
     updateTotalSeats();
 }
 
-function startEditSeatPrice(button, sectorId, seatNumber, currentPrice) {
+function startEditSeatPrice(button, sectorId, row, seat, currentPrice) {
     const li = button.closest('li');
     const priceSpan = li.querySelector('.seat-price');
     button.style.display = 'none';
@@ -591,12 +591,13 @@ function startEditSeatPrice(button, sectorId, seatNumber, currentPrice) {
             alert('Пожалуйста, введите корректную цену (положительное число).');
             return;
         }
+        const seatKey = `${row}-${seat}`;
         if (!pendingSeatChanges[sectorId]) pendingSeatChanges[sectorId] = {};
-        if (!pendingSeatChanges[sectorId][seatNumber]) pendingSeatChanges[sectorId][seatNumber] = {};
+        if (!pendingSeatChanges[sectorId][seatKey]) pendingSeatChanges[sectorId][seatKey] = {};
         const statusSpan = li.querySelector('.seat-status');
         const currentStatus = statusSpan.textContent === 'Свободно' ? 'available' : 'occupied';
-        pendingSeatChanges[sectorId][seatNumber].price = newPrice;
-        pendingSeatChanges[sectorId][seatNumber].status = currentStatus;
+        pendingSeatChanges[sectorId][seatKey].price = newPrice;
+        pendingSeatChanges[sectorId][seatKey].status = currentStatus;
         li.classList.add('pending-change');
         priceSpan.textContent = newPrice + ' ₽';
         input.remove();
