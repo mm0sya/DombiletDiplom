@@ -44,6 +44,13 @@
                         <option value="Товарищеские матчи" {{ 'selected' if match.tournament == 'Товарищеские матчи' else '' }}>Товарищеские матчи</option>
                     </select>
                 </div>
+                <div class="mb-4 flex items-center gap-2">
+                    <div class="flex-1">
+                        <label for="official_url" class="block text-sm font-medium text-gray-700">Ссылка на официальный сайт</label>
+                        <input type="url" id="official_url" name="official_url" value="{{ match.official_url | default('') }}" class="mt-1 block w-full border rounded p-2" placeholder="https://ticket.fckrasnodar.ru/...">
+                    </div>
+                    <button type="button" class="cta-button mt-6" onclick="runManualParse('{{ match.slug }}')">Парсинг</button>
+                </div>
                 <div class="mb-4">
                     <label for="image" class="block text-sm font-medium text-gray-700">Изображение</label>
                     <input type="file" id="image" name="image" class="mt-1 block w-full">
@@ -101,4 +108,18 @@
             <a href="/admin-panel" class="back-button ml-2">Назад</a>
         </div>
     </main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function runManualParse(slug) {
+    if (!confirm('Запустить парсинг для этого матча?')) return;
+    fetch(`/admin-panel/manual_parse/${slug}`, {method: 'POST'})
+        .then(r => r.json())
+        .then(data => {
+            alert(data.status === 'ok' ? 'Парсинг успешно завершён!' : ('Ошибка: ' + (data.error || 'Неизвестная ошибка')));
+        })
+        .catch(e => alert('Ошибка: ' + e));
+}
+</script>
 {% endblock %}

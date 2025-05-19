@@ -16,6 +16,7 @@ from app.utils.validators import validate_password
 from app.core.security import fernet
 from app.config import SUPERADMIN_USERNAME, SUPERADMIN_PASSWORD_ENCRYPTED
 from fastapi.templating import Jinja2Templates
+from pars import parse_match as run_parse_match
 
 templates = Jinja2Templates(directory="templates")
 
@@ -217,9 +218,10 @@ async def add_match_route(
     tournament: str = Form(...),
     slug: str = Form(None),
     image: Optional[UploadFile] = File(None),
+    official_url: str = Form(None),
     admin: dict = Depends(get_current_admin)
 ):
-    await add_match(teams, date, time, tournament, slug, image, matches_collection, translit)
+    await add_match(teams, date, time, tournament, slug, image, matches_collection, translit, official_url)
     response = RedirectResponse(url="/admin-panel", status_code=303)
     response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
     response.headers["Pragma"] = "no-cache"
@@ -255,10 +257,11 @@ async def edit_match_route(
     is_active: Optional[str] = Form(None),
     slug: str = Form(None),
     image: Optional[UploadFile] = File(None),
+    official_url: str = Form(None),
     admin: dict = Depends(get_current_admin)
 ):
     is_active_bool = is_active == "true"
-    await edit_match(match_slug, teams, date, time, tournament, is_active_bool, slug, image, matches_collection, translit)
+    await edit_match(match_slug, teams, date, time, tournament, is_active_bool, slug, image, matches_collection, translit, official_url)
     response = RedirectResponse(url="/admin-panel", status_code=303)
     response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
     response.headers["Pragma"] = "no-cache"
@@ -360,6 +363,18 @@ async def delete_seat_route(
 @admin_router.get("/admin-panel/", include_in_schema=False)
 async def redirect_admin_panel():
     return RedirectResponse(url="/admin-panel")
+
+@admin_router.post("/manual_parse/{match_slug}", response_class=JSONResponse)
+async def manual_parse_match(match_slug: str):
+    from app.database.mongodb import matches_collection
+    match = await matches_collection.find_one({"slug": match_slug})
+    if not match or not match.get("official_url"):
+        return {"status": "error", "error": "Нет ссылки на официальный сайт"}
+    try:
+        await run_parse_match(match, matches_collection)
+        return {"status": "ok"}
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
 
 def verify_password(plain_password: str, encrypted_password: str) -> bool:
     try:

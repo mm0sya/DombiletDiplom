@@ -123,7 +123,8 @@ async def bulk_add_sectors(match_slug, sector_data, matches_collection):
             "row": int(row),
             "seat": seat_num,
             "available": True,
-            "price": int(price)
+            "price": int(price),
+            "source": "manual"
         } for seat_num in seat_numbers]
         
         for sector in match["sectors"]:

@@ -48,7 +48,7 @@ async def get_matches(query, matches_collection):
                 pass
     return matches
 
-async def add_match(teams, date, time, tournament, slug, image, matches_collection, translit):
+async def add_match(teams, date, time, tournament, slug, image, matches_collection, translit, official_url=None):
     match_id = str(await matches_collection.count_documents({}) + 1)
     image_filename = "default_match.jpg"
     if image and image.filename:
@@ -66,12 +66,13 @@ async def add_match(teams, date, time, tournament, slug, image, matches_collecti
         "image": image_filename,
         "sectors": [],
         "is_active": True,
-        "slug": slug
+        "slug": slug,
+        "official_url": official_url
     }
     await matches_collection.insert_one(match)
     return match
 
-async def edit_match(match_slug, teams, date, time, tournament, is_active, slug, image, matches_collection, translit):
+async def edit_match(match_slug, teams, date, time, tournament, is_active, slug, image, matches_collection, translit, official_url=None):
     match = await matches_collection.find_one({"slug": match_slug})
     if not match:
         raise NotFoundException("Match not found")
@@ -89,6 +90,7 @@ async def edit_match(match_slug, teams, date, time, tournament, is_active, slug,
         with open(f"static/backgrounds/{image_filename}", "wb") as f:
             f.write(await image.read())
         update_data["image"] = image_filename
+    update_data["official_url"] = official_url
     await matches_collection.update_one({"slug": match_slug}, {"$set": update_data})
     return update_data
 
