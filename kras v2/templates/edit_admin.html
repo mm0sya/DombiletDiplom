@@ -3,61 +3,6 @@
 
 
 {% block head %}
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .dark-green {
-            background-color: #1A3C34;
-        }
-        .dark-green:hover {
-            background-color: #2A5C4A;
-        }
-        .light-gray {
-            background-color: #F5F7FA;
-        }
-        .section-box {
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 16px;
-            background-color: white;
-        }
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #1A3C34;
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 8px;
-        }
-        .back-button {
-            background-color: #5A606E;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 4px;
-            transition: background-color 0.2s;
-            text-decoration: none;
-        }
-        .back-button:hover {
-            background-color: #4A505E;
-        }
-        .bg-green-500 {
-            background-color: #34C759;
-        }
-        .hover\:bg-green-600:hover {
-            background-color: #2EB648;
-        }
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #1f2937; /* Tailwind bg-gray-800 */
-        }
-        main {
-            padding-bottom: 60px; /* Высота футера */
-        }
-    </style>
     <script type="text/javascript">
         var gk_isXlsx = false;
         var gk_xlsxFileLookup = {};
@@ -116,6 +61,7 @@
             return true;
         }
     </script>
+    <link rel="stylesheet" href="/static/css/set_admin.css">
 {% endblock %}
 
 {% block user_menu %}
@@ -138,7 +84,7 @@
                     <input type="password" id="password" name="password" class="mt-1 block w-full border rounded p-2">
                 </div>
                 <div class="flex space-x-4">
-                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Сохранить</button>
+                    <button type="submit" class="cta-button">Сохранить</button>
                     <a href="/admin-panel/set-admin" class="back-button">Назад</a>
                 </div>
             </form>
