@@ -78,7 +78,7 @@
                                              data-row="{{ seat.row if seat.row is defined else '' }}"
                                              data-seat="{{ seat.seat if seat.seat is defined else '' }}"
                                              data-available="{{ 'true' if seat.available else 'false' }}"
-                                             data-delete-url="/admin-panel/deactivate_seat/{{ match.slug }}/{{ sector.name }}/{{ seat.row }}/{{ seat.seat }}"
+                                             data-delete-url="/admin-panel/delete_seat/{{ match.slug }}/{{ sector.name }}/{{ seat.row }}/{{ seat.seat }}"
                                              data-price="{{ seat.price }}"></div>
                                     {% endfor %}
                                 {% else %}

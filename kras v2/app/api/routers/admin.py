@@ -6,7 +6,7 @@ import re
 from datetime import datetime, timedelta
 import os
 from transliterate import translit
-from app.services.admin_service import login_admin, create_admin, edit_admin, delete_admin, bulk_add_sectors, deactivate_seat, activate_seat, update_seats, delete_sector, update_seat_price
+from app.services.admin_service import login_admin, create_admin, edit_admin, delete_admin, bulk_add_sectors, deactivate_seat, activate_seat, update_seats, delete_sector, update_seat_price, delete_seat
 from app.utils.exceptions import NotFoundException, BadRequestException, ForbiddenException
 from app.core.dependencies import get_current_admin
 from app.services.match_service import get_matches, add_match, edit_match, delete_match, get_match_for_edit
@@ -340,6 +340,22 @@ async def update_seat_price_route(
     new_price = data.get("price")
     await update_seat_price(match_slug, sector_name, row, seat, new_price, matches_collection)
     return {"status": "success"}
+
+@admin_router.get("/delete_seat/{match_slug}/{sector_name}/{row}/{seat}", response_class=RedirectResponse)
+async def delete_seat_route(
+    request: Request,
+    match_slug: str,
+    sector_name: str,
+    row: int,
+    seat: int,
+    admin: dict = Depends(get_current_admin)
+):
+    await delete_seat(match_slug, sector_name, row, seat, matches_collection)
+    response = RedirectResponse(url=f"/admin-panel/edit_match/{match_slug}", status_code=303)
+    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    return response
 
 @admin_router.get("/admin-panel/", include_in_schema=False)
 async def redirect_admin_panel():

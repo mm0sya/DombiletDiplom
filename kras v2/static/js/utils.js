@@ -557,7 +557,7 @@ function groupSeatsByRows() {
                                 <div class="flex items-center space-x-2">
                                     <button onclick="startEditSeatPrice(this, '${sectorId}', ${rowNumber}, ${seat.seat}, ${seat.originalPrice})" class="text-blue-500 hover:underline mx-1">Изменить цену</button>
                                     <button onclick="toggleSeatStatus('${matchSlug}', '${sectorId}', ${rowNumber}, ${seat.seat}, '${seat.available ? 'deactivate' : 'activate'}', this)" class="${seat.available ? 'text-red-500' : 'text-green-500'} hover:underline">${seat.available ? 'Деактивировать' : 'Активировать'}</button>
-                                    <a href="/admin-panel/deactivate_seat/${matchSlug}/${sectorId}/${rowNumber}/${seat.seat}" class="text-red-500 hover:underline">Удалить</a>
+                                    <a href="/admin-panel/delete_seat/${matchSlug}/${sectorId}/${rowNumber}/${seat.seat}" class="text-red-500 hover:underline">Удалить</a>
                                 </div>
                             </li>
                         `).join('')}

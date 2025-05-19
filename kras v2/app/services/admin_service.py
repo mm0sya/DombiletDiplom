@@ -218,3 +218,17 @@ async def update_seat_price(match_slug, sector_name, row, seat, new_price, match
             raise NotFoundException("Место не найдено в секторе")
     raise NotFoundException("Сектор не найден")
 
+async def delete_seat(match_slug, sector_name, row, seat, matches_collection):
+    match = await matches_collection.find_one({"slug": match_slug})
+    if not match:
+        raise NotFoundException("Match not found")
+    for sector in match["sectors"]:
+        if sector["name"] == sector_name:
+            original_len = len(sector["seats"])
+            sector["seats"] = [st for st in sector["seats"] if not (st["row"] == row and st["seat"] == seat)]
+            if len(sector["seats"]) == original_len:
+                raise NotFoundException(f"Место {row}-{seat} не найдено в секторе")
+            await matches_collection.update_one({"slug": match_slug}, {"$set": {"sectors": match["sectors"]}})
+            return True
+    raise NotFoundException("Сектор не найден")
+
