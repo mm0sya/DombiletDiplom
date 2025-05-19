@@ -2,15 +2,6 @@
 {% block title %}Редактирование матча{% endblock %}
 {% block head %}
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .dark-green {
-            background-color: #1A3C34;
-        }
-        .dark-green:hover {
-            background-color: #2A5C4A;
-        }
         .light-gray {
             background-color: #F5F7FA;
         }
@@ -431,7 +422,7 @@
                 <div class="mb-4">
                     <div class="flex items-center mb-4">
                         <label for="is_active" class="mr-2 font-medium">Активен</label>
-                        <input type="checkbox" id="is_active" name="is_active" {% if match.is_active %}checked{% endif %}>
+                        <input type="checkbox" name="is_active" value="true" {% if match.is_active %}checked{% endif %}>
                     </div>
                     <input type="text" id="teams" name="teams" value="{{ match.teams }}" required class="mt-1 block w-full border rounded p-2">
                     <div class="flex items-center mt-2">
