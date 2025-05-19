@@ -1,232 +1,17 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
+{% extends 'base.html' %}
+{% block title %}Матчи ФК Краснодар{% endblock %}
 
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Матчи ФК Краснодар</title>
-    <link rel="icon" href="/static/image/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="/static/css/styles.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .match-card {
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-            background-color: white;
-            width: 100%;
-            max-width: 400px;
-        }
-        .match-card:hover {
-            transform: translateY(-4px);
-        }
-        .match-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-        .match-date-overlay {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: rgba(0, 0, 0, 0.6);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .match-price-overlay {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background-color: #34C759;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .match-info {
-            padding: 20px;
-        }
-        .match-teams {
-            font-size: 24px;
-            font-weight: 700;
-            color: #1F2937;
-            margin-bottom: 4px;
-        }
-        .match-details {
-            font-size: 14px;
-            color: #6B7280;
-            margin-bottom: 12px;
-        }
-        .buy-button {
-            display: block;
-            width: 100%;
-            background-color: #34C759;
-            color: white;
-            padding: 12px;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 16px;
-            text-align: center;
-            transition: background-color 0.3s;
-        }
-        .buy-button:hover {
-            background-color: #2EB648;
-        }
-        .buy-button.disabled {
-            background-color: #d1d5db;
-            cursor: not-allowed;
-        }
-        .bold-option {
-            font-weight: bold;
-        }
-        .w-full {
-            width: 1280px;
-        }
-    </style>
-    <script src="/static/js/utils.js"></script>
+{% block head %}
     <script>
-        function filterMatches() {
-            const dateFrom = document.getElementById('date-from').value;
-            const dateTo = document.getElementById('date-to').value;
-            const tournamentFilter = document.getElementById('tournament-filter').value;
-            const searchQuery = document.getElementById('search-query').value.toLowerCase();
-            const matchCards = document.querySelectorAll('.match-card');
-            
-            matchCards.forEach(card => {
-                const matchDate = card.dataset.date;
-                const matchTournament = card.dataset.tournament;
-                const matchTeams = card.querySelector('.match-teams').textContent.toLowerCase();
-                
-                // Фильтр по дате
-                let dateMatch = true;
-                if (dateFrom && matchDate < dateFrom) {
-                    dateMatch = false;
-                }
-                if (dateTo && matchDate > dateTo) {
-                    dateMatch = false;
-                }
-                
-                // Фильтр по турниру
-                const tournamentMatch = tournamentFilter === 'all' || matchTournament === tournamentFilter;
-                
-                // Фильтр по поисковому запросу
-                const searchMatch = searchQuery === '' || matchTeams.includes(searchQuery);
-                
-                // Показываем карточку, если все фильтры совпадают
-                if (dateMatch && tournamentMatch && searchMatch) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-
-        window.onload = function() {
-            updateCartCount();
-            filterMatches();
-        };
+        window.onload = matchesOnLoad;
     </script>
-</head>
-<body class="light-gray">
-    <header class="dark-green text-white p-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center">
-                <img src="/static/image/favicon.ico" alt="Логотип ФК Краснодар" class="h-10 mr-4" loading="lazy">
-                <nav class="flex space-x-8">
-                    <a href="/" class="hover:underline">Главная</a>
-                    <a href="/matches" class="hover:underline">Матчи</a>
-                    <a href="/stadium" class="hover:underline">Стадион</a>
-                </nav>
-            </div>
-            <div>
-                <a href="/cart" class="hover:underline">Корзина (<span id="cart-count">0</span>)</a>
-            </div>
-        </div>
-    </header>
+{% endblock %}
+
+{% block content %}
     <main class="max-w-7xl mx-auto p-6">
         <h2 class="text-3xl font-bold mb-6 text-center">Билеты и расписание матчей футбольного клуба Краснодар</h2>
         <div class="flex justify-between mb-4 ">
-            <input type="text" id="search-query" class="border rounded p-2 w-full" placeholder="🔎 Поиск по командам..." oninput="filterMatches()">
+            <input type="text" id="search-query" class="border rounded p-2" style="width: 100%;" placeholder="🔎 Поиск по командам..." oninput="filterMatches()">
         </div>
         <div class="flex justify-between mb-4">
             <div class="flex space-x-2">
@@ -258,7 +43,15 @@
                         {% set _ = available_sectors.append(sector) %}
                     {% endif %}
                 {% endfor %}
-                {% set min_price = available_sectors | map(attribute='price') | min | default(1500) %}
+                {% set prices = [] %}
+                {% for sector in available_sectors %}
+                    {% for seat in sector.seats %}
+                        {% if seat.available %}
+                            {% set _ = prices.append(seat.price) %}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                {% set min_price = prices | min | default(1500) %}
                 {% set date_parts = match.date.split('-') %}
                 {% set year = date_parts[0] %}
                 {% set month_num = date_parts[1] | int %}
@@ -281,7 +74,7 @@
                     <div class="match-info">
                         <p class="match-teams">{{ match.teams }}</p>
                         <p class="match-details">{{ match.tournament | default('Футбол') }}</p>
-                        <a href="/tickets/{{ match.id }}" 
+                        <a href="/tickets/{{ match.slug }}" 
                            class="buy-button {% if not available_sectors %}disabled{% endif %}" 
                            {% if not available_sectors %}disabled onclick="return false;"{% endif %}>
                             {% if not available_sectors %}
@@ -295,9 +88,4 @@
             {% endfor %}
         </div>
     </main>
-    <footer class="bg-gray-800 text-white p-4 text-center mt-6">
-        <div class="max-w-7xl mx-auto">
-            <p>© 2025 ФК Краснодар. Все права защищены.</p>
-        </div>
-    </footer>
-</html>
+{% endblock %}

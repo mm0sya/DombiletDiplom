@@ -1,304 +1,16 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
+{% extends 'base.html' %}
 
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
+{% block title %}ФК Краснодар{% endblock %}
 
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ФК Краснодар</title>
-    <link rel="icon" href="/static/image/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="/static/css/styles.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .hero-section {
-            background-image: url('/static/image/hero-bg.jpg');
-            background-size: cover;
-            background-position: center;
-            height: 600px;
-            display: flex;
-            justify-content: center;
-            color: white;
-            text-align: center;
-            position: relative; /* Необходимо для позиционирования ::before */
-            padding: 6rem 1rem;
-        }
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.3));
-            z-index: 1;
-        }
-        .hero-section > div {
-            position: relative;
-            z-index: 2; /* Контент поверх затемнения */
-        }
-        .hero-section h1 {
-            font-size: 3rem;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            color: white;
-        }
-
-        .hero-section h1 {
-            font-size: 3rem;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            color: white;
-        }
-        .hero-section p {
-            font-size: 1.5rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-            color: #d1fae5;
-        }
-        .cta-button {
-            background-color: #34C759;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 4px;
-            transition: background-color 0.2s;
-        }
-        .cta-button:hover {
-            background-color: #2EB648;
-        }
-        .all-matches-button {
-            background-color: #34C759;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-        .all-matches-button:hover {
-            background-color: #2EB648;
-        }
-        .bold-option {
-            font-weight: bold;
-        }
-        .advantage-card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 1.5rem;
-        }
-        .match-card {
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-            background-color: white;
-            width: 100%;
-            max-width: 400px;
-        }
-        .match-card:hover {
-            transform: translateY(-4px);
-        }
-        .match-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-        .match-date-overlay {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: rgba(0, 0, 0, 0.6);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .match-price-overlay {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background-color: #34C759;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .match-info {
-            padding: 20px;
-        }
-        .match-teams {
-            font-size: 24px;
-            font-weight: 700;
-            color: #1F2937;
-            margin-bottom: 4px;
-        }
-        .match-details {
-            font-size: 14px;
-            color: #6B7280;
-            margin-bottom: 12px;
-        }
-        .buy-button {
-            display: block;
-            width: 100%;
-            background-color: #34C759;
-            color: white;
-            padding: 12px;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 16px;
-            text-align: center;
-            transition: background-color 0.3s;
-        }
-        .buy-button:hover {
-            background-color: #2EB648;
-        }
-        .buy-button.disabled {
-            background-color: #d1d5db;
-            cursor: not-allowed;
-        }
-        .faq-item {
-            border-bottom: 1px solid #e5e7eb;
-            padding-bottom: 1rem;
-            margin-bottom: 1rem;
-        }
-        .faq-item:last-child {
-            border-bottom: none;
-        }
-        .faq-item h3 {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: #1f2937;
-        }
-        .faq-item p {
-            color: #4b5563;
-        }
-        .highlighted-section {
-            border: 2px solid #e2f2e8;
-            background-color: #e2f2e8;
-            border-radius: 8px;
-            padding: 1rem;
-        }
-    </style>
-    <script src="/static/js/utils.js"></script>
+{% block head %}
     <script>
-        function toggleFAQ(id) {
-            const element = document.getElementById(id);
-            const arrow = element.previousElementSibling.querySelector('svg');
-            if (element.classList.contains('hidden')) {
-                element.classList.remove('hidden');
-                arrow.classList.add('rotate-180');
-            } else {
-                element.classList.add('hidden');
-                arrow.classList.remove('rotate-180');
-            }
-        }
-
-        window.onload = function() {
-            updateCartCount();
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('success') === 'true') {
-                alert('Заявка успешно отправлена!');
-                // Удаляем параметр success из URL
-                urlParams.delete('success');
-                const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '');
-                window.history.replaceState({}, document.title, newUrl);
-            }
-        };
+        window.onload = indexOnLoad;
     </script>
-</head>
-<body class="light-gray">
-    <header class="dark-green text-white p-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center">
-                <img src="/static/image/favicon.ico" alt="Логотип ФК Краснодар" class="h-10 mr-4" loading="lazy">
-                <nav class="flex space-x-8">
-                    <a href="/" class="hover:underline">Главная</a>
-                    <a href="/matches" class="hover:underline">Матчи</a>
-                    <a href="/stadium" class="hover:underline">Стадион</a>
-                </nav>
-            </div>
-            <div>
-                <a href="/cart" class="hover:underline">Корзина (<span id="cart-count">0</span>)</a>
-            </div>
-        </div>
-    </header>
-    <section class="hero-section mb-8">
+    <link rel="stylesheet" href="/static/css/index.css">
+{% endblock %}
+
+{% block content %}
+    <section class="hero-section">
         <div>
             <h1>Добро пожаловать в ФК Краснодар!</h1>
             <p class="mb-6">Покупайте билеты на матчи и поддерживайте свою команду!</p>
@@ -318,7 +30,15 @@
                         {% set _ = available_sectors.append(sector) %}
                     {% endif %}
                 {% endfor %}
-                {% set min_price = available_sectors | map(attribute='price') | min | default(1500) %}
+                {% set prices = [] %}
+                {% for sector in available_sectors %}
+                    {% for seat in sector.seats %}
+                        {% if seat.available %}
+                            {% set _ = prices.append(seat.price) %}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                {% set min_price = prices | min | default(1500) %}
                 {% set date_parts = match.date.split('-') %}
                 {% set year = date_parts[0] %}
                 {% set month_num = date_parts[1] | int %}
@@ -341,7 +61,7 @@
                     <div class="match-info">
                         <p class="match-teams">{{ match.teams }}</p>
                         <p class="match-details">{{ match.tournament | default('Футбол') }}</p>
-                        <a href="/tickets/{{ match.id }}" 
+                        <a href="/tickets/{{ match.slug }}" 
                            class="buy-button {% if not available_sectors %}disabled{% endif %}" 
                            {% if not available_sectors %}disabled onclick="return false;"{% endif %}>
                             {% if not available_sectors %}
@@ -355,7 +75,7 @@
             {% endfor %}
         </div>
         <div class="text-center mt-7">
-            <a href="/matches" class="all-matches-button inline-flex items-center">
+            <a href="/matches" class="cta-button inline-flex items-center">
                 Ко всем мероприятиям
                 <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -399,6 +119,22 @@
             </div>
         </div>
     </section>
+
+    <!-- Блок с фотографиями стадиона и болельщиков -->
+    <section class="max-w-7xl mx-auto p-4 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="md:row-span-2">
+                <img src="/static/image/stadium.jpg" alt="Ozon-арена" class="w-full h-full object-cover rounded-xl shadow-lg" style="min-height:320px; max-height:420px;">
+            </div>
+            <div>
+                <img src="/static/image/stadium1.jpg" alt="Ночная Ozon-арена" class="w-full h-48 object-cover rounded-xl shadow-lg mb-4">
+            </div>
+            <div>
+                <img src="/static/image/stadium2.jpg" alt="Вид сверху на стадион" class="w-full h-48 object-cover rounded-xl shadow-lg">
+            </div>
+        </div>
+    </section>
+
     <section class="max-w-7xl mx-auto p-4 mb-8 border rounded-lg border-gray-300" style="min-width: 1280px;">
         <h2 class="text-2xl font-bold mb-5">Часто задаваемые вопросы</h2>
         <div class="space-y-4">
@@ -462,13 +198,8 @@
                     <input type="checkbox" id="consent" name="consent" class="mr-2" required>
                     <label for="consent" class="text-gray-800 text-sm">Я даю согласие на обработку персональных данных, а также соглашаюсь с условиями договора оферты</label>
                 </div>
-                <button type="submit" class="all-matches-button text-white px-6 py-2 rounded">Оставить заявку</button>
+                <button type="submit" class="cta-button text-white px-6 py-2 rounded">Оставить заявку</button>
             </form>
         </div>
     </section>
-    <footer class="bg-gray-800 text-white p-4 text-center">
-        <div class="max-w-7xl mx-auto">
-            <p>© 2025 ФК Краснодар. Все права защищены.</p>
-        </div>
-    </footer>
-</html>
+{% endblock %}

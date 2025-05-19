@@ -1,161 +1,18 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
+{% extends "base.html" %}
+{% block title %}Управление администраторами{% endblock %}
 
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
 
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
+{% block head %}
+    <link rel="stylesheet" href="/static/css/set_admin.css">
+{% endblock %}
 
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Управление администраторами</title>
-    <link rel="icon" href="/static/image/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="/static/css/styles.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .dark-green {
-            background-color: #1A3C34;
-        }
-        .dark-green:hover {
-            background-color: #2A5C4A;
-        }
-        .light-gray {
-            background-color: #F5F7FA;
-        }
-        .section-box {
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 16px;
-            background-color: white;
-        }
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #1A3C34;
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 8px;
-        }
-        .bg-green-500 {
-            background-color: #34C759;
-        }
-        .hover\:bg-green-600:hover {
-            background-color: #2EB648;
-        }
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #1f2937; /* Tailwind bg-gray-800 */
-        }
-        main {
-            padding-bottom: 60px; /* Высота футера */
-        }
-    </style>
-    <script>
-        function validateForm() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const usernameRegex = /^[a-zA-Z0-9_-]+$/;
-            const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{}|;:,.<>?])[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{}|;:,.<>?]{8,}$/;
+{% block user_menu %}
+    <a href="/admin-panel" class="hover:underline">{{ username }}</a>
+    <a href="/admin-panel/logout" class="hover:underline">Выход</a>
+{% endblock %}
 
-            if (!usernameRegex.test(username)) {
-                alert('Имя пользователя должно содержать только латинские буквы, цифры, подчеркивания или дефисы.');
-                return false;
-            }
-            if (!passwordRegex.test(password)) {
-                alert('Пароль должен быть не короче 8 символов, содержать минимум одну заглавную латинскую букву и один специальный символ.');
-                return false;
-            }
-            return true;
-        }
 
-        function deleteAdmin(adminId, role) {
-            if (role === 'superadmin') {
-                alert('Нельзя удалить superadmin.');
-                return;
-            }
-            if (!confirm('Вы уверены, что хотите удалить этого администратора?')) {
-                return;
-            }
-
-            fetch(`/admin-panel/set-admin/delete/${adminId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Ошибка удаления');
-                }
-                return response;
-            })
-            .then(() => {
-                window.location.reload();
-            })
-            .catch(error => {
-                console.error('Ошибка:', error);
-                alert('Не удалось удалить администратора');
-            });
-        }
-    </script>
-</head>
-<body class="light-gray">
-    <header class="dark-green text-white p-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center">
-                <img src="/static/image/favicon.ico" alt="Логотип ФК Краснодар" class="h-10 mr-4" loading="lazy">
-                <nav class="flex space-x-8">
-                    <a href="/" class="hover:underline">Главная</a>
-                    <a href="/matches" class="hover:underline">Матчи</a>
-                    <a href="/stadium" class="hover:underline">Стадион</a>
-                </nav>
-            </div>
-            <div class="flex items-center space-x-4">
-                <a href="/admin-panel" class="hover:underline">{{ username }}</a>
-                <a href="/admin-panel/logout" class="hover:underline">Выход</a>
-            </div>
-        </div>
-    </header>
+{% block content %}
     <main class="max-w-7xl mx-auto p-4">
         <div class="section-box">
             <h2 class="section-title">Добавить нового администратора</h2>
@@ -168,7 +25,7 @@
                     <label for="password" class="block text-sm font-medium text-gray-700">Пароль</label>
                     <input type="password" id="password" name="password" class="mt-1 block w-full border rounded p-2" required>
                 </div>
-                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Создать</button>
+                <button type="submit" class="cta-button">Создать</button>
             </form>
         </div>
 
@@ -203,8 +60,4 @@
             {% endif %}
         </div>
     </main>
-    <footer class="bg-gray-800 text-white p-4 text-center">
-        <p>© 2025 ФК Краснодар. Все права защищены.</p>
-    </footer>
-</body>
-</html>
+{% endblock %}
