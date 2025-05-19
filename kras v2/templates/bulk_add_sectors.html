@@ -7,21 +7,6 @@
             justify-content: center;
         }
     </style>
-    <script>
-        function addRow() {
-            const tbody = document.getElementById('sector-rows');
-            const firstRow = tbody.querySelector('tr');
-            const newRow = firstRow.cloneNode(true);
-            newRow.querySelectorAll('input').forEach(input => input.value = '');
-            tbody.appendChild(newRow);
-        }
-        function removeRow(btn) {
-            const tbody = document.getElementById('sector-rows');
-            if (tbody.rows.length > 1) {
-                btn.closest('tr').remove();
-            }
-        }
-        </script>
 {% endblock %}
 {% block user_menu %}
     <a href="/admin-panel" class="hover:underline">{{ username }}</a>

@@ -2,117 +2,21 @@
 {% block title %}Админ-панель{% endblock %}
 {% block head %}
     <style>
-    .highlighted-section {
-        margin-bottom: 26px;
-        background-color: #ffffff;
-    }
+        .highlighted-section {
+            margin-bottom: 26px;
+            background-color: #ffffff;
+        }
     </style>
-    <script src="/static/js/utils.js"></script>
-    <script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-            return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-    
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-    
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                    row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                    headerRowIndex = 0;
-                }
-    
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-    </script>
     <script>
-        function filterMatches() {
-            const selectedTournament = document.getElementById('tournament-filter').value;
-            const selectedDate = document.getElementById('date-filter').value;
-            const matchElements = document.getElementsByClassName('match-item');
-
-            Array.from(matchElements).forEach(matchElement => {
-                const matchTournament = matchElement.getAttribute('data-tournament') || 'РПЛ';
-                const matchDate = matchElement.getAttribute('data-date');
-                const matchesTournament = selectedTournament === 'Все лиги' || matchTournament === selectedTournament;
-                const matchesDate = !selectedDate || matchDate === selectedDate;
-                if (matchesTournament && matchesDate) {
-                    matchElement.style.display = 'block';
-                } else {
-                    matchElement.style.display = 'none';
-                }
-            });
-        }
-
-        function deleteMatch(matchId) {
-            if (!confirm("Вы уверены, что хотите удалить этот матч?")) {
-                return;
-            }
-
-            fetch(`/admin-panel/delete_match/${matchId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Ошибка удаления');
-                }
-                return response;
-            })
-            .then(() => {
-                window.location.href = "/admin-panel";
-            })
-            .catch(error => {
-                console.error("Ошибка:", error);
-                alert("Не удалось удалить матч");
-            });
-        }
-
-        function toggleShowInactive() {
-            const showInactive = document.getElementById('show-inactive').checked;
-            const url = new URL(window.location.href);
-            if (showInactive) {
-                url.searchParams.set('show_inactive', '1');
-            } else {
-                url.searchParams.delete('show_inactive');
-            }
-            window.location.href = url.toString();
-        }
-
-        window.onload = function() {
-            filterMatches();
-        };
+        window.onload = adminPanelOnLoad;
     </script>
 {% endblock %}
+
 {% block user_menu %}
     <a href="/admin-panel" class="hover:underline">{{ username }}</a>
     <a href="/admin-panel/logout" class="hover:underline">Выход</a>
 {% endblock %}
+
 {% block content %}
     <main class="max-w-7xl mx-auto p-4">
         <div class="highlighted-section">

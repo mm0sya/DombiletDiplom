@@ -2,48 +2,8 @@
 {% block title %}Матчи ФК Краснодар{% endblock %}
 
 {% block head %}
-    <script src="/static/js/utils.js"></script>
     <script>
-        function filterMatches() {
-            const dateFrom = document.getElementById('date-from').value;
-            const dateTo = document.getElementById('date-to').value;
-            const tournamentFilter = document.getElementById('tournament-filter').value;
-            const searchQuery = document.getElementById('search-query').value.toLowerCase();
-            const matchCards = document.querySelectorAll('.match-card');
-            
-            matchCards.forEach(card => {
-                const matchDate = card.dataset.date;
-                const matchTournament = card.dataset.tournament;
-                const matchTeams = card.querySelector('.match-teams').textContent.toLowerCase();
-                
-                // Фильтр по дате
-                let dateMatch = true;
-                if (dateFrom && matchDate < dateFrom) {
-                    dateMatch = false;
-                }
-                if (dateTo && matchDate > dateTo) {
-                    dateMatch = false;
-                }
-                
-                // Фильтр по турниру
-                const tournamentMatch = tournamentFilter === 'all' || matchTournament === tournamentFilter;
-                
-                // Фильтр по поисковому запросу
-                const searchMatch = searchQuery === '' || matchTeams.includes(searchQuery);
-                
-                // Показываем карточку, если все фильтры совпадают
-                if (dateMatch && tournamentMatch && searchMatch) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-
-        window.onload = function() {
-            updateCartCount();
-            filterMatches();
-        };
+        window.onload = matchesOnLoad;
     </script>
 {% endblock %}
 

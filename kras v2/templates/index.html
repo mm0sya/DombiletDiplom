@@ -3,31 +3,8 @@
 {% block title %}ФК Краснодар{% endblock %}
 
 {% block head %}
-    <script src="/static/js/utils.js"></script>
     <script>
-        function toggleFAQ(id) {
-            const element = document.getElementById(id);
-            const arrow = element.previousElementSibling.querySelector('svg');
-            if (element.classList.contains('hidden')) {
-                element.classList.remove('hidden');
-                arrow.classList.add('rotate-180');
-            } else {
-                element.classList.add('hidden');
-                arrow.classList.remove('rotate-180');
-            }
-        }
-
-        window.onload = function() {
-            updateCartCount();
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('success') === 'true') {
-                alert('Заявка успешно отправлена!');
-                // Удаляем параметр success из URL
-                urlParams.delete('success');
-                const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '');
-                window.history.replaceState({}, document.title, newUrl);
-            }
-        };
+        window.onload = indexOnLoad;
     </script>
     <link rel="stylesheet" href="/static/css/index.css">
 {% endblock %}
