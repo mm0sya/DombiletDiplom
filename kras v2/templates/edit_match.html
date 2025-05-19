@@ -74,7 +74,13 @@
                             <div class="sector-seats" data-sector='{"matchId": "{{ match.slug }}", "sectorName": "{{ sector.name }}"}' data-price="{{ sector.price }}">
                                 {% if sector.seats %}
                                     {% for seat in sector.seats %}
-                                        <div class="seat-item" data-number="{{ seat.number }}" data-available="{{ 'true' if seat.available else 'false' }}" data-delete-url="/admin-panel/deactivate_seat/{{ match.slug }}/{{ sector.name }}/{{ seat.number }}" data-price="{{ seat.price }}"></div>
+                                        <div class="seat-item"
+                                             data-number="{{ seat.number }}"
+                                             data-row="{{ seat.row if seat.row is defined else '' }}"
+                                             data-seat="{{ seat.seat if seat.seat is defined else '' }}"
+                                             data-available="{{ 'true' if seat.available else 'false' }}"
+                                             data-delete-url="/admin-panel/deactivate_seat/{{ match.slug }}/{{ sector.name }}/{{ seat.number }}"
+                                             data-price="{{ seat.price }}"></div>
                                     {% endfor %}
                                 {% else %}
                                     <p>Нет мест в этом секторе.</p>

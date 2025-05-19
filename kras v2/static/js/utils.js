@@ -514,33 +514,34 @@ function restoreToggleState() {
 }
 
 function groupSeatsByRows() {
-    const seatsPerRow = 35;
     document.querySelectorAll('.sector-seats').forEach(sector => {
         const sectorData = JSON.parse(sector.getAttribute('data-sector'));
         const sectorId = sectorData.sectorName;
         const matchSlug = sectorData.matchId;
         const sectorPrice = parseInt(sector.getAttribute('data-price'));
+        // Собираем все места с реальными row и seat
         const seats = Array.from(sector.querySelectorAll('.seat-item')).map(seat => ({
-            number: parseInt(seat.getAttribute('data-number')),
+            row: parseInt(seat.getAttribute('data-row')),
+            seat: parseInt(seat.getAttribute('data-seat')),
+            number: parseInt(seat.getAttribute('data-number')), // на всякий случай
             available: seat.getAttribute('data-available') === 'true' || seat.getAttribute('data-available') === 'True',
             deleteUrl: seat.getAttribute('data-delete-url'),
             price: seat.getAttribute('data-price') ? Number(seat.getAttribute('data-price')) : 0,
             originalPrice: seat.getAttribute('data-price') ? Number(seat.getAttribute('data-price')) : 0
         }));
+        // Группируем по рядам
         const rows = {};
         seats.forEach(seat => {
-            const rowNumber = Math.floor((seat.number - 1) / seatsPerRow) + 1;
-            if (!rows[rowNumber]) {
-                rows[rowNumber] = [];
+            if (!seat.row || isNaN(seat.row)) return; // пропускаем некорректные
+            if (!rows[seat.row]) {
+                rows[seat.row] = [];
             }
-            rows[rowNumber].push(seat);
+            rows[seat.row].push(seat);
         });
         const rowsContainer = document.createElement('div');
         for (const rowNumber in rows) {
-            const localSeats = rows[rowNumber].map(seat => ({
-                ...seat,
-                localNumber: (seat.number - 1) % seatsPerRow + 1
-            }));
+            // Сортируем места по номеру в ряду
+            const localSeats = rows[rowNumber].sort((a, b) => a.seat - b.seat);
             const rowId = `row-${sectorId}-${rowNumber}`;
             const rowDiv = document.createElement('div');
             rowDiv.className = 'ml-4 mt-2 row-container';
@@ -552,7 +553,7 @@ function groupSeatsByRows() {
                     <ul class="ml-4 mt-2">
                         ${localSeats.map(seat => `
                             <li class="flex justify-between items-center py-1">
-                                <span>Место ${seat.localNumber}: <span class="seat-status">${seat.available ? 'Свободно' : 'Занято'}</span> <span class="seat-price">${typeof seat.price !== 'undefined' && seat.price !== null ? seat.price : 0} ₽</span></span>
+                                <span>Место ${seat.seat}: <span class="seat-status">${seat.available ? 'Свободно' : 'Занято'}</span> <span class="seat-price">${typeof seat.price !== 'undefined' && seat.price !== null ? seat.price : 0} ₽</span></span>
                                 <div class="flex items-center space-x-2">
                                     <button onclick="startEditSeatPrice(this, '${sectorId}', ${seat.number}, ${seat.originalPrice})" class="text-blue-500 hover:underline mx-1">Изменить цену</button>
                                     <button onclick="toggleSeatStatus('${matchSlug}', '${sectorId}', ${seat.number}, '${seat.available ? 'deactivate' : 'activate'}', this)" class="${seat.available ? 'text-red-500' : 'text-green-500'} hover:underline">${seat.available ? 'Деактивировать' : 'Активировать'}</button>
