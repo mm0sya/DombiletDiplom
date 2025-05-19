@@ -121,3 +121,7 @@ async def submit_contact(
         print(f"Error in submit_contact: {str(e)}")
         print(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+
+@public_router.get("/fan-id", response_class=HTMLResponse)
+async def fan_id(request: Request):
+    return templates.TemplateResponse("fan-id.html", {"request": request})
