@@ -1,0 +1,28 @@
+/* Фон у "гарантия","оперативность" в index.html */
+.advantage-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px #ff00001a;
+    padding: 1.5rem;
+}
+
+/* Наши преимущества и т.п. в index.html */
+.faq-item {
+    border-bottom: 1px solid #eae5eb;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+.faq-item:last-child {
+    border-bottom: none;
+}
+.faq-item h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+.faq-item p {
+    color: #4b5563;
+}

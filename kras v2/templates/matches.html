@@ -2,84 +2,6 @@
 {% block title %}Матчи ФК Краснодар{% endblock %}
 
 {% block head %}
-    <style>
-        .match-card {
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-            background-color: white;
-            width: 100%;
-            max-width: 400px;
-        }
-        .match-card:hover {
-            transform: translateY(-4px);
-        }
-        .match-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-        .match-date-overlay {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: rgba(0, 0, 0, 0.6);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .match-price-overlay {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background-color: #34C759;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .match-info {
-            padding: 20px;
-        }
-        .match-teams {
-            font-size: 24px;
-            font-weight: 700;
-            color: #1F2937;
-            margin-bottom: 4px;
-        }
-        .match-details {
-            font-size: 14px;
-            color: #6B7280;
-            margin-bottom: 12px;
-        }
-        .buy-button {
-            display: block;
-            width: 100%;
-            background-color: #34C759;
-            color: white;
-            padding: 12px;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 16px;
-            text-align: center;
-            transition: background-color 0.3s;
-        }
-        .buy-button:hover {
-            background-color: #2EB648;
-        }
-        .buy-button.disabled {
-            background-color: #d1d5db;
-            cursor: not-allowed;
-        }
-        .bold-option {
-            font-weight: bold;
-        }
-        .w-full {
-            width: 1280px;
-        }
-    </style>
     <script src="/static/js/utils.js"></script>
     <script>
         function filterMatches() {
@@ -129,7 +51,7 @@
     <main class="max-w-7xl mx-auto p-6">
         <h2 class="text-3xl font-bold mb-6 text-center">Билеты и расписание матчей футбольного клуба Краснодар</h2>
         <div class="flex justify-between mb-4 ">
-            <input type="text" id="search-query" class="border rounded p-2 w-full" placeholder="🔎 Поиск по командам..." oninput="filterMatches()">
+            <input type="text" id="search-query" class="border rounded p-2" style="width: 100%;" placeholder="🔎 Поиск по командам..." oninput="filterMatches()">
         </div>
         <div class="flex justify-between mb-4">
             <div class="flex space-x-2">

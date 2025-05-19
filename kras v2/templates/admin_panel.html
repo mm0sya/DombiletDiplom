@@ -2,33 +2,9 @@
 {% block title %}Админ-панель{% endblock %}
 {% block head %}
     <style>
-    body {
-        font-family: 'Inter', sans-serif;
-    }
-    .dark-green {
-        background-color: #1A3C34;
-    }
-    .dark-green:hover {
-        background-color: #2A5C4A;
-    }
-    .light-gray {
-        background-color: #F5F7FA;
-    }
-    .section-box {
-        border: 2px solid #e5e7eb;
-        border-radius: 8px;
-        padding: 16px;
-        margin-bottom: 16px;
-        background-color: white;
-    }
-    .bold-option {
-        font-weight: bold;
-    }
-    .bg-green-500 {
-        background-color: #34C759;
-    }
-    .hover\:bg-green-600:hover {
-        background-color: #2EB648;
+    .highlighted-section {
+        margin-bottom: 26px;
+        background-color: #ffffff;
     }
     </style>
     <script src="/static/js/utils.js"></script>
@@ -139,7 +115,7 @@
 {% endblock %}
 {% block content %}
     <main class="max-w-7xl mx-auto p-4">
-        <div class="section-box">
+        <div class="highlighted-section">
             <h2 class="text-2xl font-bold mb-4">Добавить новое мероприятие</h2>
             <form action="/admin-panel/add_match" method="post" enctype="multipart/form-data" class="space-y-4">
                 <div>
@@ -166,11 +142,11 @@
                     <label for="image" class="block text-sm font-medium text-gray-700">Изображение</label>
                     <input type="file" id="image" name="image" class="mt-1 block w-full">
                 </div>
-                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Добавить матч</button>
+                <button type="submit" class="cta-button">Добавить матч</button>
             </form>
         </div>
 
-        <div class="section-box">
+        <div class="highlighted-section">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-2xl font-bold">Сектора матчей</h2>
                 <div class="flex items-center ml-4">

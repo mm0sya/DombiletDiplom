@@ -42,45 +42,6 @@
         return gk_fileData[filename] || "";
         }
     </script>
-    <style>
-        .cart-item {
-            border: 1px solid #e5e7eb;
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 16px;
-        }
-        .remove-button {
-            background-color: #EF4444;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            transition: background-color 0.2s;
-        }
-        .remove-button:hover {
-            background-color: #DC2626;
-        }
-        .submit-button {
-            background-color: #34C759;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 4px;
-            transition: background-color 0.2s;
-        }
-        .submit-button:hover {
-            background-color: #2EB648;
-        }
-        .clear-button {
-            background-color: #EF4444;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 4px;
-            transition: background-color 0.2s;
-        }
-        .clear-button:hover {
-            background-color: #DC2626;
-        }
-
-    </style>
     <script src="/static/js/utils.js"></script>
     <script>
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -228,6 +189,7 @@
             }, 1000);
         };
     </script>
+    <link rel="stylesheet" href="/static/css/cart.css">
 {% endblock %}
 
 {% block content %}
@@ -256,7 +218,7 @@
             <p class="text-lg font-semibold">Итого: <span id="total-price">0 ₽</span></p>
             <div class="flex gap-4">
                 <button class="clear-button" onclick="clearCart()">Очистить корзину</button>
-                <button class="submit-button" onclick="submitCheckout()">Оформить заказ</button>
+                <button class="cta-button" onclick="submitCheckout()">Оформить заказ</button>
             </div>
         </div>
     </main>

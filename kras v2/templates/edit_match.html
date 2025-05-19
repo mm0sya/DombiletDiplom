@@ -1,64 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Редактирование матча{% endblock %}
 {% block head %}
-    <style>
-        .light-gray {
-            background-color: #F5F7FA;
-        }
-        .toggle-content {
-            display: none;
-        }
-        .toggle-content.active {
-            display: block;
-        }
-        .row-container {
-            border: 1px solid #e5e7eb;
-            border-radius: 4px;
-            padding: 8px;
-            margin-bottom: 8px;
-        }
-        .sector-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .pending-change {
-            background-color: #fff3cd;
-        }
-        .section-box {
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 24px;
-            margin-bottom: 24px;
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #1A3C34;
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 8px;
-        }
-        .back-button {
-            background-color: #5A606E;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 4px;
-            transition: background-color 0.2s;
-            text-decoration: none;
-        }
-        .back-button:hover {
-            background-color: #4A505E;
-        }
-        .bg-green-500 {
-            background-color: #34C759;
-        }
-        .hover\:bg-green-600:hover {
-            background-color: #2EB648;
-        }
-    </style>
     <script type="text/javascript">
         var gk_isXlsx = false;
         var gk_xlsxFileLookup = {};
@@ -407,6 +349,7 @@
             });
         };
     </script>
+    <link rel="stylesheet" href="/static/css/edit_match.css">
 {% endblock %}
 
 {% block user_menu %}
@@ -489,13 +432,13 @@
                 <p>Сектора отсутствуют.</p>
             {% endif %}
             <div class="mt-4">
-                <a href="/admin-panel/bulk_add_sectors/{{ match.slug }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Добавить сектора</a>
+                <a href="/admin-panel/bulk_add_sectors/{{ match.slug }}" class="cta-button">Добавить сектора</a>
             </div>
         </div>
 
         <div class="mt-6">
-            <button form="edit-match-form" type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 text-base">Сохранить</button>
-            <a href="/admin-panel" class="back-button text-white px-4 py-2 rounded ml-4 inline-block text-base">Назад</a>
+            <button form="edit-match-form" type="submit" class="cta-button">Сохранить</button>
+            <a href="/admin-panel" class="back-button ml-2">Назад</a>
         </div>
     </main>
 {% endblock %}
