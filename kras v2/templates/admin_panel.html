@@ -8,6 +8,25 @@
         }
     </style>
     <script>
+        function filterMatches() {
+            const tournament = document.getElementById('tournament-filter').value;
+            const date = document.getElementById('date-filter').value;
+            const matches = document.querySelectorAll('.match-item');
+
+            matches.forEach(match => {
+                const matchTournament = match.getAttribute('data-tournament');
+                const matchDate = match.getAttribute('data-date');
+                let show = true;
+
+                if (tournament !== 'Все лиги' && matchTournament !== tournament) {
+                    show = false;
+                }
+                if (date && matchDate !== date) {
+                    show = false;
+                }
+                match.style.display = show ? '' : 'none';
+            });
+        }
         window.onload = adminPanelOnLoad;
     </script>
 {% endblock %}
