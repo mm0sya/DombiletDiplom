@@ -89,7 +89,15 @@
         }
     
         function scrollToStadiumMap() {
-            document.querySelector('.stadium-map').scrollIntoView({ behavior: 'smooth' });
+            const stadiumMap = document.querySelector('.stadium-map');
+            const offset = 100; // Задайте значение смещения
+            const elementPosition = stadiumMap.getBoundingClientRect().top + window.scrollY;
+            const offsetPosition = elementPosition - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
         }
     
         function formatDate(dateString, timeString) {
