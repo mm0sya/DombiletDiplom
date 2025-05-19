@@ -190,7 +190,7 @@ async def bulk_add_sectors_form(request: Request, match_slug: str, admin: dict =
         raise HTTPException(status_code=404, detail="Match not found")
     return templates.TemplateResponse(
         "bulk_add_sectors.html",
-        {"request": request, "match": match, "sectors": SECTOR_LIST}
+        {"request": request, "match": match, "sectors": SECTOR_LIST, "username": admin["username"]}
     )
 
 @admin_router.post("/bulk_add_sectors/{match_slug}", response_class=RedirectResponse)
