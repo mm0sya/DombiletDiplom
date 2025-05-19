@@ -37,20 +37,19 @@ async def process_order(name, email, phone, selected_seats, matches_collection, 
                 for seat_info in seats:
                     row = seat_info["row"]
                     seat_num = seat_info["seat"]
-                    seat_number = (row - 1) * 35 + seat_num
                     for st in sector["seats"]:
-                        if st["number"] == seat_number:
+                        if st["row"] == row and st["seat"] == seat_num:
                             if not st["available"]:
-                                raise BadRequestException(f"Seat {seat_number} already taken")
+                                raise BadRequestException(f"Место {row}-{seat_num} уже занято")
                             if st["price"] != seat_info["price"]:
-                                raise BadRequestException(f"Price mismatch for seat {seat_number}")
+                                raise BadRequestException(f"Несоответствие цены для места {row}-{seat_num}")
                             st["available"] = False
                             break
                     else:
-                        raise NotFoundException(f"Seat {seat_number} not found in sector")
+                        raise NotFoundException(f"Место {row}-{seat_num} не найдено в секторе")
                 break
         else:
-            raise NotFoundException(f"Sector not found: {sector_name}")
+            raise NotFoundException(f"Сектор не найден: {sector_name}")
         await matches_collection.update_one({"slug": match_id}, {"$set": {"sectors": match["sectors"]}})
         for seat_info in seats:
             order = {
@@ -59,7 +58,8 @@ async def process_order(name, email, phone, selected_seats, matches_collection, 
                 "email": email,
                 "phone": phone,
                 "sector": sector_name,
-                "seat": (seat_info["row"] - 1) * 35 + seat_info["seat"],
+                "row": seat_info["row"],
+                "seat": seat_info["seat"],
                 "price": seat_info["price"],
                 "timestamp": datetime.utcnow() + timedelta(hours=3)
             }

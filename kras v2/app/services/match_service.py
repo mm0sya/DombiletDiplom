@@ -17,21 +17,19 @@ async def get_sector_from_match(match, sector_name):
 
 async def check_seat_availability(match, sector_name, row, seat):
     sector = await get_sector_from_match(match, sector_name)
-    seat_number = (row - 1) * 35 + seat
     for st in sector["seats"]:
-        if st["number"] == seat_number:
+        if st["row"] == row and st["seat"] == seat:
             return {"available": st["available"], "price": st["price"]}
     return {"available": False}
 
 async def select_seat_logic(match, sector_name, row, seat):
     sector = await get_sector_from_match(match, sector_name)
-    seat_number = (row - 1) * 35 + seat
     for st in sector["seats"]:
-        if st["number"] == seat_number:
+        if st["row"] == row and st["seat"] == seat:
             if not st["available"]:
-                raise BadRequestException(f"Seat {seat_number} already taken")
+                raise BadRequestException(f"Место {row}-{seat} уже занято")
             return True
-    raise NotFoundException(f"Seat {seat_number} not found in sector")
+    raise NotFoundException(f"Место {row}-{seat} не найдено в секторе")
 
 async def get_matches(query, matches_collection):
     matches = await matches_collection.find(query).to_list(1000)

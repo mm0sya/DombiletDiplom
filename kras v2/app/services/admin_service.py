@@ -118,11 +118,18 @@ async def bulk_add_sectors(match_slug, sector_data, matches_collection):
                 seat_numbers.extend(range(start, end + 1))
             else:
                 seat_numbers.append(int(part))
-        seats = [{"number": (int(row) - 1) * 35 + s, "available": True, "price": int(price)} for s in seat_numbers]
+        # Новая структура хранения мест
+        seats = [{
+            "row": int(row),
+            "seat": seat_num,
+            "available": True,
+            "price": int(price)
+        } for seat_num in seat_numbers]
+        
         for sector in match["sectors"]:
             if sector["name"] == sector_name:
-                existing_seat_numbers = {seat["number"] for seat in sector["seats"]}
-                seats = [seat for seat in seats if seat["number"] not in existing_seat_numbers]
+                existing_seats = {(seat["row"], seat["seat"]) for seat in sector["seats"]}
+                seats = [seat for seat in seats if (seat["row"], seat["seat"]) not in existing_seats]
                 sector["seats"].extend(seats)
                 break
         else:
@@ -137,12 +144,12 @@ async def deactivate_seat(match_slug, sector_name, seat_number, matches_collecti
     for sector in match["sectors"]:
         if sector["name"] == sector_name:
             for st in sector["seats"]:
-                if st["number"] == seat_number:
+                if st["row"] == seat_number // 35 + 1 and st["seat"] == seat_number % 35:
                     st["available"] = False
                     await matches_collection.update_one({"slug": match_slug}, {"$set": {"sectors": match["sectors"]}})
                     return True
-            raise NotFoundException(f"Seat {seat_number} not found in sector")
-    raise NotFoundException("Sector not found")
+            raise NotFoundException(f"Место {seat_number} не найдено в секторе")
+    raise NotFoundException("Сектор не найден")
 
 async def activate_seat(match_slug, sector_name, seat_number, matches_collection):
     match = await matches_collection.find_one({"slug": match_slug})
@@ -151,12 +158,12 @@ async def activate_seat(match_slug, sector_name, seat_number, matches_collection
     for sector in match["sectors"]:
         if sector["name"] == sector_name:
             for st in sector["seats"]:
-                if st["number"] == seat_number:
+                if st["row"] == seat_number // 35 + 1 and st["seat"] == seat_number % 35:
                     st["available"] = True
                     await matches_collection.update_one({"slug": match_slug}, {"$set": {"sectors": match["sectors"]}})
                     return True
-            raise NotFoundException(f"Seat {seat_number} not found in sector")
-    raise NotFoundException("Sector not found")
+            raise NotFoundException(f"Место {seat_number} не найдено в секторе")
+    raise NotFoundException("Сектор не найден")
 
 async def update_seats(match_slug, seat_changes, total_seats, matches_collection):
     match = await matches_collection.find_one({"slug": match_slug})
@@ -200,7 +207,7 @@ async def update_seat_price(match_slug, sector_name, seat_number, new_price, mat
     for sector in match["sectors"]:
         if sector["name"] == sector_name:
             for seat in sector["seats"]:
-                if seat["number"] == seat_number:
+                if seat["row"] == seat_number // 35 + 1 and seat["seat"] == seat_number % 35:
                     seat["price"] = new_price
                     await matches_collection.update_one({"slug": match_slug}, {"$set": {"sectors": match["sectors"]}})
                     return True

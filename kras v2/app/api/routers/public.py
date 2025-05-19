@@ -55,8 +55,8 @@ async def get_sector_view(request: Request, match_slug: str, sector_name: str):
             svg_code = "<svg><!-- SVG не найден --></svg>"
         available_seats = [
             {
-                "row": (seat["number"] - 1) // 35 + 1,
-                "seat": (seat["number"] - 1) % 35 + 1,
+                "row": seat["row"],
+                "seat": seat["seat"],
                 "price": seat["price"],
                 "sector_name": sector_name,
                 "match_id": match["slug"]
