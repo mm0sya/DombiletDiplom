@@ -1,0 +1,217 @@
+/* Блок с информацией о мероприятиии в tickets.html */
+.match-info {
+    background-color: white;
+    border-radius: 18px;
+    padding: 40px;
+    margin: 0 auto;
+    max-width: 1400px;
+    position: relative;
+    top: -100px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.match-info .header-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 16px;
+}
+.match-info .header-info .match-type {
+    font-size: 14px;
+    color: #6B7280;
+}
+.match-info .header-info .location {
+    font-size: 14px;
+    color: #6B7280;
+}
+.match-info .header-info .price-section {
+    display: flex;
+    align-items: center;
+}
+.match-info .header-info .price-section .price {
+    font-size: 14px;
+    color: #6B7280;
+    padding-left: 10ch;
+}
+.match-info .header-info .price-section .price span {
+    font-weight: bold;
+}
+.match-info h2 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #1F2A44;
+    margin: 0;
+}
+.match-info h2 span {
+    font-size: 32px;
+    font-weight: bold;
+    color: #1F2A44;
+}
+.match-info p.date {
+    font-size: 16px;
+    color: #6B7280;
+    margin: 8px 0 4px 0;
+}
+.match-info .buy-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+.match-info .scroll-button {
+    background-color: #34C759;                                 
+    color: white;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.2s;
+    cursor: pointer;
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+}
+.match-info .scroll-button:hover {
+    background-color: #2EB648;
+}
+.match-info .header-info .price-section {
+    display: flex;
+    align-items: center;
+    margin-right: 100px; /* Сдвигаем левее на 20px, настройте значение по необходимости */
+}
+
+
+
+
+
+/* Всплывашка в tickets.html*/
+.tooltip {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    pointer-events: none; /* Чтобы tooltip не мешал взаимодействию с элементами под ним */
+    display: none; /* По умолчанию скрыт */
+    font-size: 14px;
+    color: #1F2A44;
+    text-align: center;
+}
+
+.tooltip p {
+    margin: 2px 0;
+}
+
+.tooltip .sector-name {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.tooltip .price {
+    font-weight: bold;
+    font-size: 16px;
+    color: #1F2A44;
+}
+.sector.highlighted {
+    opacity: 1 !important; /* Полная яркость для подсвеченных секторов */
+}
+
+
+/* Блок с "Как выбрать места?" в ticket.hmtl */
+.info-section {
+    margin: 20px 0;
+}
+.info-section .info-wrapper {
+    background-color: #E6F5F1;
+    padding: 40px;
+    border-radius: 18px;
+    border: 1px solid #ecddec;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.info-section .info-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+.info-section .info-block {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+.info-section .info-block h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1F2A44;
+    margin-bottom: 10px;
+}
+.info-section .info-block h3 .number {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-color: #34C759;
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+    line-height: 24px;
+    margin-right: 8px;
+}
+.info-section .info-block p {
+    font-size: 14px;
+    color: #6B7280;
+    line-height: 1.5;
+}
+
+
+
+
+/* Блок "Список свободных билетов" в ticket.html */
+.contact-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 20px auto;
+}
+.contact-section .contact-text {
+    font-size: 14px;
+    color: #6B7280;
+}
+.contact-section .contact-text a {
+    color: #2EB648;
+    text-decoration: underline;
+}
+
+
+
+
+
+/* Блок со схемой svg в tickets.html */
+.stadium-map {
+    width: 100%;
+    max-width: 1400px;
+    background-color: white;
+    border-radius: 18px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0; /* Уменьшенные отступы сверху и снизу */
+}
+
+.stadium-map svg {
+    width: 85%; /* Растягиваем SVG на всю ширину контейнера */
+    max-width: 90%; /* Увеличиваем максимальную ширину для уменьшения боковых отступов */
+    height: auto; /* Позволяем высоте подстраиваться под пропорции */
+    max-height: 100%; /* Убираем ограничение по высоте или увеличиваем до 100% */
+    object-fit: contain;
+}

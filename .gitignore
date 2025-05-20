@@ -7,3 +7,5 @@
 /dataSources/
 /dataSources.local.xml
 kras v2/.env
+**/__pycache__/
+kras v2/venv/

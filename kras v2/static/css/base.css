@@ -1,0 +1,118 @@
+/* Базовые стили для body и структуры страницы */
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.scrollable-content {
+    margin-top: 60px;
+    overflow-y: auto;
+}
+
+main {
+    flex: 1 0 auto;
+    width: 100%; /* Добавлено */
+}
+
+
+/* Стили для кнопки "Купить билеты >" и остальные базовые кнопки зеленого цвета в index.html*/
+.cta-button {
+    background-color: #34C759;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+    align-items: center;
+    display: inline-flex
+}
+
+.cta-button:hover {
+    background-color: #2EB648;
+}
+
+/* Стили для кнопки "назад"*/
+.back-button {
+    background-color: #6B7280;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+    align-items: center;
+    display: inline-flex
+}
+.back-button:hover {
+    background-color: #5A606E;
+}
+
+/* Красные кнопки "удалить" */
+.clear-button {
+    background-color: #EF4444;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+    align-items: center;
+    display: inline-flex
+}
+.clear-button:hover {
+    background-color: #DC2626;
+}
+
+
+footer {
+    flex-shrink: 0;
+    background-color: #1f2937; /* Соответствует bg-gray-800 */
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+
+/* Стили для header */
+header {
+    position: fixed; /* Фиксирует хедер в верхней части экрана */
+    top: 0; /* Привязка к верхнему краю */
+    left: 0; /* Привязка к левому краю */
+    width: 100%; /* Хедер занимает всю ширину */
+    z-index: 1000; /* Обеспечивает, что хедер будет поверх других элементов */
+    background-color: #2A5C4A; /* Цвет фона (замените на ваш .dark-green) */
+    color: white;
+    padding: 12px;
+}
+header:hover {
+    background-color:#1A3C34;
+}
+
+
+
+/* Стили для заднего фона страницы страницы */
+.light-gray {
+    background-color: #faf5f5;
+}
+
+
+/*ЭТО ВСЁ ПО СКРОЛЛБАРУ От сюда*/
+/* Кастомный скроллбар для WebKit-браузеров (Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 9px; /* Ширина скроллбара */
+    height: 5px; /* Высота для горизонтального скроллбара */
+}
+
+::-webkit-scrollbar-track {
+    background: #F5F7FA; /* Цвет фона трека */
+    border-radius: 10px; /* Скругление углов трека */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #6B7280 ; /* Цвет ползунка */
+    border-radius: 10px; /* Скругление углов ползунка */
+    border: 1px solid #f1f1f1; /* Граница для эффекта */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4B5563; /* Цвет при наведении */
+}
+/*ЭТО ВСЁ ПО СКРОЛЛБАРУ До сюда*/

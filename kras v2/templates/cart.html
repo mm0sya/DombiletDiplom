@@ -1,273 +1,60 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
+{% extends "base.html" %}
+{% block title %}Корзина{% endblock %}
 
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
+{% block head %}
+    <script>
+        window.cartMatches = {{ matches | tojson | safe }};
+        window.onload = function() { cartOnLoad(window.cartMatches); };
+    </script>
+    <link rel="stylesheet" href="/static/css/cart.css">
+{% endblock %}
 
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Корзина</title>
-<link rel="icon" href="/static/image/favicon.ico" type="image/x-icon">
-<link rel="stylesheet" href="/static/css/styles.css">
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-    .cart-item {
-        border: 1px solid #e5e7eb;
-        padding: 16px;
-        border-radius: 8px;
-        margin-bottom: 16px;
-    }
-    .remove-button {
-        background-color: #EF4444;
-        color: white;
-        padding: 4px 8px;
-        border-radius: 4px;
-        transition: background-color 0.2s;
-    }
-    .remove-button:hover {
-        background-color: #DC2626;
-    }
-    .submit-button {
-        background-color: #34C759;
-        color: white;
-        padding: 8px 16px;
-        border-radius: 4px;
-        transition: background-color 0.2s;
-    }
-    .submit-button:hover {
-        background-color: #2EB648;
-    }
-    .clear-button {
-        background-color: #EF4444;
-        color: white;
-        padding: 8px 16px;
-        border-radius: 4px;
-        transition: background-color 0.2s;
-    }
-    .clear-button:hover {
-        background-color: #DC2626;
-    }
-
-</style>
-<script src="/static/js/utils.js"></script>
-<script>
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const RESERVATION_DURATION = 15 * 60 * 1000;
-
-    async function validateCart() {
-        const invalidSeats = [];
-        for (let i = cart.length - 1; i >= 0; i--) {
-            const item = cart[i];
-            const now = Date.now();
-            if (now - item.reservationTime > RESERVATION_DURATION) {
-                invalidSeats.push(i);
-                continue;
-            }
-            const isAvailable = await checkSeatAvailability(item.match_id, item.sector_name, item.row, item.seat);
-            if (!isAvailable) {
-                invalidSeats.push(i);
-            }
-        }
-        invalidSeats.forEach(index => cart.splice(index, 1));
-        updateCart(cart);
-        renderCart();
-    }
-
-    function removeFromCart(index) {
-        cart.splice(index, 1);
-        updateCart(cart);
-        renderCart();
-    }
-
-    function clearCart() {
-        cart = [];
-        updateCart(cart);
-        renderCart();
-    }
-
-    function renderCart() {
-        const cartContainer = document.getElementById('cart-items');
-        const totalPriceElement = document.getElementById('total-price');
-        cartContainer.innerHTML = '';
-
-        if (cart.length === 0) {
-            cartContainer.innerHTML = '<p class="text-gray-500">Корзина пуста.</p>';
-            totalPriceElement.textContent = '0 ₽';
-            return;
-        }
-
-        let totalPrice = 0;
-        cart.forEach((item, index) => {
-            const remainingTime = Math.max(0, Math.floor((RESERVATION_DURATION - (Date.now() - item.reservationTime)) / 1000));
-            const minutes = Math.floor(remainingTime / 60);
-            const seconds = remainingTime % 60;
-            const timeLeft = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-
-            const cartItem = document.createElement('div');
-            cartItem.className = 'cart-item';
-            cartItem.innerHTML = `
-                <div class="flex justify-between items-center">
-                    <div>
-                        <p class="font-semibold">Матч: ${item.match_id}</p>
-                        <p>Сектор: ${item.sector_name}</p>
-                        <p>Ряд: ${item.row}, Место: ${item.seat}</p>
-                        <p>Цена: ${item.price} ₽</p>
-                        <p>Осталось времени: <span id="time-${index}">${timeLeft}</span></p>
-                    </div>
-                    <button class="remove-button" onclick="removeFromCart(${index})">Удалить</button>
+{% block content %}
+    <main class="max-w-7xl mx-auto p-4">
+        <div id="notification" class="notification"></div>
+        <h2 class="text-3xl font-bold mb-4">Ваш заказ</h2>
+        <div id="cart-items"></div>
+        <div class="mb-4" id="contact-form-block">
+            <h3 class="text-2xl font-semibold mb-2">Контактные данные</h3>
+            <form id="checkout-form" class="space-y-4">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <input type="text" id="full_name" name="full_name" placeholder="Фамилия Имя Отчество*" required class="mt-1 block w-full border rounded p-2">
+                    <input type="tel" id="phone" name="phone" placeholder="Телефон*" required class="mt-1 block w-full border rounded p-2">
+                    <input type="email" id="email" name="email" placeholder="E-mail*" required class="mt-1 block w-full border rounded p-2">
                 </div>
-            `;
-            cartContainer.appendChild(cartItem);
-            totalPrice += item.price;
-        });
+                <div>
+                    <input type="text" id="fan_id" name="fan_id" placeholder="Fan ID" class="mt-1 block w-full border rounded p-2">
+                </div>
+                <div>
+                    <textarea id="comment" name="comment" placeholder="Комментарий" rows="3" class="mt-1 block w-full border rounded p-2"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="flex justify-between items-center mb-4" id="cart-summary-block">
+            <p class="text-2xl font-semibold">Итого: <span id="total-price">0 ₽</span></p>
+            <div class="flex gap-4">
+                <button class="clear-button" onclick="clearCart()">Очистить корзину</button>
+                <button class="cta-button" onclick="submitCheckout()">Оформить заказ</button>
+            </div>
+        </div>
+    </main>
+{% endblock %}
 
-        totalPriceElement.textContent = `${totalPrice} ₽`;
-    }
-
-    function showNotification(message) {
-        alert(message);
-    }
-
-    async function submitCheckout() {
-        const form = document.getElementById('checkout-form');
-        const fullName = form.querySelector('#full_name').value;
-        const email = form.querySelector('#email').value;
-        const phone = form.querySelector('#phone').value;
-
-        if (!fullName || !email || !phone) {
-            alert('Пожалуйста, заполните все обязательные поля.');
-            return;
-        }
-
-        const selectedSeats = JSON.stringify(cart);
-        const formData = new FormData();
-        formData.append('full_name', fullName);
-        formData.append('email', email);
-        formData.append('phone', phone);
-        formData.append('selected_seats', selectedSeats);
-
-        try {
-            const response = await fetch('/checkout', {
-                method: 'POST',
-                body: formData
-            });
-
-            if (response.ok) {
-                cart = [];
-                updateCart(cart);
-                showNotification('Заказ успешно оформлен!');
-                window.location.href = '/cart?success=true';
-            } else {
-                const errorText = await response.text();
-                showNotification(`Ошибка при оформлении заказа: ${errorText}`);
-            }
-        } catch (error) {
-            console.error('Ошибка:', error);
-            showNotification('Произошла ошибка при оформлении заказа.');
-        }
-    }
-
-    window.onload = async function() {
-        await validateCart();
-        setInterval(() => {
-            cart.forEach((item, index) => {
-                const remainingTime = Math.max(0, Math.floor((RESERVATION_DURATION - (Date.now() - item.reservationTime)) / 1000));
-                const minutes = Math.floor(remainingTime / 60);
-                const seconds = remainingTime % 60;
-                const timeLeft = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-                const timeElement = document.getElementById(`time-${index}`);
-                if (timeElement) {
-                    timeElement.textContent = timeLeft;
+{% block scripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart.length === 0) {
+                const contactFormBlock = document.getElementById('contact-form-block');
+                if (contactFormBlock) {
+                    contactFormBlock.style.display = 'none';
                 }
-            });
-            validateCart();
-        }, 1000);
-    };
-</script>
-</head>
-<body class="light-gray">
-<header class="dark-green text-white p-4">
-    <div class="max-w-7xl mx-auto flex justify-between items-center">
-        <div class="flex items-center">
-            <img src="/static/image/favicon.ico" alt="Логотип ФК Краснодар" class="h-10 mr-4">
-            <nav class="flex space-x-8">
-                <a href="/" class="hover:underline">Главная</a>
-                <a href="/matches" class="hover:underline">Матчи</a>
-                <a href="/stadium" class="hover:underline">Стадион</a>
-            </nav>
-        </div>
-        <div>
-            <a href="/cart" class="hover:underline">Корзина (<span id="cart-count">0</span>)</a>
-        </div>
-    </div>
-</header>
-<main class="max-w-7xl mx-auto p-4">
-    <div id="notification" class="notification"></div>
-    <h2 class="text-2xl font-bold mb-4">Корзина</h2>
-    <div id="cart-items"></div>
-    <div class="mb-4">
-        <h3 class="text-lg font-semibold mb-2">Контактные данные</h3>
-        <form id="checkout-form" class="space-y-4">
-            <div>
-                <label for="full_name" class="block text-sm font-medium text-gray-700">ФИО</label>
-                <input type="text" id="full_name" name="full_name" required class="mt-1 block w-full border rounded p-2">
-            </div>
-            <div>
-                <label for="email" class="block text-sm font-medium text-gray-700">E-mail</label>
-                <input type="email" id="email" name="email" required class="mt-1 block w-full border rounded p-2">
-            </div>
-            <div>
-                <label for="phone" class="block text-sm font-medium text-gray-700">Номер телефона</label>
-                <input type="tel" id="phone" name="phone" required class="mt-1 block w-full border rounded p-2">
-            </div>
-        </form>
-    </div>
-    <div class="flex justify-between items-center mb-4">
-        <p class="text-lg font-semibold">Итого: <span id="total-price">0 ₽</span></p>
-        <div class="flex gap-4">
-            <button class="clear-button" onclick="clearCart()">Очистить корзину</button>
-            <button class="submit-button" onclick="submitCheckout()">Оформить заказ</button>
-        </div>
-    </div>
-</main>
-<footer class="bg-gray-800 text-white p-4 text-center">
-    <p>© 2025 ФК Краснодар. Все права защищены.</p>
-</footer>
-</body>
-</html>
+                const cartSummaryBlock = document.getElementById('cart-summary-block');
+                if (cartSummaryBlock) {
+                    cartSummaryBlock.style.display = 'none';
+                }
+            }
+            const params = new URLSearchParams(window.location.search);
+        });
+    </script>
+{% endblock %}
