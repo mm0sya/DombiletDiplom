@@ -1,0 +1,53 @@
+/* --- Центрирование SVG и увеличение кликабельной зоны --- */
+#svg-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+#svg-container svg {
+    width: 1050px;
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
+#svg-container rect[data-row][data-seat] {
+    cursor: pointer;
+    pointer-events: all;
+}
+/* Стили для номеров мест поверх SVG */
+.svg-seat-label {
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    fill: #fff;
+    pointer-events: none;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    user-select: none;
+}
+.tooltip {
+    position: absolute;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 8px #0000001a;
+    z-index: 1000;
+    pointer-events: none;
+    display: none;
+    font-size: 14px;
+    color: #1F2A44;
+    text-align: center;
+    min-width: 120px;
+}
+.tooltip .sector-name {
+    font-weight: bold;
+    font-size: 16px;
+}
+.tooltip .price {
+    font-weight: bold;
+    font-size: 16px;
+    color: #1F2A44;
+}

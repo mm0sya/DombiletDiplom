@@ -1,343 +1,47 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
+{% extends "base.html" %}
 
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
+{% block title %}{{ match.teams }}{% endblock %}
 
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Выбор мест в секторе {{ sector_name }}</title>
-    <link rel="icon" href="/static/image/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="/static/css/styles.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .dark-green {
-            background-color: #1A3C34;
-        }
-        .dark-green:hover {
-            background-color: #2A5C4A;
-        }
-        .light-gray {
-            background-color: #F5F7FA;
-        }
-        .sector-image {
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            width: 100%;
-            height: 400px;
-            border: 2px solid #1A3C34;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-        .row-section {
-            border-bottom: 1px solid #e5e7eb;
-            padding: 10px 0;
-        }
-        .row-section:last-child {
-            border-bottom: none;
-        }
-        .seat-button, .seat-taken {
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            margin: 2px;
-            transition: background-color 0.2s;
-            display: inline-block;
-            text-align: center;
-            font-size: 14px;
-            line-height: 1.5;
-            min-width: 32px;
-            box-sizing: border-box;
-        }
-        .seat-button {
-            background-color: #34C759;
-        }
-        .seat-button:hover {
-            background-color: #2EB648;
-        }
-        .seat-taken {
-            background-color: #d1d5db;
-        }
-        .seat-taken:hover {
-            background-color: #c1c5cb;
-        }
-        .row-toggle {
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            background-color: #f3f4f6;
-            border-radius: 4px;
-        }
-        .row-toggle:hover {
-            background-color: #e5e7eb;
-        }
-        .row-content {
-            display: none;
-            padding: 10px;
-        }
-        .row-content.open {
-            display: block;
-        }
-        .cart-button {
-            background-color: #34C759;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 4px;
-            transition: background-color 0.2s;
-        }
-        .cart-button:hover {
-            background-color: #2EB648;
-        }
-        .back-button {
-            background-color: #6B7280;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 4px;
-            transition: background-color 0.2s;
-        }
-        .back-button:hover {
-            background-color: #5A606E;
-        }
-        main {
-            flex: 1 0 auto;
-            width: 100%; /* Гарантирует, что main занимает всю доступную ширину */
-        }
-        .sector-image {
-            max-width: 100%; /* Убедимся, что изображение не выходит за пределы контейнера */
-            width: 100%; /* Подтверждаем, что изображение растягивается на всю ширину контейнера */
-            box-sizing: border-box; /* Учитываем border и padding в ширине */
-        }
-        html, body {
-        height: 100%;
-        margin: 0;
-        }
-        body {
-            display: flex;
-            flex-direction: column;
-        }
-        footer {
-            flex-shrink: 0;
-        }
-    </style>
-    <script src="/static/js/utils.js"></script>
+{% block head %}
     <script>
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        function toggleRow(rowNumber) {
-            const content = document.getElementById(`row-${rowNumber}`);
-            const isOpen = content.classList.contains('open');
-            if (isOpen) {
-                content.classList.remove('open');
-            } else {
-                document.querySelectorAll('.row-content.open').forEach(openRow => {
-                    openRow.classList.remove('open');
-                });
-                content.classList.add('open');
-                localStorage.setItem('openRow', rowNumber);
-            }
-        }
-
-        async function selectSeat(row, seat, price) {
-            const button = document.querySelector(`button[data-row="${row}"][data-seat="${seat}"]`);
-            const alreadyInCart = cart.some(item => 
-                item.match_id === '{{ match.id }}' && 
-                item.sector_name === '{{ sector_name }}' && 
-                item.row === row && 
-                item.seat === seat
-            );
-
-            if (alreadyInCart) {
-                cart = cart.filter(item => 
-                    !(item.match_id === '{{ match.id }}' && 
-                      item.sector_name === '{{ sector_name }}' && 
-                      item.row === row && 
-                      item.seat === seat)
-                );
-                updateCart(cart);
-                const isAvailable = await checkSeatAvailability('{{ match.id }}', '{{ sector_name }}', row, seat);
-                if (isAvailable) {
-                    button.classList.remove('seat-taken');
-                    button.classList.add('seat-button');
-                } else {
-                    button.classList.remove('seat-button');
-                    button.classList.add('seat-taken');
-                }
-                return;
-            }
-
-            const isAvailable = await checkSeatAvailability('{{ match.id }}', '{{ sector_name }}', row, seat);
-            if (!isAvailable) {
-                alert('Это место уже занято!');
-                button.classList.remove('seat-button');
-                button.classList.add('seat-taken');
-                return;
-            }
-
-            cart.push({
-                match_id: '{{ match.id }}',
-                sector_name: '{{ sector_name }}',
-                row: row,
-                seat: seat,
-                price: price,
-                reservationTime: Date.now()
-            });
-            updateCart(cart);
-
-            button.classList.remove('seat-button');
-            button.classList.add('seat-taken');
-        }
-
-        async function initializeSeatStates() {
-            const buttons = document.querySelectorAll('button[data-row][data-seat]');
-            for (const button of buttons) {
-                const row = parseInt(button.getAttribute('data-row'));
-                const seat = parseInt(button.getAttribute('data-seat'));
-                const inCart = cart.some(item => 
-                    item.match_id === '{{ match.id }}' && 
-                    item.sector_name === '{{ sector_name }}' && 
-                    item.row === row && 
-                    item.seat === seat
-                );
-                const isAvailable = await checkSeatAvailability('{{ match.id }}', '{{ sector_name }}', row, seat);
-
-                if (inCart) {
-                    button.classList.remove('seat-button');
-                    button.classList.add('seat-taken');
-                } else if (!isAvailable) {
-                    button.classList.remove('seat-button');
-                    button.classList.add('seat-taken');
-                    cart = cart.filter(item => 
-                        !(item.match_id === '{{ match.id }}' && 
-                          item.sector_name === '{{ sector_name }}' && 
-                          item.row === row && 
-                          item.seat === seat)
-                    );
-                    updateCart(cart);
-                } else {
-                    button.classList.add('seat-button');
-                }
-            }
-        }
-
-        window.onload = async function() {
-            const openRow = localStorage.getItem('openRow');
-            if (openRow) {
-                const content = document.getElementById(`row-${openRow}`);
-                if (content) {
-                    content.classList.add('open');
-                }
-            }
-
-            await initializeSeatStates();
-        };
+        window.availableSeats = {{ available_seats | tojson | safe }};
+        window.matchId = "{{ match.slug }}";
+        window.sectorName = "{{ sector_name }}";
+        window.matchDate = "{{ match.date }}";
+        window.matchTime = "{{ match.time|default('00:00') }}";
+        window.onload = sectorViewOnLoad;
     </script>
-</head>
-<body class="light-gray">
-    <header class="dark-green text-white p-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center">
-                <img src="/static/image/favicon.ico" alt="Логотип ФК Краснодар" class="h-10 mr-4">
-                <nav class="flex space-x-8">
-                    <a href="/" class="hover:underline">Главная</a>
-                    <a href="/matches" class="hover:underline">Матчи</a>
-                    <a href="/stadium" class="hover:underline">Стадион</a>
-                </nav>
-            </div>
-            <div>
-                <a href="/cart" class="hover:underline">Корзина (<span id="cart-count">0</span>)</a>
-            </div>
-        </div>
-    </header>
+    <link rel="stylesheet" href="/static/css/sector_view.css">
+{% endblock %}
+
+{% block content %}
     <main class="max-w-7xl mx-auto p-4">
-        <h2 class="text-2xl font-bold mb-4 text-center">{{ match.teams }} - {{ match.date }}</h2>
-        <div class="text-center">
-            <div class="sector-image" style="background-image: url('/static/svg/{{ sector_name }}.svg');"></div>
+        <div class="match-info" style="background-color: white; border-radius: 18px; padding: 40px; margin: 0 auto 24px auto; max-width: 1400px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: flex-start;">
+            <div class="header-info" style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 16px;">
+                <div class="match-type" style="font-size: 14px; color: #6B7280;">⚽ Футбольный матч</div>
+                <div class="location" style="font-size: 14px; color: #6B7280;">📍 г. Краснодар, площадка: OZON арена</div>
+            </div>
+            <h2 style="font-size: 32px; font-weight: bold; color: #1F2A44; margin: 0;">{{ match.teams }}</h2>
+            <p id="match-date" style="font-size: 16px; color: #6B7280; margin: 8px 0 0 0;"></p>
+        </div>
+        <div class="stadium-map mx-auto" style="background: white; border-radius: 18px; padding: 10px 0 10px 0; max-width: 1400px; display: flex; flex-direction: column; align-items: center;">
             <h3 class="text-xl font-semibold mb-4">Сектор {{ sector_name }}</h3>
+            <div id="svg-container">
+                {{ svg_code | safe }}
+            </div>
         </div>
-        <div class="mb-4">
-            {% set rows = {} %}
-            {% for seat in sector.seats %}
-                {% if seat.available %}
-                    {% set row = (seat.number - 1) // 35 + 1 %}
-                    {% set seat_num = (seat.number - 1) % 35 + 1 %}
-                    {% if row not in rows %}
-                        {% set _ = rows.update({row: []}) %}
-                    {% endif %}
-                    {% set _ = rows[row].append({'number': seat_num, 'available': seat.available}) %}
-                {% endif %}
-            {% endfor %}
-            {% for row in rows.keys() | sort %}
-                <div class="row-section">
-                    <div class="row-toggle" onclick="toggleRow({{ row }})">
-                        <p>Ряд {{ row }}</p>
-                        <p class="text-sm text-gray-500">
-                            Доступно мест: {{ rows[row] | length }}
-                        </p>
-                    </div>
-                    <div id="row-{{ row }}" class="row-content">
-                        {% for seat in rows[row] | sort(attribute='number') %}
-                            <button
-                                class="seat-button"
-                                data-row="{{ row }}"
-                                data-seat="{{ seat.number }}"
-                                onclick="selectSeat({{ row }}, {{ seat.number }}, {{ sector.price }})"
-                            >
-                                {{ seat.number }}
-                            </button>
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="flex justify-center space-x-4">
-            <a href="/cart" class="cart-button">Перейти в корзину</a>
-            <a href="/tickets/{{ match.id }}" class="back-button">Назад</a>
+
+        <div class="flex justify-center space-x-4 mt-6">
+            <a href="/cart" class="cta-button">Перейти в корзину</a>
+            <a href="/tickets/{{ match.slug }}" class="back-button">Назад</a>
         </div>
     </main>
-    <footer class="bg-gray-800 text-white p-4 text-center">
-        <p>© 2025 ФК Краснодар. Все права защищены.</p>
-    </footer>
-</body>
-</html>
+
+
+    <!-- Tooltip для мест -->
+    <div id="seat-tooltip" class="tooltip" style="display:none; position:absolute; z-index:1000;">
+        <p class="sector-name"></p>
+        <p>Ряд: <span id="tooltip-row"></span> &nbsp; Место: <span id="tooltip-seat"></span></p>
+        <p class="price">Цена: <span id="tooltip-price"></span> ₽</p>
+    </div>
+{% endblock %}

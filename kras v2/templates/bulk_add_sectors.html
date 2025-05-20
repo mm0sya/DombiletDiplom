@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Добавление рядов{% endblock %}
+{% block head %}
+    <style>
+        .clear-button { 
+            width: 100%;
+            justify-content: center;
+        }
+    </style>
+{% endblock %}
+{% block user_menu %}
+    <a href="/admin-panel" class="hover:underline">{{ username }}</a>
+    <a href="/admin-panel/logout" class="hover:underline">Выход</a>
+{% endblock %}
+{% block content %}
+    <main class="max-w-7xl mx-auto p-4">
+        <h2 class="text-2xl font-bold mb-6">Выставление мест по диапазону</h2>
+        <form id="bulk-add-form" method="POST" action="/admin-panel/bulk_add_sectors/{{ match.slug }}">
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border border-gray-300 rounded" style="border-collapse: separate; border-spacing: 0;">
+                    <thead>
+                        <tr>
+                            <th class="border border-gray-300 bg-gray-50 font-semibold text-base p-2">Сектор</th>
+                            <th class="border border-gray-300 bg-gray-50 font-semibold text-base p-2">Ряд</th>
+                            <th class="border border-gray-300 bg-gray-50 font-semibold text-base p-2">Места</th>
+                            <th class="border border-gray-300 bg-gray-50 font-semibold text-base p-2">Цена</th>
+                            <th class="border border-gray-300 bg-gray-50 p-2"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="sector-rows">
+                        <tr>
+                            <td class="border border-gray-300 p-0"><div class="p-2"><select name="sector_name" class="w-full h-10 px-2 rounded border border-gray-300 focus:outline-none" required>{% for sector in sectors %}<option value="{{ sector }}">{{ sector }}</option>{% endfor %}</select></div></td>
+                            <td class="border border-gray-300 p-0"><div class="p-2"><input type="number" name="row" class="w-full h-10 px-2 rounded border border-gray-300 focus:outline-none" min="1" required></div></td>
+                            <td class="border border-gray-300 p-0"><div class="p-2"><input type="text" name="places" class="w-full h-10 px-2 rounded border border-gray-300 focus:outline-none" placeholder="1-10" required></div></td>
+                            <td class="border border-gray-300 p-0"><div class="p-2"><input type="number" name="price" class="w-full h-10 px-2 rounded border border-gray-300 focus:outline-none" min="1" required></div></td>
+                            <td class="border border-gray-300 p-0"><div class="p-2"><button type="button" class="clear-button" onclick="removeRow(this)"> Удалить</button></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-5 flex gap-2">
+                <button type="button" class="cta-button" onclick="addRow()">Добавить строку</button>
+                <a href="/admin-panel/edit_match/{{ match.slug }}" class="back-button">Назад</a>
+                <button type="submit" class="cta-button" style="margin-left: auto;">Сохранить</button>
+            </div>
+        </form>
+    </main>
+{% endblock %}

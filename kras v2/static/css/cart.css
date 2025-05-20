@@ -1,0 +1,16 @@
+.cart-item {
+    border: 1px solid #e5e7eb;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+.remove-button {
+    background-color: #EF4444;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+.remove-button:hover {
+    background-color: #DC2626;
+}
