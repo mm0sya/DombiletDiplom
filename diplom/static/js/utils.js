@@ -897,7 +897,7 @@ function selectSector(sectorName) {
 
 function scrollToStadiumMap() {
     const stadiumMap = document.querySelector('.stadium-map');
-    const offset = 100;
+    const offset = 110;
     const elementPosition = stadiumMap.getBoundingClientRect().top + window.scrollY;
     const offsetPosition = elementPosition - offset;
     window.scrollTo({
