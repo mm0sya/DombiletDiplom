@@ -140,7 +140,8 @@ async def parse_match(match, matches_collection):
                                 break
                         if not fill_color:
                             fill_color = rect.get("fill", "")
-                    if fill_color not in ["rgb(0, 192, 0)", "#00C000"]:
+                    # Считаем место свободным, если оно не красное
+                    if fill_color in ["#f90606", "rgb(249, 6, 6)"]:
                         continue
                     seat_name = seat.get("seat", "Неизвестное место")
                     row_name = seat.get("row", "Неизвестный ряд")
