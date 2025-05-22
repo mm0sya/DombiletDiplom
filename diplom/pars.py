@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 import motor.motor_asyncio
 import asyncio
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+import re
 
 MONGO_URL = "mongodb://localhost:27017"
 DB_NAME = "krasnodar_tickets"
@@ -97,12 +98,18 @@ async def parse_match(match, matches_collection):
                     modal = WebDriverWait(driver, 5).until(
                         EC.visibility_of_element_located((By.ID, "openModal"))
                     )
+                    # --- Парсим цену из модального окна ---
+                    modal_html = modal.get_attribute("outerHTML")
+                    modal_soup = BeautifulSoup(modal_html, "html.parser")
+                    # Берём третью строку текста (цена)
+                    lines = [line.strip() for line in modal_soup.get_text("\n").split("\n") if line.strip()]
+                    sector_price = int(lines[2]) if len(lines) > 2 and lines[2].isdigit() else 0
                     show_all_button = WebDriverWait(driver, 5).until(
                         EC.element_to_be_clickable((By.ID, "ModalHref"))
                     )
                     show_all_button.click()
                 except:
-                    pass
+                    sector_price = 0
                 WebDriverWait(driver, 15).until(
                     EC.presence_of_element_located((By.TAG_NAME, "svg"))
                 )
@@ -153,7 +160,7 @@ async def parse_match(match, matches_collection):
                         "row": int(row_name) if str(row_name).isdigit() else row_name,
                         "seat": int(seat_name) if str(seat_name).isdigit() else seat_name,
                         "available": True,
-                        "price": 0,  # цену можно доработать
+                        "price": sector_price,
                         "source": "parser"
                     })
                 if available_seats:
