@@ -100,7 +100,8 @@
                 {% for match in matches %}
                     <div class="match-item border rounded p-4 mb-4" data-tournament="{{ match.tournament | default('РПЛ') }}" data-date="{{ match.date }}" data-active="{{ match.is_active|default(true) }}">
                         <h3 class="text-xl font-semibold">{{ match.teams }} - {{ match.date }} {{ match.time }} ({{ match.tournament | default('РПЛ') }}) {% if not match.is_active %}<span class="text-red-500 text-sm ml-2">(неактивен)</span>{% endif %}</h3>
-                        <ul class="mt-2">
+                        <button type="button" class="text-blue-500 hover:underline mb-2" onclick="toggleSectors(this)">Показать сектора</button>
+                        <ul class="mt-2 hidden">
                             {% for sector in match.sectors %}
                                 {% set prices = sector.seats | map(attribute='price') | list %}
                                 {% set min_price = prices|min if prices else 0 %}
@@ -124,4 +125,16 @@
             </div>
         </div>
     </main>
+    <script>
+    function toggleSectors(btn) {
+        const ul = btn.nextElementSibling;
+        if (ul.classList.contains('hidden')) {
+            ul.classList.remove('hidden');
+            btn.textContent = 'Скрыть сектора';
+        } else {
+            ul.classList.add('hidden');
+            btn.textContent = 'Показать сектора';
+        }
+    }
+    </script>
 {% endblock %}
