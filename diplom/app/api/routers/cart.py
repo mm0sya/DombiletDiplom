@@ -62,6 +62,46 @@ async def submit_order(
             password="C3gZs5uDsyKyy9ea8V4B",
             use_tls=True,
         )
+        
+        # Отправка копии администратору
+        admin_message = EmailMessage()
+        admin_message["From"] = "foot_bilet@mail.ru"
+        admin_message["To"] = "footbol_mang@mail.ru"  # email администратора
+        admin_message["Subject"] = f"Новый заказ от клиента {phone}"
+        
+        # Формирование содержимого письма с дополнительной информацией
+        seats_info = ""
+        total_price = 0
+        match_ids = set()
+        for seat in selected_seats_data:
+            match_ids.add(seat.get('match_id', 'Не указан'))
+            sector = seat.get('sector_name', seat.get('sector', 'Не указан'))
+            seats_info += f"- Место: Ряд {seat.get('row', 'N/A')}, Место {seat.get('seat', 'N/A')}, Сектор {sector}, Цена: {seat.get('price', 0)} руб.\n"
+            total_price += seat.get('price', 0)
+        
+        # Попытка получить названия матчей из базы данных (поле 'teams'), если доступны match_id
+        match_info = "Матч(и): Не указан"
+        if match_ids and 'Не указан' not in match_ids:
+            matches = await matches_collection.find({'slug': {'$in': list(match_ids)}}).to_list(1000)
+            matches = convert_objectid_to_str(matches)
+            if matches:
+                match_names = [match.get('teams', 'Не указан') for match in matches]
+                match_info = "Матч(и): " + ", ".join(match_names)
+
+        
+        fan_id_info = f"Fan ID: {fan_id}\n" if fan_id else ""
+        comment_info = f"\nКомментарий: {comment}\n" if comment else ""
+        
+        admin_message.set_content(f"Новый заказ получен:\nИмя: {name}\nEmail: {email}\nТелефон: {phone}\nКоличество мест: {len(selected_seats_data)}\n{match_info}\n\nВыбранные места:\n{seats_info}Общая стоимость: {total_price} руб.\n\n{fan_id_info}\n{comment_info}")
+
+        await aiosmtplib.send(
+            admin_message,
+            hostname="smtp.mail.ru",
+            port=465,
+            username="foot_bilet@mail.ru",
+            password="C3gZs5uDsyKyy9ea8V4B",
+            use_tls=True,
+        )
         return RedirectResponse(url="/cart?success=true", status_code=303)
     except json.JSONDecodeError as e:
         print(f"JSON decode error in submit_order: {str(e)}")

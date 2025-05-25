@@ -133,6 +133,22 @@ async def submit_contact(
             password="C3gZs5uDsyKyy9ea8V4B",
             use_tls=True,
         )
+        
+        # Отправка копии администратору
+        admin_message = EmailMessage()
+        admin_message["From"] = "foot_bilet@mail.ru"
+        admin_message["To"] = "footbol_mang@mail.ru"  # email администратора
+        admin_message["Subject"] = "Новая заявка от клиента"
+        admin_message.set_content(f"Новая заявка получена:\nИмя: {name}\nТелефон: {phone}\nEmail: {email}")
+
+        await aiosmtplib.send(
+            admin_message,
+            hostname="smtp.mail.ru",
+            port=465,
+            username="foot_bilet@mail.ru",
+            password="C3gZs5uDsyKyy9ea8V4B",
+            use_tls=True,
+        )
         return RedirectResponse(url="/?success=true", status_code=303)
     except Exception as e:
         print(f"Error in submit_contact: {str(e)}")
